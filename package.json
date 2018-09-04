@@ -1,0 +1,27 @@
+{
+  "name": "build-raven-os-org",
+  "version": "1.0.0",
+  "description": "front for build-raven-os-org",
+  "main": "index.js",
+  "dependencies": {
+    "vue": "^2.5.16",
+    "vue-resource": "^1.5.1",
+    "vue-router": "^3.0.1",
+    "vueify": "^9.4.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "build": "browserify -t vueify -e static/app.js -o static/build/build.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/raven-os/packages-raven-os-org.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/raven-os/packages-raven-os-org/issues"
+  },
+  "homepage": "https://github.com/raven-os/packages-raven-os-org#readme"
+}
