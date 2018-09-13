@@ -29,40 +29,35 @@
             <b-col/>
           </b-row>
           <b-row>
-            <b-col lg="auto" xl="auto"/>
-            <b-col lg="12" xl="2">
+            <b-col></b-col>
+            <b-col>
               <div class="sort-title">Sort by</div>
             </b-col>
-            <b-col cols="0" sm="0" md="0" lg="1" xl="auto"/>
-            <b-col cols="4" md="3" lg="auto" xl="auto">
+            <b-col>
               <label class="custom-radio" for="running">Running
                 <input id="running" v-model="sort" type="radio" value="running">
                 <span class="checkmark"/>
               </label>
             </b-col>
-            <b-col cols="4" md="3" lg="auto" xl="auto">
+            <b-col>
               <label class="custom-radio" for="queuing">Queuing
                 <input id="queuing" v-model="sort" type="radio" value="queuing">
                 <span class="checkmark"/>
               </label>
             </b-col>
-            <b-col cols="4" md="3" lg="auto" xl="auto">
+            <b-col>
               <label class="custom-radio" for="exit_status">Exit Status
                 <input id="exit_status" v-model="sort" type="radio" value="exit_status">
                 <span class="checkmark"/>
               </label>
             </b-col>
-            <!-- <b-col cols="4" md="3" cols="auto" lg="auto" xl="auto">-->
-
-            <b-col cols="4" md="auto" order-md="4" lg="auto" xl="0"/>
             <b-col cols="6" md="3" lg="auto" xl="auto">
               <label class="custom-radio" for="created_at">Creation date
                 <input id="created_at" v-model="sort" type="radio" value="created_at">
                 <span class="checkmark"/>
               </label>
             </b-col>
-            <b-col cols="2" md="0" lg="auto" xl="0"/>
-            <b-col cols="0" md="0" lg="auto" xl="1"/>
+            <b-col></b-col>
           </b-row>
         </div>
       </b-container>
@@ -81,7 +76,7 @@
 
         <!-- Nothing found -->
         <div v-else-if="builds.length <= 0">
-          <p>
+          <p class="build-list-error">
             <b>No builds found</b>
           </p>
         </div>
@@ -154,7 +149,7 @@ export default {
       this.getBuilds()
     },
     getBuilds () {
-      let url = 'http://localhost:8000/builds/'
+      let url = 'http://localhost:8080/builds/'
       if (this.query) {
         url += `?${this.field}=${this.query}`
       }
@@ -170,7 +165,7 @@ export default {
       }, err => {
         console.log(err)
         this.results.builds.loading = false
-        this.results.builds.error = err
+        this.results.builds.error = err.body.error_description
       })
     }
   }
@@ -183,7 +178,6 @@ export default {
 </script>
 
 <style scoped>
-
 /* PACKAGES-SEARCH
 ----------------------------------- */
 #builds-search {
@@ -218,6 +212,9 @@ export default {
   border-radius: 0px 5px 5px 0px;
   height: 50px;
 }
+.search-input:focus {
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(0, 0, 0, 0.6);
+}
 
 #builds-search .search-select {
   font-family: sans-serif;
@@ -236,7 +233,7 @@ export default {
   background: var(--accent) url('https://cdn3.iconfinder.com/data/icons/google-material-design-icons/48/ic_keyboard_arrow_down_48px-128.png') no-repeat;
   background-size: 20px;
   background-position: right 10px center;
-  width: 100%;
+  width: 175px;
 }
 
 #builds-search .sort-title {
@@ -315,8 +312,14 @@ export default {
   background: white;
 }
 
-/* PACKAGES-LIST
+/* BUILDS-LIST
 ----------------------------------- */
+.packages-list-error {
+  text-align: center;
+  margin-top: 50px;
+  font-weight: bold;
+}
+
 #builds-list .packages-list-table {
   padding: 10px;
   border-spacing: 10px;

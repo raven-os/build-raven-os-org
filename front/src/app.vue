@@ -7,29 +7,18 @@
       ============================-->
       <header id="header">
         <div class="container">
-          <div
-            id="logo"
-            class="pull-left">
-            <a href="/#packages-search">
-              <img
-                src="/img/raven_title.png"
-                alt=""
-                title="" >
+          <div id="logo" class="pull-left">
+            <a href="/">
+              <img src="/img/raven_title.png" alt="" title="" >
             </a>
           </div>
           <nav id="nav-menu-container">
             <ul class="nav-menu">
-              <li
-                :class="{menu_active: isActive('home')}"
-                @click="setActive('home')">
+              <li :class="{menu_active: isActive('home')}" @click="setActive('home')">
                 <!--<a href="#packages-search">Search package</a>-->
-                <router-link
-                  to="/"
-                  exact>Home</router-link>
+                <router-link to="/" exact>Home</router-link>
               </li>
-              <li
-                :class="{menu_active: isActive('create')}"
-                @click="setActive('create')">
+              <li :class="{menu_active: isActive('create')}" @click="setActive('create')">
                 <!--<a href="/create.html">Create package</a>-->
                 <router-link to="/create">Create</router-link>
               </li>
@@ -46,9 +35,7 @@
     <!--==========================
     Footer
     ============================-->
-    <footer
-      id="footer"
-      style="margin-top: 50px">
+    <footer id="footer" style="margin-top: 50px">
       <div class="footer-top">
         <div class="container"/>
       </div>

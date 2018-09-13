@@ -13,10 +13,9 @@
         <!-- <p v-if="loadingCreation">Loading ...</p> -->
         <form id="form-create" @submit.prevent="addBuild()">
           <b-container>
-
-            <b-row class="m-2">
+              <b-row class="m-2">
               <b-col>
-                <b-file :state="isValidImport" placeholder="Browse or drag n drop a manifest" @change="readFile"/>
+                <b-file :state="isValidImport" class="file-import" placeholder="Browse or drag and drop a manifest" @change="readFile"/>
                 <span v-if="isValidImport === false">Invalid file, must be a python file</span>
               </b-col>
             </b-row>
@@ -32,12 +31,7 @@
                   <b-input-group-prepend>
                     <div class="input-prepend">Name</div>
                   </b-input-group-prepend>
-                  <input
-                    id="name"
-                    v-model="name"
-                    class="form-control create-input"
-                    type="text"
-                    placeholder="manifest name">
+                  <input id="name" v-model="name" class="form-control create-input" type="text" placeholder="Manifest name">
                 </b-input-group>
               </b-col>
             </b-row>
@@ -48,13 +42,7 @@
                   <b-input-group-prepend>
                     <div class="input-prepend" style="background:grey;">Package id</div>
                   </b-input-group-prepend>
-                  <input
-                    id="package_id"
-                    v-model="package_id"
-                    class="form-control create-input"
-                    type="text"
-                    placeholder="package id"
-                    disabled>
+                  <input id="package_id" v-model="package_id" class="form-control create-input" type="text" placeholder="Package id" readonly="true">
                 </b-input-group>
               </b-col>
             </b-row>
@@ -63,16 +51,9 @@
               <b-col>
                 <b-input-group class="search-input-group create-input-group">
                   <b-input-group-prepend>
-                    <div class="input-prepend">Manifest</div>
+                    <div class="input-prepend input-prepend-high">Manifest</div>
                   </b-input-group-prepend>
-                  <textarea
-                    id="manifest"
-                    v-model="manifest"
-                    class="form-control create-input"
-                    type="text"
-                    placeholder="manifest"
-                    style="height: 20rem;"
-                    @input="getPackageId"/>
+                  <textarea id="manifest" v-model="manifest" class="form-control create-input create-input-high" type="text" placeholder="Manifest" @input="getPackageId"/>
                 </b-input-group>
               </b-col>
             </b-row>
@@ -230,6 +211,10 @@ export default {
   margin-bottom: 50px;
 }
 
+input[type="file"]:focus {
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(0, 0, 0, 0.6);
+}
+
 #form-create {
   width: 100%;
 }
@@ -254,6 +239,9 @@ export default {
   width: 150px;
   vertical-align: middle !important;
 }
+#create-build .input-prepend-high {
+  padding-top: 130px;
+}
 
 #create-build .create-input {
   font-family: sans-serif;
@@ -272,17 +260,13 @@ export default {
 
 #create-build .create-input-high,
 #create-build .input-prepend-high {
-  height: 200px;
+  height: 300px;
 }
 
 #create-build .create-input-high {
-  overflow-wrap: break-word;
+  overflow: auto;
   text-align: justify;
   resize: none;
-}
-
-#create-build .input-prepend-high {
-  padding-top: 80px;
 }
 
 #create-build .create-add {
