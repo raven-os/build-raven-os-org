@@ -43,12 +43,6 @@ jQuery(document).ready(function ($) {
     speed: 400
   });
 
-  // Nav Bar
-  $("#btn-sub").click(function () {
-    $("#nav-menu-container li").removeClass("menu-active");
-    $('#li-news').addClass('menu-active');
-  });
-
   // Mobile Navigation
   if ($('#nav-menu-container').length) {
     var $mobile_nav = $('#nav-menu-container').clone().prop({ id: 'mobile-nav' });

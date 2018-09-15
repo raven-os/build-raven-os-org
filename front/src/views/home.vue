@@ -12,12 +12,7 @@
             <b-col/>
             <b-col cols="12" md="10">
               <b-input-group class="search-input-group">
-                <input
-                  ref="search"
-                  v-model="query"
-                  class="form-control search-input"
-                  type="text"
-                  placeholder="Search">
+                <input ref="search" v-model="query" class="form-control search-input" type="text" placeholder="Search">
                 <select slot="prepend" v-model="field" class="search-select">
                   <option value="running">Running</option>
                   <option value="queuing">Queuing</option>
@@ -29,35 +24,35 @@
             <b-col/>
           </b-row>
           <b-row>
-            <b-col></b-col>
-            <b-col>
+            <b-col cols="0" md ="0" lg="1"></b-col>
+            <b-col cols="12" md="2" lg="2">
               <div class="sort-title">Sort by</div>
             </b-col>
-            <b-col>
+            <b-col cols="6" md="2" lg="2">
               <label class="custom-radio" for="running">Running
                 <input id="running" v-model="sort" type="radio" value="running">
                 <span class="checkmark"/>
               </label>
             </b-col>
-            <b-col>
+            <b-col cols="6" md="2" lg="2">
               <label class="custom-radio" for="queuing">Queuing
                 <input id="queuing" v-model="sort" type="radio" value="queuing">
                 <span class="checkmark"/>
               </label>
             </b-col>
-            <b-col>
+            <b-col cols="6" md="3" lg="2">
               <label class="custom-radio" for="exit_status">Exit Status
                 <input id="exit_status" v-model="sort" type="radio" value="exit_status">
                 <span class="checkmark"/>
               </label>
             </b-col>
-            <b-col cols="6" md="3" lg="auto" xl="auto">
+            <b-col cols="6" md="3" lg="2">
               <label class="custom-radio" for="created_at">Creation date
                 <input id="created_at" v-model="sort" type="radio" value="created_at">
                 <span class="checkmark"/>
               </label>
             </b-col>
-            <b-col></b-col>
+            <b-col cols="0" lg="1"></b-col>
           </b-row>
         </div>
       </b-container>
@@ -318,6 +313,10 @@ export default {
   text-align: center;
   margin-top: 50px;
   font-weight: bold;
+}
+
+#builds-list {
+  margin-top: 50px;
 }
 
 #builds-list .packages-list-table {

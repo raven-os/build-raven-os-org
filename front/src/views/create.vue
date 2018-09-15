@@ -6,7 +6,7 @@
     <section id="create-build">
       <b-container>
         <!-- Create Build section -->
-        <h1>Create Build</h1>
+        <h1>Creation</h1>
         <!-- Error handling -->
         <p v-if="errorCreation" class="build-error">{{ errorCreation }}</p>
         <p v-if="successCreation" class="build-error">The build has been successfully added!</p>
@@ -21,7 +21,7 @@
             </b-row>
             <b-row class="m-2">
               <b-col>
-                <div style="text-align:center;">Or write it</div>
+                <h2>Or write it</h2>
               </b-col>
             </b-row>
 
@@ -200,6 +200,11 @@ export default {
 
 /* CREATE-BUILD
 ----------------------------------- */
+h2 {
+  text-align: center;
+  margin: 25px 0px;
+}
+
 #create-build {
   margin-top: 150px;
 }
