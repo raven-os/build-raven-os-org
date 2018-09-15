@@ -7,23 +7,16 @@
       ============================-->
       <header id="header">
         <div class="container">
-          <div id="logo" class="pull-left">
-            <a href="/">
-              <img src="/img/raven_title.png" alt="" title="" >
-            </a>
-          </div>
-          <nav id="nav-menu-container">
-            <ul class="nav-menu">
-              <li :class="{menu_active: isActive('home')}" @click="setActive('home')">
-                <!--<a href="#packages-search">Search package</a>-->
-                <router-link to="/" exact>Home</router-link>
-              </li>
-              <li :class="{menu_active: isActive('create')}" @click="setActive('create')">
-                <!--<a href="/create.html">Create package</a>-->
-                <router-link to="/create">Create</router-link>
-              </li>
-            </ul>
-          </nav>
+          <b-navbar class="app-navbar" toggleable="md" type="dark">
+          <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
+            <b-navbar-brand href="/"><img src="/img/raven_title.png" alt="" title="" ></b-navbar-brand>
+              <b-collapse is-nav id="nav_collapse">
+                <b-navbar-nav class="ml-auto">
+                  <b-nav-item to="/" exact class="nav-item" active-class="nav-item-active">Home</b-nav-item>
+                  <b-nav-item to="/create" class="nav-item" active-class="nav-item-active">Create</b-nav-item>
+                </b-navbar-nav>
+              </b-collapse>
+        </b-navbar>
           <!-- #nav-menu-container -->
         </div>
       </header>
@@ -126,257 +119,17 @@ Header
   transition: all 0.5s;
 }
 
-/* -----------------------------------
-# Navigation Menu
------------------------------------ */
-/* Nav Menu Essentials */
-.nav-menu, .nav-menu * {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.nav-menu ul {
-  position: absolute;
-  display: none;
-  top: 100%;
-  left: 0;
-  z-index: 99;
-}
-
-.nav-menu li {
-  position: relative;
-  white-space: nowrap;
-}
-
-.nav-menu > li {
-  float: left;
-}
-
-.nav-menu li:hover > ul,
-.nav-menu li.sfHover > ul {
-  display: block;
-}
-
-.nav-menu ul ul {
-  top: 0;
-  left: 100%;
-}
-
-.nav-menu ul li {
-  min-width: 180px;
-}
-
-/* Nav Menu Arrows */
-.sf-arrows .sf-with-ul {
-  padding-right: 30px;
-}
-
-.sf-arrows .sf-with-ul:after {
-  content: "\f107";
-  position: absolute;
-  right: 15px;
-  font-family: FontAwesome;
-  font-style: normal;
-  font-weight: normal;
-}
-
-.sf-arrows ul .sf-with-ul:after {
-  content: "\f105";
-}
-
-/* Nav Meu Container */
-#nav-menu-container {
-  float: right;
-  margin: 0;
-}
-
-@media (max-width: 768px) {
-  #nav-menu-container {
-    display: none;
-  }
-}
-
-/* Nav Meu Styling */
-.nav-menu a {
-  padding: 0 8px 10px 8px;
-  text-decoration: none;
-  display: inline-block;
-  color: var(--white);
-  font-family: sans-serif;
-  font-weight: 400;
+.app-navbar {
+  background-color: var(--primary-dark);
   text-transform: uppercase;
-  font-size: 13px;
-  outline: none;
 }
 
-.nav-menu > li {
-  margin-left: 10px;
+.nav-item {
+  color: var(--white) !important;
 }
 
-.nav-menu > li > a:before {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 2px;
-  bottom: 0;
-  left: 0;
-  background-color: var(--accent);
-  visibility: hidden;
-  -webkit-transform: scaleX(0);
-  transform: scaleX(0);
-  -webkit-transition: all 0.3s ease-in-out 0s;
-  transition: all 0.3s ease-in-out 0s;
-}
-
-.nav-menu a:hover:before, .nav-menu li:hover > a:before, .nav-menu .menu_active > a:before {
-  visibility: visible;
-  -webkit-transform: scaleX(1);
-  transform: scaleX(1);
-}
-
-.nav-menu ul {
-  margin: 4px 0 0 0;
-  border: 1px solid var(--primary-dark);
-}
-
-.nav-menu ul li {
-  color: var(--primary);
-  background: var(--primary-dark);
-}
-
-.nav-menu ul li:first-child {
-  border-top: 0;
-}
-
-.nav-menu ul li a {
-  padding: 10px;
-  color: var(--primary);
-  transition: 0.3s;
-  display: block;
-  font-size: 13px;
-  text-transform: none;
-}
-
-.nav-menu ul li a:hover {
-  background: var(--accent);
-  color: var(--white);
-}
-
-.nav-menu ul ul {
-  margin: 0;
-}
-
-/* Mobile Nav Toggle */
-#mobile-nav-toggle {
-  position: fixed;
-  right: 0;
-  top: 0;
-  z-index: 999;
-  margin: 20px 20px 0 0;
-  border: 0;
-  background: none;
-  font-size: 24px;
-  display: none;
-  transition: all 0.2s;
-  outline: none;
-  cursor: pointer;
-  color: var(--white);
-}
-
-#mobile-nav-toggle i {
-  color: var(--white);
-}
-
-@media (max-width: 768px) {
-  #mobile-nav-toggle {
-    display: inline;
-  }
-}
-
-/* Mobile Nav Styling */
-#mobile-nav {
-  position: fixed;
-  top: 0;
-  padding-top: 18px;
-  bottom: 0;
-  z-index: 998;
-  background: rgba(52, 52, 50, 0.9);
-  left: -260px;
-  width: 260px;
-  overflow-y: auto;
-  transition: 0.4s;
-}
-
-#mobile-nav ul {
-  padding: 0;
-  margin: 0;
-  list-style: none;
-}
-
-#mobile-nav ul li {
-  position: relative;
-}
-
-#mobile-nav ul li a {
-  color: var(--white);
-  font-size: 16px;
-  overflow: hidden;
-  padding: 10px 22px 10px 15px;
-  position: relative;
-  text-decoration: none;
-  width: 100%;
-  display: block;
-  outline: none;
-}
-
-#mobile-nav ul li a:hover {
-  color: var(--white);
-}
-
-#mobile-nav ul li li {
-  padding-left: 30px;
-}
-
-#mobile-nav ul .menu-has-children i {
-  position: absolute;
-  right: 0;
-  z-index: 99;
-  padding: 15px;
-  cursor: pointer;
-  color: var(--white);
-}
-
-#mobile-nav ul .menu-has-children i.fa-chevron-up {
-  color: var(--accent);
-}
-
-#mobile-nav ul .menu-item-active {
-  color: var(--accent);
-}
-
-#mobile-body-overly {
-  width: 100%;
-  height: 100%;
-  z-index: 997;
-  top: 0;
-  left: 0;
-  position: fixed;
-  background: rgba(52, 52, 50, 0.9);
-  display: none;
-}
-
-/* Mobile Nav body classes */
-body.mobile-nav-active {
-  overflow: hidden;
-}
-
-body.mobile-nav-active #mobile-nav {
-  left: 0;
-}
-
-body.mobile-nav-active #mobile-nav-toggle {
-  color: var(--white);
+.nav-item-active {
+  color: var(--accent) !important;
 }
 
 /* -----------------------------------

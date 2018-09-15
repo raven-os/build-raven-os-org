@@ -309,7 +309,7 @@ export default {
 
 /* BUILDS-LIST
 ----------------------------------- */
-.packages-list-error {
+.build-list-error {
   text-align: center;
   margin-top: 50px;
   font-weight: bold;
