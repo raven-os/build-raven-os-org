@@ -36,6 +36,7 @@ pub mod routes;
 use app::build::Builder;
 use app::ws;
 use app::App;
+use app::queue::Queue;
 use std::thread;
 
 /// Retrieves the needed environment variables or exits
@@ -58,6 +59,7 @@ fn main() {
 
     let app = App::from(&get_env("DATABASE_URL")).expect("Failed to start app");
     let builder = Builder::new();
+    let mut queue = Queue::new();
 
     let options = rocket_cors::Cors {
         ..Default::default()
@@ -66,6 +68,7 @@ fn main() {
     rocket::ignite()
         .manage(app)
         .manage(builder)
+        .manage(queue)
         .mount(
             "/",
             routes![routes::frontend::static_files, routes::frontend::index,],
@@ -78,6 +81,13 @@ fn main() {
                 routes::build::dump_filter,
                 //routes::package::compile
             ],
+        )
+        .mount(
+            "/queue",
+            routes![
+                routes::queue::add,
+                routes::queue::get
+            ]
         )
         .attach(options)
         .catch(catchers![routes::error::not_found,])

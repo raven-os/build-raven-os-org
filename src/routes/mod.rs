@@ -7,3 +7,4 @@
 pub mod error;
 pub mod frontend;
 pub mod build;
+pub mod queue;

@@ -1,4 +1,5 @@
 mod compiler;
+pub mod queue;
 pub mod build;
 pub mod ws;
 pub use self::compiler::Compiler;

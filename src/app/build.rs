@@ -5,6 +5,8 @@
 
 use diesel;
 use diesel::prelude::*;
+use std::fs;
+use std::fs::File;
 
 use failure::Error;
 
@@ -61,12 +63,21 @@ impl Builder {
             created_at,
         };
 
+        // Create a row in db for the build
         diesel::insert_into(builds::table)
             .values(&new_build)
             .execute(db_con.as_ref())?;
-        Ok(builds::table
+
+        // Retrieve the row
+        let res : Build = builds::table
             .order(builds::id.desc())
-            .first(db_con.as_ref())?)
+            .first(db_con.as_ref())?;
+
+        // Save the manifest with the build's id as name
+        fs::create_dir_all("manifests/")?;
+        File::create("manifests/".to_string() + &res.id().to_string() + ".py")?;
+        fs::write("manifests/".to_string() + &res.id().to_string() + ".py", manifest.to_string())?;
+        Ok(res)
     }
 
     pub fn builds(
