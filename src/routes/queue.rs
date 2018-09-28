@@ -7,6 +7,8 @@ use rocket_contrib::Json;
 
 use app::queue::Queue;
 use app::{ApiError, ApiResult};
+use std::sync::{Arc, Mutex};
+
 // use db::build::Build;
 // use db::DbConnection;
 
@@ -19,13 +21,13 @@ struct QueueParam {
 }
 
 #[post("/", format = "application/json", data = "<data>")]
-fn add(queue: State<Queue>, data: Json<QueueParam>) -> ApiResult<String, ApiError> {
-    queue.push(&data.name);
+fn add(queue: State<Arc<Mutex<Queue>>>, data: Json<QueueParam>) -> ApiResult<String, ApiError> {
+    queue.lock().unwrap().push(&data.name);
     ApiResult::success(Status::Ok, "ok".to_string())
 }
 
 #[get("/")]
-fn get(queue: State<Queue>) -> ApiResult<String, ApiError> {
-    queue.broadcast();
+fn get(queue: State<Arc<Mutex<Queue>>>) -> ApiResult<String, ApiError> {
+    queue.lock().unwrap().broadcast();
     ApiResult::success(Status::Ok, "ok".to_string())
 }

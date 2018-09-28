@@ -23,7 +23,7 @@
             <b-col/>
           </b-row>
           <b-row>
-            <b-col cols="0" md ="0" lg="1"></b-col>
+            <b-col cols="0" md ="0" lg="1"/>
             <b-col cols="12" md="2" lg="2">
               <div class="sort-title">Sort by</div>
             </b-col>
@@ -51,7 +51,7 @@
                 <span class="checkmark"/>
               </label>
             </b-col>
-            <b-col cols="0" lg="1"></b-col>
+            <b-col cols="0" lg="1"/>
           </b-row>
         </div>
       </b-container>
@@ -90,7 +90,7 @@
             </thead>
             <tbody>
               <template v-for="build in builds">
-                <tr :key="build.id">
+                <tr :key="build.id" @click="goToDetails(build.id)">
                   <!-- <td>{{ pkg.id }}</td> -->
                   <td id="td-id" class="list-table-cell">{{ build.id }}</td>
                   <td id="td-manifest" class="list-table-cell">{{ build.manifest.substring(0, 10) }}</td>
@@ -101,6 +101,28 @@
               </template>
             </tbody>
           </table>
+
+          <!-- QUEUE -->
+          <h3 style="text-align:center; margin:20px;">Queue</h3>
+          <table class="builds-list-table">
+            <tbody>
+              <template v-for="build in running">
+                <tr :key="build" @click="goToDetails(build)">
+                  <!-- <td>{{ pkg.id }}</td> -->
+                  <td id="td-id" class="list-table-cell">{{ build }}</td>
+                  <td id="td-manifest" class="list-table-cell">running</td>
+                </tr>
+              </template>
+              <template v-for="build in queuing">
+                <tr :key="build" @click="goToDetails(build)">
+                  <!-- <td>{{ pkg.id }}</td> -->
+                  <td id="td-id" class="list-table-cell">{{ build }}</td>
+                  <td id="td-manifest" class="list-table-cell">queuing</td>
+                </tr>
+              </template>
+            </tbody>
+          </table>
+
         </div>
       </b-container>
     </section>
@@ -116,7 +138,8 @@ export default {
       sort: '',
       results: {
         builds: {loading: false, error: null, data: []}
-      }
+      },
+      queue: null
     }
   },
   computed: {
@@ -128,6 +151,13 @@ export default {
     },
     builds () {
       return this.results.builds.data
+    },
+    queuing () {
+      console.log('comp', this.queue)
+      return (this.queue && this.queue.queuing) || null
+    },
+    running () {
+      return (this.queue && this.queue.running) || null
     }
   },
   watch: {
@@ -135,15 +165,30 @@ export default {
     field: 'search',
     sort: 'getBuilds'
   },
+  mounted () {
+    var ws = new WebSocket('ws://127.0.0.1:2794', ['rust-websocket'])
+    ws.vue = this
+    ws.onmessage = function (e) {
+      this.vue.queue = JSON.parse(e.data)
+
+      console.log(this.vue.queue)
+    }
+    ws.onopen = function () {
+      ws.send('.packager.compile.client 1')
+    }
+  },
   beforeMount () {
     this.getBuilds()
   },
   methods: {
+    goToDetails (id) {
+      this.$router.push({ path: '/details/' + id })
+    },
     search () {
       this.getBuilds()
     },
     getBuilds () {
-      let url = 'http://localhost:8080/builds/'
+      let url = 'http://localhost:8000/builds/'
       if (this.query) {
         url += `?${this.field}=${this.query}`
       }
@@ -341,5 +386,10 @@ export default {
 
 #td-manifest {
   width: 25%;
+}
+
+tbody tr:hover {
+  cursor: pointer;
+  color: var(--accent);
 }
 </style>

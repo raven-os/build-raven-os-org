@@ -53,7 +53,6 @@ fn compile(builder: State<Builder>, id: String) -> ApiResult<String, ApiError> {
     ApiResult::success(Status::Ok, output)
 }
 
-
 #[post("/", format = "application/json", data = "<data>")]
 fn add(
     builder: State<Builder>,
@@ -88,6 +87,18 @@ fn dump_filter(
     }
 }
 
+#[get("/<id>")]
+fn get (
+    builder: State<Builder>,
+    connection: DbConnection,
+    id: i32
+) -> ApiResult<Build, ApiError> {
+    if let Ok(build) = builder.get(&connection, id) {
+        ApiResult::success(Status::Ok, build)
+    } else {
+        ApiResult::error(Status::InternalServerError, ApiError::internal_error())
+    }
+}
 
 #[get("/")]
 fn dump(builder: State<Builder>, connection: DbConnection) -> ApiResult<Vec<Build>, ApiError> {

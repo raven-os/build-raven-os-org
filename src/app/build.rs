@@ -109,4 +109,36 @@ impl Builder {
             .then_order_by(created_at)
             .load::<Build>(db_con.as_ref())?)
     }
+
+    pub fn get(
+        &self,
+        db_con: &DbConnection,
+        build_id: i32
+    ) -> Result<Build, Error> {
+        use db::build::schema::builds::dsl::*;
+
+        let query = builds.find(build_id);
+
+        Ok(query
+            .first::<Build>(db_con.as_ref())?)
+    }
+
+    pub fn update(
+        &self,
+        db_con: &DbConnection,
+        build_id: i32,
+        q: bool,
+        r: bool
+    ) -> Result<Build, Error> {
+        use db::build::schema::builds::dsl::*;
+
+        let query = builds.find(build_id);
+
+        let _ = diesel::update(query)
+            .set((queuing.eq(q), running.eq(r)))
+            .execute(db_con.as_ref());
+
+        Ok(query
+            .first::<Build>(db_con.as_ref())?)
+    }
 }

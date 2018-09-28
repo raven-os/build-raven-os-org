@@ -38,6 +38,7 @@ use app::ws;
 use app::App;
 use app::queue::Queue;
 use std::thread;
+use std::sync::{Arc, Mutex};
 
 /// Retrieves the needed environment variables or exits
 fn get_env(var: &str) -> String {
@@ -53,13 +54,15 @@ fn get_env(var: &str) -> String {
 fn main() {
     dotenv::dotenv().ok();
 
+    let queue = Arc::new(Mutex::new(Queue::new()));
+    let q2 = queue.clone();
+
     thread::spawn(move || {
-        ws::server::serve();
+        ws::server::serve(q2);
     });
 
     let app = App::from(&get_env("DATABASE_URL")).expect("Failed to start app");
     let builder = Builder::new();
-    let mut queue = Queue::new();
 
     let options = rocket_cors::Cors {
         ..Default::default()
@@ -79,6 +82,7 @@ fn main() {
                 routes::build::add,
                 routes::build::dump,
                 routes::build::dump_filter,
+                routes::build::get,
                 //routes::package::compile
             ],
         )

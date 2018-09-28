@@ -6,6 +6,7 @@ use std::thread;
 use websocket::sender::Writer;
 use websocket::sync::Server;
 use websocket::OwnedMessage;
+use app::queue::Queue;
 
 pub enum ConnectionType {
     Server,
@@ -52,8 +53,9 @@ impl fmt::Display for Client {
     }
 }
 
-pub fn serve() {
-    pub fn add_client(list: &Arc<Mutex<Vec<Client>>>, client: Client) {
+pub fn serve(q: Arc<Mutex<Queue>>) {
+
+    pub fn add_client(list: &Arc<Mutex<Vec<Client>>>, client: Client, queue: Arc<Mutex<Queue>>) {
         let clients = &mut *match list.lock() {
             Ok(c) => c,
             Err(s) => {
@@ -63,6 +65,15 @@ pub fn serve() {
         };
         println!("[ws.server.add] from {}", client);
         clients.push(client);
+        queue.lock().unwrap().broadcast();
+
+        /*
+        let data = queue.lock().unwrap().broadcast();
+        // send_message(list, "tmp", &data);
+        client
+            .tx_mut()
+            .send_message(&OwnedMessage::Text(data));
+        */
     }
 
     pub fn remove_client(list: &Arc<Mutex<Vec<Client>>>, ip: &str) {
@@ -90,10 +101,9 @@ pub fn serve() {
                 return;
             }
         };
-
         let mut build_clients: Vec<&mut Client> = clients
             .iter_mut()
-            .filter(|c| c.id == id)
+            // .filter(|c| c.id != "%")
             .collect();
 
         build_clients.iter_mut().for_each(|client| {
@@ -113,6 +123,7 @@ pub fn serve() {
     for request in server.filter_map(Result::ok) {
         let conn = Arc::clone(&clients);
 
+        let q2 = q.clone();
         thread::spawn(move || {
             if !request.protocols().contains(&"rust-websocket".to_string()) {
                 request.reject().unwrap();
@@ -131,6 +142,7 @@ pub fn serve() {
             let mut sender = Some(sender);
 
             for message in receiver.incoming_messages() {
+                let q3 = q2.clone();
                 let message = match message {
                     Ok(m) => m,
                     Err(e) => {
@@ -154,13 +166,21 @@ pub fn serve() {
                             id = Some(v[1].to_string());
                         }
                     }
+                    OwnedMessage::Text(ref txt) if txt.starts_with(".queue.broadcast ") => {
+                        if sender.take().is_some() {
+                            let v: Vec<&str> = txt.splitn(2, ' ').collect();
+                            connection_type = Some(ConnectionType::Server);
+                            id = Some(v[1].to_string());// id is the message to broadcast
+                            send_message(&conn, v[1], v[1]);
+                        }
+                    }
                     OwnedMessage::Text(ref txt) if txt.starts_with(".packager.compile.client ") => {
                         if let Some(s) = sender.take() {
                             let v: Vec<&str> = txt.split(' ').collect();
                             connection_type = Some(ConnectionType::Client);
                             id = Some(v[1].to_string());
                             let client = Client::new(&ip.to_string(), v[1], s);
-                            add_client(&conn, client);
+                            add_client(&conn, client, q3);
                         }
                     }
                     OwnedMessage::Text(txt) => {
