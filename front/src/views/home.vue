@@ -167,14 +167,16 @@ export default {
     sort: 'getBuilds'
   },
   mounted () {
-    var ws = new WebSocket('ws://127.0.0.1:2794', ['rust-websocket'])
-    ws.vue = this
-    ws.onmessage = function (e) {
-      this.vue.queue = JSON.parse(e.data)
+    window.ws = new WebSocket('ws://127.0.0.1:2794', ['rust-websocket'])
+    window.ws.vue = this
+    window.ws.onmessage = function (e) {
+      const json = e.data.replace(/[^\x20-\x7E]/g, '\\n')
+      console.log(json)
+      this.vue.queue = JSON.parse(json)
       console.log(this.vue.queue)
     }
-    ws.onopen = function () {
-      ws.send('.packager.compile.client 1')
+    window.ws.onopen = function () {
+      window.ws.send('.packager.compile.client 1')
     }
   },
   beforeMount () {

@@ -1,5 +1,9 @@
 use std::collections::LinkedList;
-use std::sync::{Mutex, Arc};
+use std::sync::Mutex;
+
+use app::compiler::Compiler;
+use app::build::Builder;
+use db::DbConnection;
 
 use app::ws::client::WsClient;
 // use std::{thread, time};
@@ -21,11 +25,32 @@ impl Queue {
         }
     }
 
-    pub fn run (&self) {
+    pub fn clear_output(&mut self) {
+        self.output = String::new()
+    }
+
+    pub fn append_output(&mut self, text: &str) {
+        self.output += text;
+        self.broadcast();
+    }
+
+    pub fn run (&mut self, builder: &Builder, connection: &DbConnection) {
         if let Some(e) = self.queuing.lock().unwrap().pop_front() {
-            self.running.lock().unwrap().push_back(e);
+            self.running.lock().unwrap().push_back(e.to_string());
+            builder.update(connection, e.parse::<i32>().unwrap(), false, true);
+
         }
         self.broadcast();
+        self.clear_output();
+        let mut compiler = Compiler::new("./test.sh");
+        while !compiler.end {
+            #[allow(unused_mut)]
+            let mut line = compiler.line();
+            if !line.is_empty() {
+                println!("{:?}", line);
+                self.append_output(&line);
+            }
+        }
     }
 
     pub fn push (&self, name: &str) {

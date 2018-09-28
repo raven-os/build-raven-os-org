@@ -60,7 +60,7 @@
         </form>
         <div style="text-align: center; margin:10px">
           <!-- <p v-if="loadingCompilation">Loading ...</p>-->
-          <textarea v-if="successCompilation" v-model="successCompilation" style="margin:10px; width:1000px; height: 400px"/>
+          <textarea v-if="output" v-model="output" style="margin:10px; width:1000px; height: 400px"/>
         </div>
       </b-container>
     </section>
@@ -78,7 +78,8 @@ export default {
   data () {
     return {
       build: null,
-      successCompilation: null
+      successCompilation: null,
+      queue: null
     }
   },
   computed: {
@@ -86,16 +87,23 @@ export default {
       return (this.build && this.build.manifest) || null
     },
     queuing () {
-      return (this.build && this.build.queuing) || false
+      return (this.build && this.build.queuing) || (this.queue && this.queue.queuing && this.queue.queuing.includes(this.id + '')) || false
     },
     running () {
-      return (this.build && this.build.running) || false
+      return (this.build && this.build.running) || (this.queue && this.queue.running && this.queue.running.includes(this.id + '')) || false
     },
     output () {
-      return (this.build && this.build.output) || null
+      return (this.build && this.build.output) || (this.queue && this.queue.output) || null
     }
   },
   mounted () {
+    window.ws.vue = this
+    window.ws.onmessage = function (e) {
+      const json = e.data.replace(/[^\x20-\x7E]/g, '\\n')
+      console.log(json)
+      this.vue.queue = JSON.parse(json)
+      console.log(this.vue.queue)
+    }
     this.$http.get('http://localhost:8000/builds/' + this.id).then(res => {
       this.build = res.body
     }, err => {

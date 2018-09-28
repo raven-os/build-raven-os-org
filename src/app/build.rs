@@ -128,7 +128,7 @@ impl Builder {
         db_con: &DbConnection,
         build_id: i32,
         q: bool,
-        r: bool
+        r: bool,
     ) -> Result<Build, Error> {
         use db::build::schema::builds::dsl::*;
 
@@ -136,6 +136,24 @@ impl Builder {
 
         let _ = diesel::update(query)
             .set((queuing.eq(q), running.eq(r)))
+            .execute(db_con.as_ref());
+
+        Ok(query
+            .first::<Build>(db_con.as_ref())?)
+    }
+
+    pub fn updateOut(
+        &self,
+        db_con: &DbConnection,
+        build_id: i32,
+        out: String,
+    ) -> Result<Build, Error> {
+        use db::build::schema::builds::dsl::*;
+
+        let query = builds.find(build_id);
+
+        let _ = diesel::update(query)
+            .set(output.eq(out))
             .execute(db_con.as_ref());
 
         Ok(query
