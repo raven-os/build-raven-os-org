@@ -26,6 +26,12 @@ fn add(queue: State<Arc<Mutex<Queue>>>, data: Json<QueueParam>) -> ApiResult<Str
     ApiResult::success(Status::Ok, "ok".to_string())
 }
 
+#[post("/run")]
+fn run(queue: State<Arc<Mutex<Queue>>>) -> ApiResult<String, ApiError>{
+    queue.lock().unwrap().run();
+    ApiResult::success(Status::Ok, "ok".to_string())
+}
+
 #[get("/")]
 fn get(queue: State<Arc<Mutex<Queue>>>) -> ApiResult<String, ApiError> {
     queue.lock().unwrap().broadcast();

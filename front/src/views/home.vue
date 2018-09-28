@@ -123,6 +123,8 @@
             </tbody>
           </table>
 
+          <button class="run-btn" @click.prevent="runQueue()">Run</button>
+
         </div>
       </b-container>
     </section>
@@ -153,7 +155,6 @@ export default {
       return this.results.builds.data
     },
     queuing () {
-      console.log('comp', this.queue)
       return (this.queue && this.queue.queuing) || null
     },
     running () {
@@ -170,7 +171,6 @@ export default {
     ws.vue = this
     ws.onmessage = function (e) {
       this.vue.queue = JSON.parse(e.data)
-
       console.log(this.vue.queue)
     }
     ws.onopen = function () {
@@ -181,6 +181,9 @@ export default {
     this.getBuilds()
   },
   methods: {
+    runQueue () {
+      this.$http.post('http://localhost:8000/queue/run')
+    },
     goToDetails (id) {
       this.$router.push({ path: '/details/' + id })
     },
@@ -217,6 +220,24 @@ export default {
 </script>
 
 <style scoped>
+.run-btn {
+  font-family: sans-serif;
+  font-size: 16px;
+  padding: 8px 18px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: var(--primary-dark);
+  color: var(--white);
+  border-radius: 5px;
+  height: 50px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: var(--accent);
+  width: 150px;
+  display: block;
+  margin: 0 auto;
+}
 /* PACKAGES-SEARCH
 ----------------------------------- */
 #builds-search {

@@ -8,15 +8,24 @@ const CONNECTION: &str = "ws://127.0.0.1:2794";
 #[derive(Debug, Default)]
 pub struct Queue {
     pub queuing: Mutex<LinkedList<String>>,
-    pub running: Mutex<LinkedList<String>>
+    pub running: Mutex<LinkedList<String>>,
+    pub output: String
 }
 
 impl Queue {
     pub fn new() -> Queue {
         Queue {
             queuing: Mutex::new(LinkedList::new()),
-            running: Mutex::new(LinkedList::new())
+            running: Mutex::new(LinkedList::new()),
+            output: String::new()
         }
+    }
+
+    pub fn run (&self) {
+        if let Some(e) = self.queuing.lock().unwrap().pop_front() {
+            self.running.lock().unwrap().push_back(e);
+        }
+        self.broadcast();
     }
 
     pub fn push (&self, name: &str) {
@@ -39,12 +48,18 @@ impl Queue {
             json += "\"";
         }
         json += "], \"running\": [";
-        let list = self.running.lock().unwrap();
-        for x in list.iter() {
+        let list2 = self.running.lock().unwrap();
+        for x in list2.iter() {
+            if json.chars().last().unwrap() != '[' {
+                json += ",";
+            }
+            json += "\"";
             json += x;
-            json += ",";
+            json += "\"";
         }
-        json += "], \"output\": \"\"";
+        json += "], \"output\": \"";
+        json += &self.output;
+        json += "\"";
         json += "}";
         println!("json {}", json);
 

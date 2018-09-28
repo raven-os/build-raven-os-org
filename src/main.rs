@@ -90,7 +90,8 @@ fn main() {
             "/queue",
             routes![
                 routes::queue::add,
-                routes::queue::get
+                routes::queue::get,
+                routes::queue::run,
             ]
         )
         .attach(options)
