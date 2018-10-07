@@ -51,6 +51,12 @@ impl Queue {
                 self.append_output(&line);
             }
         }
+
+        if let Some(e) = self.running.lock().unwrap().pop_front() {
+            builder.update(connection, e.parse::<i32>().unwrap(), false, false);
+            builder.updateOut(connection, e.parse::<i32>().unwrap(), compiler.final_output);
+            self.broadcast();
+        }
     }
 
     pub fn push (&self, name: &str) {
