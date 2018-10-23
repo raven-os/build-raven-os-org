@@ -82,10 +82,13 @@
               <tr>
                 <!-- <th>Id</th> -->
                 <th class="list-table-cell">Id</th>
-                <th class="list-table-cell">Manifest (10 first letters)</th>
+                <th class="list-table-cell">Manifest</th>
                 <th class="list-table-cell">Running</th>
                 <th class="list-table-cell">Queuing</th>
+                <th class="list-table-cell">Built</th>
                 <th class="list-table-cell">Creation Date</th>
+                <th class="list-table-cell">Start Date</th>
+                <th class="list-table-cell">End Date</th>
               </tr>
             </thead>
             <tbody>
@@ -93,10 +96,13 @@
                 <tr :key="build.id" @click="goToDetails(build.id)">
                   <!-- <td>{{ pkg.id }}</td> -->
                   <td id="td-id" class="list-table-cell">{{ build.id }}</td>
-                  <td id="td-manifest" class="list-table-cell">{{ build.manifest.substring(0, 10) }}</td>
+                  <td id="td-manifest" class="list-table-cell">{{ build.name }}</td>
                   <td id="td-running" class="list-table-cell">{{ build.running }}</td>
                   <td id="td-queuing" class="list-table-cell">{{ build.queuing }}</td>
-                  <td id="td-date" class="list-table-cell">{{ build.created_at }}</td>
+                  <td id="td-queuing" class="list-table-cell">{{ !!build.output }}</td>
+                  <td id="td-date" class="list-table-cell">{{ new Date(build.created_at).toLocaleString() }}</td>
+                  <td id="td-date" class="list-table-cell">{{ new Date(build.started_at).toLocaleString() }}</td>
+                  <td id="td-date" class="list-table-cell">{{ new Date(build.ended_at).toLocaleString() }}</td>
                 </tr>
               </template>
             </tbody>

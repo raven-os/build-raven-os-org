@@ -26,7 +26,7 @@ fn add(queue: State<Arc<Mutex<Queue>>>,
     connection: DbConnection,
     data: Json<QueueParam>) -> ApiResult<String, ApiError> {
     queue.lock().unwrap().push(&data.name);
-    builder.update(&connection, data.name.parse::<i32>().unwrap(), true, false);
+    builder.update(&connection, data.name.parse::<i32>().unwrap(), Some(true), Some(false), None, None, None);
     ApiResult::success(Status::Ok, "ok".to_string())
 }
 

@@ -17,6 +17,7 @@ use db::DbConnection;
 )]
 struct NewBuild {
     manifest: String,
+    name: String,
 }
 
 
@@ -62,6 +63,7 @@ fn add(
     if let Ok(build) = builder.add_build(
         &connection,
         &data.manifest,
+        &data.name,
         &Local::now().naive_local(),
     ) {
         ApiResult::success(Status::Created, build)

@@ -4,6 +4,7 @@ use std::sync::Mutex;
 use app::compiler::Compiler;
 use app::build::Builder;
 use db::DbConnection;
+use chrono::Local;
 
 use app::ws::client::WsClient;
 // use std::{thread, time};
@@ -37,7 +38,7 @@ impl Queue {
     pub fn run (&mut self, builder: &Builder, connection: &DbConnection) {
         if let Some(e) = self.queuing.lock().unwrap().pop_front() {
             self.running.lock().unwrap().push_back(e.to_string());
-            builder.update(connection, e.parse::<i32>().unwrap(), false, true);
+            builder.update(connection, e.parse::<i32>().unwrap(), Some(false), Some(true), None, Some(&Local::now().naive_local()), None);
 
         }
         self.broadcast();
@@ -53,10 +54,9 @@ impl Queue {
         }
 
         if let Some(e) = self.running.lock().unwrap().pop_front() {
-            builder.update(connection, e.parse::<i32>().unwrap(), false, false);
-            builder.updateOut(connection, e.parse::<i32>().unwrap(), compiler.final_output);
-            self.broadcast();
+            builder.update(connection, e.parse::<i32>().unwrap(), Some(false), Some(false), Some(compiler.final_output), None, Some(&Local::now().naive_local()));
         }
+        self.broadcast();
     }
 
     pub fn push (&self, name: &str) {
@@ -68,34 +68,18 @@ impl Queue {
         println!("[queue.broadcast]");
 
         let list = self.queuing.lock().unwrap();
-        let mut json = String::new();
-        json += "{\"queuing\":[";
-        for x in list.iter() {
-            if json.chars().last().unwrap() != '[' {
-                json += ",";
-            }
-            json += "\"";
-            json += x;
-            json += "\"";
-        }
-        json += "], \"running\": [";
         let list2 = self.running.lock().unwrap();
-        for x in list2.iter() {
-            if json.chars().last().unwrap() != '[' {
-                json += ",";
-            }
-            json += "\"";
-            json += x;
-            json += "\"";
-        }
-        json += "], \"output\": \"";
-        json += &self.output;
-        json += "\"";
-        json += "}";
-        println!("json {}", json);
+
+        let to_send = json!({
+            "queuing": list.to_owned(),
+            "running": list2.to_owned(),
+            "output": &self.output
+        }).to_string();
+
+        println!("json {}", to_send);
 
         let client = WsClient::connect(CONNECTION);
-        client.send(&[".queue.broadcast", &json].join(" "));
+        client.send(&[".queue.broadcast", &to_send].join(" "));
         client.close();
     }
 }

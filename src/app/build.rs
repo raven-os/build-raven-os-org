@@ -54,10 +54,12 @@ impl Builder {
         &self,
         db_con: &DbConnection,
         manifest: &str,
+        name: &str,
         created_at: &NaiveDateTime,
     ) -> Result<Build, Error> {
         let new_build = NewBuild {
             manifest,
+            name,
             running: &false,
             queuing: &false,
             created_at,
@@ -127,34 +129,34 @@ impl Builder {
         &self,
         db_con: &DbConnection,
         build_id: i32,
-        q: bool,
-        r: bool,
+        new_queuing: Option<bool>,
+        new_running: Option<bool>,
+        new_output: Option<String>,
+        new_started_at: Option<&NaiveDateTime>,
+        new_ended_at: Option<&NaiveDateTime>
     ) -> Result<Build, Error> {
         use db::build::schema::builds::dsl::*;
 
         let query = builds.find(build_id);
 
-        let _ = diesel::update(query)
-            .set((queuing.eq(q), running.eq(r)))
-            .execute(db_con.as_ref());
+        let update = diesel::update(query);
 
-        Ok(query
-            .first::<Build>(db_con.as_ref())?)
-    }
-
-    pub fn updateOut(
-        &self,
-        db_con: &DbConnection,
-        build_id: i32,
-        out: String,
-    ) -> Result<Build, Error> {
-        use db::build::schema::builds::dsl::*;
-
-        let query = builds.find(build_id);
-
-        let _ = diesel::update(query)
-            .set(output.eq(out))
-            .execute(db_con.as_ref());
+        // TODO: execute only 1 request ?
+        if let Some(is_queuing) = new_queuing {
+            update.set(queuing.eq(is_queuing)).execute(db_con.as_ref());
+        }
+        if let Some(is_running) = new_running {
+            update.set(running.eq(is_running)).execute(db_con.as_ref());;
+        }
+        if let Some(out) = new_output {
+            update.set(output.eq(out)).execute(db_con.as_ref());;
+        }
+        if let Some(started) = new_started_at {
+            update.set(started_at.eq(started)).execute(db_con.as_ref());;
+        }
+        if let Some(ended) = new_ended_at {
+            update.set(ended_at.eq(ended)).execute(db_con.as_ref());;
+        }
 
         Ok(query
             .first::<Build>(db_con.as_ref())?)

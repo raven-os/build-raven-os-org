@@ -178,7 +178,8 @@ export default {
       this.results.creation.error = null
       this.results.creation.loading = true
       const data = {
-        manifest: this.manifest
+        manifest: this.manifest,
+        name: this.name
       }
       this.$http.post('http://localhost:8000/builds/', data).then(res => {
         this.results.creation.data = res.body

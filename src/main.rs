@@ -28,6 +28,8 @@ extern crate rocket_cors;
 extern crate serde;
 extern crate serde_json as json;
 extern crate websocket;
+#[macro_use]
+extern crate serde_json;
 
 pub mod app;
 pub mod db;

@@ -11,6 +11,7 @@ use chrono;
 pub struct Build {
     id: i32,
     manifest: String,
+    name: String,
     running: bool,
     queuing: bool,
     exit_status: Option<i32>,
@@ -29,6 +30,11 @@ impl Build {
     /// Return the build's manifest
     pub fn manifest(&self) -> &str {
         &self.manifest
+    }
+
+    /// Return the build's name
+    pub fn name(&self) -> &str {
+        &self.name
     }
 
     /// Return the build's running
@@ -72,6 +78,7 @@ impl Build {
 #[table_name = "builds"]
 pub struct NewBuild<'a> {
     pub manifest: &'a str,
+    pub name: &'a str,
     pub running: &'a bool,
     pub queuing: &'a bool,
     pub created_at: &'a chrono::NaiveDateTime,
@@ -81,6 +88,11 @@ impl<'a> NewBuild<'a> {
     /// Return the build's manifest
     pub fn manifest(&self) -> &'a str {
         &self.manifest
+    }
+
+    /// Return the build's name
+    pub fn name(&self) -> &'a str {
+        &self.name
     }
 
     /// Return the build's runnin

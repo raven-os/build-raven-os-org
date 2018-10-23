@@ -2,6 +2,7 @@ table! {
     builds (id) {
         id -> Integer,
         manifest -> Text,
+        name -> Text,
         running -> Bool,
         queuing -> Bool,
         exit_status -> Nullable<Integer>,
