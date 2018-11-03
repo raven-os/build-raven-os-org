@@ -14,6 +14,9 @@ use failure::Error;
 use serde_json as json;
 use serde::Serialize;
 
+mod manifest_manager;
+pub use self::manifest_manager::ManifestManager;
+
 pub struct App {
     pool: Pool<ConnectionManager<MysqlConnection>>,
 }

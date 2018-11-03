@@ -12,14 +12,8 @@ extern crate diesel;
 pub mod app;
 pub mod db;
 
-use diesel::prelude::*;
-
 use crate::{
-    app::App,
-    db::manifest::{
-        schema::manifest,
-        models::{Manifest, NewManifest}
-    },
+    app::{App, ManifestManager},
     db::DbConnection
 };
 
@@ -39,13 +33,9 @@ fn main() {
 
     let app = App::from(&get_env("DATABASE_URL")).expect("Failed to start app");
 
-    let new_manifest  = NewManifest {
-        name: "test"
-    };
+    let conn = &DbConnection(app.pool().get().unwrap());
 
-    let con = &DbConnection(app.pool().get().unwrap());
+    let res = ManifestManager::create(conn, "test");
 
-    diesel::insert_into(manifest::table)
-        .values(&new_manifest)
-        .execute(con.as_ref());
+    println!("{:?}", res);
 }
