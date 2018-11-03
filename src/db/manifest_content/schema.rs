@@ -1,9 +1,4 @@
-table! {
-    manifest (id) {
-        id -> Integer,
-        name -> Text,
-    }
-}
+use crate::db::manifest::schema::manifest;
 
 table! {
     manifest_content (id) {

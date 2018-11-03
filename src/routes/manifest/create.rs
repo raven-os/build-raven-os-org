@@ -10,7 +10,7 @@ use crate::{
     },
     db::{
        DbConnection,
-       manifest::models::{Manifest}
+       manifest_content::models::{ManifestContent}
    }
 };
 
@@ -20,16 +20,18 @@ use crate::{
 )]
 struct Params {
     name: String,
+    content: String
 }
 
 #[post("/", format = "application/json", data = "<data>")]
 fn create(
     connection: DbConnection,
     data: Json<Params>,
-) -> ApiResult<Manifest, ApiError> {
+) -> ApiResult<ManifestContent, ApiError> {
     if let Ok(manifest) = ManifestManager::create(
         &connection,
-        &data.name
+        &data.name,
+        &data.content
     ) {
         ApiResult::success(Status::Created, manifest)
     } else {
