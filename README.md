@@ -8,7 +8,7 @@ Work In Progress - Will be hosted at https://build.raven-os.org
 #### Installation
 
 ```bash
-$ apt-get install postgers postgresql-contrib
+$ apt-get install postgres postgresql-contrib
 $ update-rc.d postgresql enable
 $ service postgresql start
 $ apt-get install libpq-dev

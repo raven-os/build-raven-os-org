@@ -15,7 +15,7 @@ use crate::app::App;
 /// Connection request guard type: a wrapper around an r2d2 pooled connection.
 pub struct DbConnection(pub r2d2::PooledConnection<ConnectionManager<PgConnection>>);
 
-// DbConnection is only a wrapper around a MysqlConnection
+// DbConnection is only a wrapper around a PgConnection
 impl AsRef<PgConnection> for DbConnection {
     fn as_ref(&self) -> &PgConnection {
         &self.0
