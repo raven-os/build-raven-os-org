@@ -2,7 +2,6 @@
 #![feature(custom_derive)]
 #![plugin(rocket_codegen)]
 #![feature(custom_attribute)]
-
 #![allow(proc_macro_derive_resolution_fallback)]
 
 use dotenv;
@@ -38,9 +37,6 @@ fn main() {
 
     rocket::ignite()
         .manage(app)
-        .mount(
-            "/manifest",
-            routes![routes::manifest::create::create]
-        )
+        .mount("/manifest", routes![routes::manifest::create::create])
         .launch();
 }

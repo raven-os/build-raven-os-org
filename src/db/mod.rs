@@ -1,22 +1,23 @@
 pub mod manifest;
 pub mod manifest_content;
+pub mod schema;
 
 use rocket::http::Status;
 use rocket::request::{self, FromRequest, State};
 use rocket::{Outcome, Request};
 
-use diesel::mysql::MysqlConnection;
+use diesel::pg::PgConnection;
 use r2d2;
 use r2d2_diesel::ConnectionManager;
 
 use crate::app::App;
 
 /// Connection request guard type: a wrapper around an r2d2 pooled connection.
-pub struct DbConnection(pub r2d2::PooledConnection<ConnectionManager<MysqlConnection>>);
+pub struct DbConnection(pub r2d2::PooledConnection<ConnectionManager<PgConnection>>);
 
 // DbConnection is only a wrapper around a MysqlConnection
-impl AsRef<MysqlConnection> for DbConnection {
-    fn as_ref(&self) -> &MysqlConnection {
+impl AsRef<PgConnection> for DbConnection {
+    fn as_ref(&self) -> &PgConnection {
         &self.0
     }
 }

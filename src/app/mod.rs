@@ -1,35 +1,35 @@
 use rocket::{
     http::Status,
-    response::{self, Responder, content},
-    Request
+    response::{self, content, Responder},
+    Request,
 };
 
-use serde_derive::{Serialize, Deserialize};
+use serde_derive::{Deserialize, Serialize};
 
-use diesel::mysql::MysqlConnection;
+use diesel::pg::PgConnection;
 use r2d2::Pool;
 use r2d2_diesel::ConnectionManager;
 
 use failure::Error;
-use serde_json as json;
 use serde::Serialize;
+use serde_json as json;
 
 mod manifest_manager;
 pub use self::manifest_manager::ManifestManager;
 
 pub struct App {
-    pool: Pool<ConnectionManager<MysqlConnection>>,
+    pool: Pool<ConnectionManager<PgConnection>>,
 }
 
 impl App {
     #[inline]
     pub fn from(database_url: &str) -> Result<App, Error> {
         Ok(App {
-            pool: Pool::new(ConnectionManager::<MysqlConnection>::new(database_url))?,
+            pool: Pool::new(ConnectionManager::<PgConnection>::new(database_url))?,
         })
     }
 
-    pub fn pool(&self) -> &Pool<ConnectionManager<MysqlConnection>> {
+    pub fn pool(&self) -> &Pool<ConnectionManager<PgConnection>> {
         &self.pool
     }
 }
@@ -71,7 +71,8 @@ impl<T: Serialize, E: Serialize> Responder<'static> for ApiResult<T, E> {
             let mut req = content::Json(string).respond_to(req).unwrap();
             req.set_status(self.code);
             req
-        }).map_err(|_| Status::InternalServerError)
+        })
+        .map_err(|_| Status::InternalServerError)
     }
 }
 

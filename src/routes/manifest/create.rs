@@ -1,17 +1,10 @@
-use serde_derive::{Serialize, Deserialize};
 use rocket::http::Status;
 use rocket_contrib::Json;
+use serde_derive::{Deserialize, Serialize};
 
 use crate::{
-    app::{
-        ApiError,
-        ApiResult,
-        ManifestManager
-    },
-    db::{
-       DbConnection,
-       manifest_content::models::{ManifestContent}
-   }
+    app::{ApiError, ApiResult, ManifestManager},
+    db::{manifest_content::models::ManifestContent, DbConnection},
 };
 
 // The following structures are used as parameter for API endpoints
@@ -20,24 +13,20 @@ use crate::{
 )]
 struct Params {
     name: String,
-    content: String
+    content: String,
 }
 
 #[post("/", format = "application/json", data = "<data>")]
-fn create(
-    connection: DbConnection,
-    data: Json<Params>,
-) -> ApiResult<ManifestContent, ApiError> {
-    if let Ok(manifest) = ManifestManager::create(
-        &connection,
-        &data.name,
-        &data.content
-    ) {
+fn create(connection: DbConnection, data: Json<Params>) -> ApiResult<ManifestContent, ApiError> {
+    if let Ok(manifest) = ManifestManager::create(&connection, &data.name, &data.content) {
         ApiResult::success(Status::Created, manifest)
     } else {
         ApiResult::error(
-            Status::BadRequest,
-            ApiError::from("unknown error", "unexpected"),
+            Status::InternalServerError,
+            ApiError::from(
+                "Internal Error",
+                "Manifest creation failed, try again later",
+            ),
         )
     }
 }

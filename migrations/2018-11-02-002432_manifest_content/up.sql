@@ -1,9 +1,6 @@
 CREATE TABLE manifest_content (
-  id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,
-  manifest_id INTEGER UNSIGNED NOT NULL,
+  id SERIAL PRIMARY KEY,
+  manifest_id INTEGER NOT NULL REFERENCES manifest(id) ON DELETE CASCADE,
   content TEXT NOT NULL,
-  edition_date DATETIME NOT NULL,
-  FOREIGN KEY (manifest_id)
-    REFERENCES manifest(id)
-    ON DELETE CASCADE
+  edition_date TIMESTAMP NOT NULL
 );
