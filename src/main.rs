@@ -37,6 +37,12 @@ fn main() {
 
     rocket::ignite()
         .manage(app)
-        .mount("/manifest", routes![routes::manifest::create::create])
+        .mount(
+            "/manifest",
+            routes![
+                routes::manifest::create::create,
+                routes::manifest::update::update
+            ],
+        )
         .launch();
 }
