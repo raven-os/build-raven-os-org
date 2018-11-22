@@ -3,7 +3,9 @@ use diesel;
 use diesel::prelude::*;
 use failure::Error;
 
-use crate::db::{manifest_content::models::ManifestContent, schema, DbConnection};
+use crate::db::{
+    manifest::models::Manifest, manifest_content::models::ManifestContent, schema, DbConnection,
+};
 
 #[derive(Clone, Eq, PartialEq, Ord, PartialOrd, Hash, Debug, Default)]
 pub struct ManifestManager {}
@@ -25,6 +27,14 @@ impl ManifestManager {
             .returning(schema::manifest::id)
             .get_result(db_con.as_ref())?;
 
+        ManifestManager::insert_content(db_con, manifest_id, content)
+    }
+
+    pub fn insert_content(
+        db_con: &DbConnection,
+        manifest_id: i32,
+        content: &str,
+    ) -> Result<ManifestContent, Error> {
         // Create new ManifestContent object
         let new_manifest_content = (
             schema::manifest_content::manifest_id.eq(manifest_id),
@@ -39,5 +49,13 @@ impl ManifestManager {
                 .get_result(db_con.as_ref())?;
 
         Ok(manifest_content)
+    }
+
+    pub fn get(db_con: &DbConnection, manifest_id: i32) -> Result<Manifest, Error> {
+        let manifest: Manifest = schema::manifest::table
+            .find(manifest_id)
+            .first(db_con.as_ref())?;
+
+        Ok(manifest)
     }
 }
