@@ -1,0 +1,36 @@
+{
+  "name": "build-raven-os-org-server",
+  "version": "1.0.0",
+  "description": "build-raven-os-org server",
+  "main": "src/index.js",
+  "author": "raven-os",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/raven-os/build-raven-os-org.git"
+  },
+  "license": "ISC",
+  "scripts": {
+    "start": "eslint . && node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "migrate:make": "knex migrate:make",
+    "migrate:latest": "knex migrate:latest",
+    "migrate:rollback": "knex migrate:rollback"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "bookshelf": "^0.14.2",
+    "express": "^4.16.4",
+    "express-validator": "^5.3.1",
+    "knex": "<0.15.0",
+    "lodash": "^4.17.11",
+    "pg": "^7.8.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.12.1",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0"
+  }
+}
