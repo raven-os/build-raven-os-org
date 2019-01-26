@@ -53,6 +53,14 @@ class ManifestController {
 
     return manifest.toJSON()
   }
+
+  // TODO: filters
+  static async list () {
+    const manifests = await Manifest
+      .fetchAll({ withRelated: ['history'] })
+
+    return manifests.toJSON()
+  }
 }
 
 module.exports = ManifestController
