@@ -1,6 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const CreateManifest = require('./action/manifest/create')
+const UpdateManifest = require('./action/manifest/update')
 
 class Routing {
   constructor (server) {
@@ -9,10 +10,12 @@ class Routing {
 
   routing () {
     const create = new CreateManifest()
+    const update = new UpdateManifest()
 
     this.server.use(bodyParser.json())
     this.server.use('/api', express.Router()
       .post('/manifest', create.routes)
+      .put('/manifest/:id', update.routes)
     )
 
     this.server.use(this.errorHandler.bind(this))

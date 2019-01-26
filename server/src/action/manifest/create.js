@@ -7,6 +7,7 @@ class CreateManifest extends AbstractAction {
   get validate () {
     return [
       sanitizeBody('name').trim(),
+      sanitizeBody('content').trim(),
       body('name')
         .exists({ checkNull: true }).withMessage('required field')
         .isString().withMessage('must be a string')

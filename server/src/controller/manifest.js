@@ -30,6 +30,21 @@ class ManifestController {
       .save()
       .get('attributes')
   }
+
+  static async updateContent (manifestId, content) {
+    const date = new Date()
+
+    const manifestContent = await ManifestController.insertContent(manifestId, content, date)
+
+    const manifest = await Manifest
+      .where('id', manifestId)
+      .fetch()
+
+    await manifest
+      .save({ last_update: date })
+
+    return manifestContent
+  }
 }
 
 module.exports = ManifestController
