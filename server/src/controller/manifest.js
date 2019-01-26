@@ -45,6 +45,14 @@ class ManifestController {
 
     return manifestContent
   }
+
+  static async get (manifestId) {
+    const manifest = await Manifest
+      .where('id', manifestId)
+      .fetch({ withRelated: ['history'] })
+
+    return manifest.toJSON()
+  }
 }
 
 module.exports = ManifestController

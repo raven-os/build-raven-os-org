@@ -1,7 +1,9 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+// TODO: regroup theses actions
 const CreateManifest = require('./action/manifest/create')
 const UpdateManifest = require('./action/manifest/update')
+const GetManifest = require('./action/manifest/get')
 
 class Routing {
   constructor (server) {
@@ -11,11 +13,13 @@ class Routing {
   routing () {
     const create = new CreateManifest()
     const update = new UpdateManifest()
+    const get = new GetManifest()
 
     this.server.use(bodyParser.json())
     this.server.use('/api', express.Router()
       .post('/manifest', create.routes)
       .put('/manifest/:id', update.routes)
+      .get('/manifest/:id', get.routes)
     )
 
     this.server.use(this.errorHandler.bind(this))
