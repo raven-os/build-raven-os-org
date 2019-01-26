@@ -8,17 +8,18 @@ class CreateManifest extends AbstractAction {
     return [
       sanitizeBody('name').trim(),
       body('name')
-        .exists({ checkNull: true })
-        .withMessage('name is required')
-        .isString()
-        .withMessage('name must be a string')
-        .isLength({ min: 1, max: 255 })
-        .withMessage('name must be between 1 and 255 characters')
+        .exists({ checkNull: true }).withMessage('required field')
+        .isString().withMessage('must be a string')
+        .isLength({ min: 1, max: 255 }).withMessage('length must be between 1 and 255'),
+      body('content')
+        .exists({ checkNull: true }).withMessage('required field')
+        .isString().withMessage('must be a string')
+        .isLength({ min: 1 }).withMessage('length must be more than 1')
     ]
   }
 
   async handler (req, res, next) {
-    return controller.create(req.body.name)
+    return controller.create(req.body.name, req.body.content)
   }
 }
 

@@ -1,4 +1,3 @@
-
 const express = require('express')
 const Routing = require('./routing')
 const config = require('./config')
