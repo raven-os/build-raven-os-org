@@ -1,16 +1,18 @@
 # build-raven-os-org
 Work In Progress - Will be hosted at https://build.raven-os.org
+Temporary readme, to be updated
 
 ## Installation
 
 ```bash
-$ apt-get install postgres postgresql-contrib
+$ apt-get install postgresql postgresql-contrib libpq-dev
+# start postgres on boot
 $ update-rc.d postgresql enable
 $ service postgresql start
-$ apt-get install libpq-dev
-# connect to postgres and set a password using \password
+# Switch to the `postgres` user and start `psql`: `sudo -u postgres psql`, and then set a password using the `\password` command.
+# Create the database `create database 'buidl-raven-os-org';`
 
-# set your configuration in src/config.local.js
+# set your local configuration in src/config.local.js, example in src/config.js, only override the fields you want to change
 $ npm i
 $ npm run migrate:latest
 $ npm start
@@ -34,8 +36,7 @@ $ npm start
 #### Connect to postgres
 
 ```bash
-$ sudo su postgres
-$ psql
+$ sudo -u postgres psql
 
 \password # set a password
 \l # list databases

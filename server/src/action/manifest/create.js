@@ -15,7 +15,7 @@ class CreateManifest extends AbstractAction {
       body('content')
         .exists({ checkNull: true }).withMessage('required field')
         .isString().withMessage('must be a string')
-        .isLength({ min: 1 }).withMessage('length must be more than 1')
+        .isLength({ min: 1 }).withMessage('length must be greater than 1')
     ]
   }
 

@@ -7,7 +7,7 @@ class GetManifest extends AbstractAction {
     return [
       param('id')
         .exists({ checkNull: true }).withMessage('required field')
-        .isInt().withMessage('must be a integer')
+        .isInt().withMessage('must be an integer')
     ]
   }
 

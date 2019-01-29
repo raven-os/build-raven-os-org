@@ -1,17 +1,19 @@
 const AbstractAction = require('../abstract')
 const { body, param } = require('express-validator/check')
+const { sanitizeBody } = require('express-validator/filter')
 const controller = require('../../controller/manifest')
 
 class UpdateManifest extends AbstractAction {
   get validate () {
     return [
+      sanitizeBody('content').trim(),
       param('id')
         .exists({ checkNull: true }).withMessage('required field')
-        .isInt().withMessage('must be a integer'),
+        .isInt().withMessage('must be an integer'),
       body('content')
         .exists({ checkNull: true }).withMessage('required field')
         .isString().withMessage('must be a string')
-        .isLength({ min: 1 }).withMessage('length must be more than 1')
+        .isLength({ min: 1 }).withMessage('length must be greater than 1')
     ]
   }
 

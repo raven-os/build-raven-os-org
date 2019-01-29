@@ -1,5 +1,4 @@
 const AbstractAction = require('../abstract')
-// const { param } = require('express-validator/check')
 const controller = require('../../controller/manifest')
 
 class ListManifest extends AbstractAction {
