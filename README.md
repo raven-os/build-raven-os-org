@@ -10,7 +10,7 @@ $ apt-get install postgresql postgresql-contrib libpq-dev
 $ update-rc.d postgresql enable
 $ service postgresql start
 # Switch to the `postgres` user and start `psql`: `sudo -u postgres psql`, and then set a password using the `\password` command.
-# Create the database `create database 'buidl-raven-os-org';`
+# Create the database `create database 'build-raven-os-org';`
 
 # set your local configuration in src/config.local.js, example in src/config.js, only override the fields you want to change
 $ npm i
