@@ -1,31 +1,42 @@
 # build-raven-os-org
 Work In Progress - Will be hosted at https://build.raven-os.org
+Temporary readme, to be updated
 
-`rustc 1.31.0-nightly (b2d6ea98b 2018-10-07)`
-
-### Setup Postgres database and diesel
-
-#### Installation
+## Installation
 
 ```bash
-$ apt-get install postgres postgresql-contrib
+$ apt-get install postgresql postgresql-contrib libpq-dev
+# start postgres on boot
 $ update-rc.d postgresql enable
 $ service postgresql start
-$ apt-get install libpq-dev
-# connect to postgres and set a password using \password
-$ cargo install diesel_cli --no-default-features --features postgres --force
+# Switch to the `postgres` user and start `psql`: `sudo -u postgres psql`, and then set a password using the `\password` command.
+# Create the database `create database 'build-raven-os-org';`
 
-# set database url in .env
-$ echo DATABASE_URL=postgres://username:password@localhost/db_name > .env
-
-$ diesel setup
+# set your local configuration in src/config.local.js, example in src/config.js, only override the fields you want to change
+$ npm i
+$ npm run migrate:latest
+$ npm start
 ```
+
+#### Migrations
+
+###### Create a migration file
+
+`$ npm run migrate:make migration_name`
+
+###### Run latest migration
+
+`$ npm run migrate:latest`
+
+###### Rollback previous migration
+
+`$ npm run migration::rollback`
+
 
 #### Connect to postgres
 
 ```bash
-$ sudo su postgres
-$ psql
+$ sudo -u postgres psql
 
 \password # set a password
 \l # list databases

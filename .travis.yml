@@ -1,15 +1,10 @@
-language: rust
-cache: cargo
-rust: nightly
+language: node_js
 before_script:
-  - rustup component add rustfmt-preview
-  - rustup update
-  - cargo update
+  - cd server
+  - npm i
 
 script:
-  - cargo fmt --all -- --check
-  - cargo build --all
-  - cargo test --all
+  - npm test
 
 # Discord notifications
 after_success:
