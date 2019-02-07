@@ -32,6 +32,14 @@ $ npm start
 
 `$ npm run migration::rollback`
 
+#### RabbitMQ
+```bash
+sudo apt-get install rabbitmq-server
+sudo service rabbitmq-server start
+
+# list queues
+sudo rabbitmqctl list_queues
+```
 
 #### Connect to postgres
 
