@@ -7,26 +7,34 @@ class Queue {
   constructor (name) {
     this.closeTimeout = 250
     this.name = name
-    return (async () => {
+    this.connection = null
+    this.channel = null
+  }
+
+  async _getInstance () {
+    if (!this.connection) {
       this.connection = await amqp.connect('amqp://localhost')
       this.channel = await this.connection.createChannel()
       this.channel.assertQueue(this.name, { durable: false })
-      return this
-    })()
+    }
+
+    return this.channel
   }
 
-  send (buffer) {
-    this.channel.sendToQueue(this.name, buffer)
+  async send (buffer) {
+    (await this._getInstance()).sendToQueue(this.name, buffer)
   }
 
-  receive (callback) {
-    return this.channel.consume(this.name, callback, { noAck: true })
+  async receive (callback) {
+    return (await this._getInstance()).consume(this.name, callback, { noAck: true })
   }
 
   close () {
-    setTimeout(() => {
-      this.connection.close()
-    }, this.closeTimeout)
+    if (this.connection) {
+      setTimeout(() => {
+        this.connection.close()
+      }, this.closeTimeout)
+    }
   }
 }
 
