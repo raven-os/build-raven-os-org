@@ -1,6 +1,5 @@
 const AbstractAction = require('../abstract')
 const { param } = require('express-validator/check')
-const controller = require('../../controller/build')
 
 class CreateBuild extends AbstractAction {
   // TODO: body param array of id
@@ -13,7 +12,7 @@ class CreateBuild extends AbstractAction {
   }
 
   async handler (req, res, next) {
-    return controller.create(req.params.id)
+    return this.app.controller.build.create(req.params.id)
   }
 }
 

@@ -1,13 +1,5 @@
-const express = require('express')
-const Routing = require('./routing')
-const config = require('./config')
+const Application = require('./application')
 
-const server = express()
+const app = new Application()
 
-const routing = new Routing(server)
-
-routing.routing(server)
-
-server.listen(config.port, () => {
-  console.info('[server] running on port', config.port)
-})
+app.run()

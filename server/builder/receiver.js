@@ -6,7 +6,7 @@ const execFile = require('child_process').execFile
 receiver().then(console.log('receiver started'))
 
 async function receiver () {
-  const queue = await new Queue('build-raven-os-org')
+  const queue = new Queue('build-raven-os-org')
 
   await queue.receive((msg) => {
     console.log('message received')

@@ -1,11 +1,12 @@
-const Manifest = require('../database/model/manifest')
-const ManifestContent = require('../database/model/manifest_content')
-
 class ManifestController {
-  static async create (name, content) {
+  constructor (app) {
+    this.app = app
+  }
+
+  async create (name, content) {
     const date = new Date()
 
-    const manifest = await Manifest.forge({
+    const manifest = await this.app.database.model.manifest.forge({
       name,
       creation_date: date,
       last_update: date
@@ -13,7 +14,7 @@ class ManifestController {
       .save()
       .get('attributes')
 
-    const manifestContent = await ManifestController.insertContent(manifest.id, content, date)
+    const manifestContent = await this.insertContent(manifest.id, content, date)
 
     return {
       ...manifest,
@@ -21,8 +22,8 @@ class ManifestController {
     }
   }
 
-  static async insertContent (manifestId, content, editionDate) {
-    return ManifestContent.forge({
+  async insertContent (manifestId, content, editionDate) {
+    return this.app.database.model.manifestContent.forge({
       manifest_id: manifestId,
       content,
       edition_date: editionDate
@@ -31,12 +32,12 @@ class ManifestController {
       .get('attributes')
   }
 
-  static async updateContent (manifestId, content) {
+  async updateContent (manifestId, content) {
     const date = new Date()
 
-    const manifestContent = await ManifestController.insertContent(manifestId, content, date)
+    const manifestContent = await this.insertContent(manifestId, content, date)
 
-    const manifest = await Manifest
+    const manifest = await this.app.database.model.manifest
       .where('id', manifestId)
       .fetch()
 
@@ -46,8 +47,8 @@ class ManifestController {
     return manifestContent
   }
 
-  static async get (manifestId) {
-    const manifest = await Manifest
+  async get (manifestId) {
+    const manifest = await this.app.database.model.manifest
       .where('id', manifestId)
       .fetch({ withRelated: ['history'] })
 
@@ -55,8 +56,8 @@ class ManifestController {
   }
 
   // TODO: filters
-  static async list () {
-    const manifests = await Manifest
+  async list () {
+    const manifests = await this.app.database.model.manifest
       .fetchAll({ withRelated: ['history'] })
 
     return manifests.toJSON()

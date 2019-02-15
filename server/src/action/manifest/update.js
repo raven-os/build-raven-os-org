@@ -1,7 +1,6 @@
 const AbstractAction = require('../abstract')
 const { body, param } = require('express-validator/check')
 const { sanitizeBody } = require('express-validator/filter')
-const controller = require('../../controller/manifest')
 
 class UpdateManifest extends AbstractAction {
   get validate () {
@@ -18,7 +17,7 @@ class UpdateManifest extends AbstractAction {
   }
 
   async handler (req, res, next) {
-    return controller.updateContent(req.params.id, req.body.content)
+    return this.app.controller.manifest.updateContent(req.params.id, req.body.content)
   }
 }
 

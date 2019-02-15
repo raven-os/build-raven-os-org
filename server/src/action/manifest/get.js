@@ -1,6 +1,5 @@
 const AbstractAction = require('../abstract')
 const { param } = require('express-validator/check')
-const controller = require('../../controller/manifest')
 
 class GetManifest extends AbstractAction {
   get validate () {
@@ -12,7 +11,7 @@ class GetManifest extends AbstractAction {
   }
 
   async handler (req, res, next) {
-    return controller.get(req.params.id)
+    return this.app.controller.manifest.get(req.params.id)
   }
 }
 
