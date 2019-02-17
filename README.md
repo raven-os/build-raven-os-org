@@ -41,6 +41,21 @@ sudo service rabbitmq-server start
 sudo rabbitmqctl list_queues
 ```
 
+#### Migrations
+
+###### Create a migration file
+
+`$ npm run migrate:make migration_name`
+
+###### Run latest migration
+
+`$ npm run migrate:latest`
+
+###### Rollback previous migration
+
+`$ npm run migration::rollback`
+
+
 #### Connect to postgres
 
 ```bash
