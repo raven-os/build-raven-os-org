@@ -9,8 +9,8 @@ async function receiver () {
   const queue = new Queue('build-raven-os-org')
 
   await queue.receive((msg) => {
-    console.log('message received')
-    // const data = msg.content.toString()
+    const data = [...msg.content]
+    console.log('message received', data)
 
     // TODO: for now use temporary test.sh script to mock compilation
     // program is started from raven/test/nbuild for now

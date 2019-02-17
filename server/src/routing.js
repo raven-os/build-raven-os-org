@@ -18,7 +18,7 @@ class Routing {
         .get('/', this.app.action.manifest.list.routes)
       )
       .use('/build', express.Router()
-        .post('/:id', this.app.action.build.create.routes)
+        .post('/', this.app.action.build.create.routes)
       )
     )
 

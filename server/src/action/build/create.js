@@ -1,18 +1,17 @@
 const AbstractAction = require('../abstract')
-const { param } = require('express-validator/check')
+const { body } = require('express-validator/check')
 
 class CreateBuild extends AbstractAction {
-  // TODO: body param array of id
   get validate () {
     return [
-      param('id')
+      body('ids')
         .exists({ checkNull: true }).withMessage('required field')
-        .isInt().withMessage('must be an integer')
+        .isArray().withMessage('must be an array of ids')
     ]
   }
 
   async handler (req, res, next) {
-    return this.app.controller.build.create(req.params.id)
+    return this.app.controller.build.create(req.body.ids)
   }
 }
 
