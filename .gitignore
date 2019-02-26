@@ -2,4 +2,5 @@ node_modules/
 npm-debug.log
 package-lock.json
 *.local.js
-server/manifests/*.py
+server/manifests/*
+!server/manifests/.empty

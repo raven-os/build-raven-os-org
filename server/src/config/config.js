@@ -9,5 +9,6 @@ module.exports = {
       password: 'postgres'
     }
   },
-  nbuild: 'nbuild'
+  nbuild: 'nbuild',
+  url: 'URL_OF_THE_API'
 }

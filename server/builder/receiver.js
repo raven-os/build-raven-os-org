@@ -1,45 +1,55 @@
 const Queue = require('../rabbitmq')
 const execFile = require('child_process').execFile
-// const fs = require('fs')
-// const config = require('../src/config')
+const config = require('../src/config')
+const rp = require('request-promise')
+const fs = require('fs')
 
 receiver().then(console.log('receiver started'))
 
 async function receiver () {
   const queue = new Queue('build-raven-os-org')
 
-  await queue.receive((msg) => {
+  await queue.receive(async (msg) => {
     const data = [...msg.content]
-    console.log('message received', data)
+    const url = config.url + 'manifest/'
+    const manifests = []
+    const path = '../../build-raven-os-org/server/manifests/manifest_'
+    let result
 
-    // TODO: for now use temporary test.sh script to mock compilation
-    // program is started from raven/test/nbuild for now
-    // const name = '../../build-raven-os-org/server/manifests/manifest_' + new Date().getTime() + '.py'
+    for (let id of data) {
+      result = await rp(url + id)
+      result = JSON.parse(result)
+      result = {
+        name: path + id + '.py',
+        content: (result.history.pop()).content
+      }
+      manifests.push(result)
+      // TODO: remove this break when nbuild will handle multiple manifests
+      break
+    }
+
+    const names = manifests.map((item) => { return item.name })
 
     try {
-      // fs.writeFileSync(name, data)
+      for (let file of manifests) {
+        fs.writeFileSync(file.name, file.content)
+      }
 
-      const child = execFile('./builder/test.sh', [], {
+      const child = execFile('./nbuild.py', names, {
         detached: true,
         stdio: [ 'ignore', 1, 2 ]
       })
-      /* function (error, stdout, stderr) {
-        if (error) {
-          console.error('error', error)
-        }
-        console.log('stdout', stdout)
-        console.log('stderr', stderr)
-      })
-      */
 
       child.unref()
+      // TODO: send it to the API to store the output
       child.stdout.on('data', (data) => {
         console.log('[output]', data)
+      })
+      child.stderr.on('data', (data) => {
+        console.log('[stderr]', data)
       })
     } catch (err) {
       console.error(err)
     }
   })
-
-  // queue.close()
 }
