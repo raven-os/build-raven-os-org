@@ -6,6 +6,8 @@ const fs = require('fs')
 
 receiver().then(console.log('receiver started'))
 
+// TODO: Bufferize the output to send 4096 char at a time to not send too much requests
+
 async function receiver () {
   const queue = new Queue('build-raven-os-org')
 
