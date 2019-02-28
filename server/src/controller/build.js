@@ -20,6 +20,18 @@ class BuildController {
     return buildModel
   }
 
+  async _get (id) {
+    const buildModel = await this.app.database.model.build
+      .where('id', id)
+      .fetch()
+
+    if (!buildModel) {
+      throw new this.app.errors.NotFound(`Build #${id} not found`)
+    }
+
+    return buildModel
+  }
+
   async create (ids) {
     for (let id of ids) {
       if (!await this.app.controller.manifest.exists(id)) {
@@ -55,7 +67,6 @@ class BuildController {
       end_date: null
     })
       .save()
-      .get('attributes')
 
     await this.app.queue.send(Buffer.from(ids))
     return build.toJSON()
