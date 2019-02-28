@@ -41,6 +41,22 @@ class BuildController {
     })
       .save()
 
+    const date = new Date()
+
+    const build = await this.app.database.model.build.forge({
+      manifest_id: ids,
+      queuing: true,
+      running: false,
+      exit_status: null,
+      stdout: '',
+      stderr: null,
+      creation_date: date,
+      start_date: null,
+      end_date: null
+    })
+      .save()
+      .get('attributes')
+
     await this.app.queue.send(Buffer.from(ids))
     return build.toJSON()
   }
