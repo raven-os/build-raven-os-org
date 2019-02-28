@@ -5,6 +5,7 @@ const Action = require('./action')
 const Queue = require('../rabbitmq')
 const express = require('express')
 const Routing = require('./routing')
+const Errors = require('./errors')
 
 class Application {
   constructor () {
@@ -13,6 +14,7 @@ class Application {
     this.database = new Database(this)
     this.controller = new Controller(this)
     this.queue = new Queue('build-raven-os-org')
+    this.errors = new Errors(this)
   }
 
   run () {

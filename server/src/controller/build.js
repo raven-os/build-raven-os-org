@@ -3,8 +3,24 @@ class BuildController {
     this.app = app
   }
 
+  async _get (id) {
+    const buildModel = await this.app.database.model.build
+      .where('id', id)
+      .fetch()
+
+    if (!buildModel) {
+      throw new this.app.errors.NotFound(`Build #${id} not found`)
+    }
+
+    return buildModel
+  }
+
   async create (ids) {
-    // TODO: verify that manifests exists
+    for (let id of ids) {
+      if (!await this.app.controller.manifest.exists(id)) {
+        throw new this.app.errors.NotFound(`Manifest #${id} not found`)
+      }
+    }
 
     const date = new Date()
 
@@ -20,16 +36,13 @@ class BuildController {
       end_date: null
     })
       .save()
-      .get('attributes')
 
     await this.app.queue.send(Buffer.from(ids))
-    return build
+    return build.toJSON()
   }
 
-  async stdout (buildId, stdout) {
-    let build = await this.app.database.model.build
-      .where('id', buildId)
-      .fetch()
+  async stdout (id, stdout) {
+    let build = await this._get(id)
 
     await build
       .save({
@@ -41,10 +54,8 @@ class BuildController {
     return build.toJSON()
   }
 
-  async stderr (buildId, stderr) {
-    let build = await this.app.database.model.build
-      .where('id', buildId)
-      .fetch()
+  async stderr (id, stderr) {
+    let build = await this._get(id)
 
     await build
       .save({
@@ -56,12 +67,9 @@ class BuildController {
     return build.toJSON()
   }
 
-  async start (buildId) {
+  async start (id) {
+    let build = await this._get(id)
     const date = new Date()
-
-    const build = await this.app.database.model.build
-      .where('id', buildId)
-      .fetch()
 
     await build
       .save({
@@ -70,15 +78,14 @@ class BuildController {
         start_date: date
       })
 
-    return build
+    build = await build.refresh()
+
+    return build.toJSON()
   }
 
-  async end (buildId, exitStatus) {
+  async end (id, exitStatus) {
+    let build = await this._get(id)
     const date = new Date()
-
-    const build = await this.app.database.model.build
-      .where('id', buildId)
-      .fetch()
 
     await build
       .save({
@@ -87,13 +94,13 @@ class BuildController {
         end_date: date
       })
 
-    return build
+    build = await build.refresh()
+
+    return build.toJSON()
   }
 
-  async get (buildId) {
-    const build = await this.app.database.model.build
-      .where('id', buildId)
-      .fetch()
+  async get (id) {
+    const build = await this._get(id)
 
     return build.toJSON()
   }

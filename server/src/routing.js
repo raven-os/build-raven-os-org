@@ -43,8 +43,7 @@ class Routing {
       }
     }
     console.error(err.stack)
-
-    res.status(400)
+    res.status(err.status || 400)
     res.json({ message: err.message, errors: errorParam })
   }
 }
