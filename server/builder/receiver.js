@@ -13,7 +13,7 @@ async function receiver () {
     const data = [...msg.content]
     const url = config.url + 'manifest/'
     const manifests = []
-    const path = '../../build-raven-os-org/server/manifests/manifest_'
+    const path = config.manifest_dir + 'manifest_'
     let result
 
     for (let id of data) {

@@ -10,5 +10,6 @@ module.exports = {
     }
   },
   nbuild: 'nbuild',
-  url: 'URL_OF_THE_API'
+  url: 'URL_OF_THE_API',
+  manifest_dir: '/path/to/manifest/directory'
 }
