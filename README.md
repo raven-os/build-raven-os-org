@@ -32,6 +32,29 @@ $ npm start
 
 `$ npm run migration::rollback`
 
+#### RabbitMQ
+```bash
+sudo apt-get install rabbitmq-server
+sudo service rabbitmq-server start
+
+# list queues
+sudo rabbitmqctl list_queues
+```
+
+#### Migrations
+
+###### Create a migration file
+
+`$ npm run migrate:make migration_name`
+
+###### Run latest migration
+
+`$ npm run migrate:latest`
+
+###### Rollback previous migration
+
+`$ npm run migration::rollback`
+
 
 #### Connect to postgres
 

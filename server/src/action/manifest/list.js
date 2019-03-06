@@ -1,5 +1,4 @@
 const AbstractAction = require('../abstract')
-const controller = require('../../controller/manifest')
 
 class ListManifest extends AbstractAction {
   get validate () {
@@ -7,7 +6,7 @@ class ListManifest extends AbstractAction {
   }
 
   async handler (req, res, next) {
-    return controller.list()
+    return this.app.controller.manifest.list()
   }
 }
 

@@ -1,7 +1,8 @@
 const { validationResult } = require('express-validator/check')
 
 class AbstractAction {
-  constructor () {
+  constructor (app) {
+    this.app = app
     this.routes = [
       this.validate,
       this._handler.bind(this)

@@ -1,7 +1,6 @@
 const AbstractAction = require('../abstract')
 const { body } = require('express-validator/check')
 const { sanitizeBody } = require('express-validator/filter')
-const controller = require('../../controller/manifest')
 
 class CreateManifest extends AbstractAction {
   get validate () {
@@ -20,7 +19,7 @@ class CreateManifest extends AbstractAction {
   }
 
   async handler (req, res, next) {
-    return controller.create(req.body.name, req.body.content)
+    return this.app.controller.manifest.create(req.body.name, req.body.content)
   }
 }
 
