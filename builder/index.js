@@ -1,6 +1,6 @@
-const Queue = require('../rabbitmq')
+const Queue = require('./rabbitmq')
 const execFile = require('child_process').execFile
-const config = require('../src/config')
+const config = require('./config')
 const rp = require('request-promise')
 const fs = require('fs')
 
@@ -35,7 +35,7 @@ async function receiver () {
         fs.writeFileSync(file.name, file.content)
       }
 
-      const child = execFile('./nbuild.py', names, {
+      const child = execFile(config.nbuild, names, {
         detached: true,
         stdio: [ 'ignore', 1, 2 ]
       })
