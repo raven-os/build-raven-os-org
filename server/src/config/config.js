@@ -8,5 +8,8 @@ module.exports = {
       user: 'postgres',
       password: 'postgres'
     }
-  }
+  },
+  nbuild: 'nbuild',
+  url: 'URL_OF_THE_API',
+  manifest_dir: '/path/to/manifest/directory'
 }
