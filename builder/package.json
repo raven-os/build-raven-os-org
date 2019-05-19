@@ -10,7 +10,7 @@
   },
   "license": "ISC",
   "scripts": {
-    "start": "eslint . && node index.js",
+    "start": "eslint . && node src/index.js",
     "test": "echo \"no test specified yet\" && exit 0"
   },
   "dependencies": {
