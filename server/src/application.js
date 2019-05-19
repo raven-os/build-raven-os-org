@@ -19,6 +19,7 @@ class Application {
 
   run () {
     this.server = express()
+    this.server.use(this.logger)
 
     const routing = new Routing(this)
     routing.routing()
@@ -26,6 +27,11 @@ class Application {
     this.server.listen(this.config.port, () => {
       console.info('[server] running on port', this.config.port)
     })
+  }
+
+  logger (req, res, next) {
+    console.log(req.method, req.originalUrl)
+    next()
   }
 }
 

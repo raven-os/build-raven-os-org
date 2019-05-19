@@ -68,7 +68,12 @@ class BuildController {
     })
       .save()
 
-    await this.app.queue.send(Buffer.from(ids))
+    const msg = {
+      build: build.id,
+      manifests: ids
+    }
+
+    await this.app.queue.send(Buffer.from(JSON.stringify(msg)))
     return build.toJSON()
   }
 
