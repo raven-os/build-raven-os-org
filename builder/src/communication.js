@@ -18,7 +18,10 @@ class Communication {
       method: 'PUT',
       uri,
       json: (body && true) || false,
-      body: body || null
+      body: body || null,
+      headers: {
+        Authorization: config.apikey
+      }
     }
 
     try {
