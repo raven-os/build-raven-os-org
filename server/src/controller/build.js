@@ -116,9 +116,23 @@ class BuildController {
     return build.toJSON()
   }
 
-  // TODO: filters
-  async list () {
+  async list (sort, direction, filters) {
     const builds = await this.app.database.model.build
+      .query(queryBuilder => {
+        if (filters.queuing !== null) {
+          queryBuilder.where('queuing', filters.queuing)
+        }
+        if (filters.running !== null) {
+          queryBuilder.where('running', filters.running)
+        }
+        if (filters.manifestId !== null) {
+          queryBuilder.where('manifest_id', '@>', [filters.manifestId])
+        }
+        if (filters.exitStatus !== null) {
+          queryBuilder.where('exit_status', filters.exitStatus)
+        }
+      })
+      .orderBy(sort, direction)
       .fetchAll()
 
     return builds.toJSON()
