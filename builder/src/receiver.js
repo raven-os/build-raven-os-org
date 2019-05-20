@@ -1,15 +1,15 @@
 const Queue = require('./queue')
 const execFile = require('child_process').execFile
-const config = require('./config')
 const rp = require('request-promise')
 const fs = require('fs')
 const Communication = require('./communication')
 
 class Receiver {
-  constructor () {
+  constructor (config) {
+    this.config = config
     this.queueName = 'build-raven-os-org'
     this.queue = new Queue(this.queueName)
-    this.communication = new Communication()
+    this.communication = new Communication(this.config)
   }
 
   async run () {
@@ -30,8 +30,8 @@ class Receiver {
   }
 
   async getManifestList (ids) {
-    const url = config.url + 'manifest/'
-    const path = config.manifest_dir + 'manifest_'
+    const url = this.config.api_url + 'manifest/'
+    const path = this.config.manifest_dir + 'manifest_'
     const manifests = []
     let result
 
@@ -63,7 +63,7 @@ class Receiver {
 
       fs.writeFileSync(manifest.name, manifest.content)
 
-      const child = execFile(config.nbuild, [manifest.name])
+      const child = execFile(this.config.nbuild, [manifest.name])
 
       child.stdout.on('data', async (data) => {
         await this.communication.updateStdout(buildId, data)
