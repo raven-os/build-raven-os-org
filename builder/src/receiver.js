@@ -17,6 +17,13 @@ class Receiver {
       const content = JSON.parse(msg.content.toString())
       const manifests = await this.getManifestList(content.manifests)
 
+      try {
+        await this.communication.verifyAuthorization(content.build)
+      } catch (err) {
+        console.error('[builder.authorization] authorization check failed. statusCode:', err.statusCode, 'message:', JSON.parse(err.error).message)
+        return
+      }
+
       await this.communication.startBuild(content.build)
       await this.buildManifests(content.build, manifests, 0)
     })
