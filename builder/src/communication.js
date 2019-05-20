@@ -1,10 +1,10 @@
-const config = require('./config')
 const rp = require('request-promise')
 const Buffer = require('./buffer')
 
 class Communication {
-  constructor () {
-    this.resource = config.url + 'build/'
+  constructor (config) {
+    this.config = config
+    this.resource = this.config.api_url + 'build/'
     this.startEndpoint = '/start'
     this.stdoutEndpoint = '/stdout'
     this.stderrEndpoint = '/stderr'
@@ -20,7 +20,7 @@ class Communication {
       json: (body && true) || false,
       body: body || null,
       headers: {
-        Authorization: config.apikey
+        Authorization: this.config.apikey
       }
     }
 
@@ -37,7 +37,7 @@ class Communication {
       method: 'PUT',
       uri: url,
       headers: {
-        Authorization: config.apikey
+        Authorization: this.config.apikey
       }
     }
 

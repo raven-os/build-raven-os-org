@@ -1,5 +1,7 @@
+const config = require('./config')
 const Receiver = require('./receiver')
-const receiver = new Receiver()
+
+const receiver = new Receiver(config)
 
 receiver.run()
   .then(() => {
