@@ -21,7 +21,11 @@ class Routing {
         .post('/', this.app.action.build.create.routes)
         .use('/:id', express.Router({ mergeParams: true })
           .get('/', this.app.action.build.get.routes)
+
+          // Middleware to authorize only builder
           .use('/', this.app.action.build.authorization.routes)
+          // Empty endpoint for a client to verify his access
+          .put('/', (req, res, next) => { res.json({}) })
           .put('/start', this.app.action.build.start.routes)
           .put('/stdout', this.app.action.build.stdout.routes)
           .put('/stderr', this.app.action.build.stderr.routes)
