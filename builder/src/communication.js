@@ -31,6 +31,19 @@ class Communication {
     }
   }
 
+  async verifyAuthorization (id) {
+    const url = this.resource + id + '/'
+    const options = {
+      method: 'PUT',
+      uri: url,
+      headers: {
+        Authorization: config.apikey
+      }
+    }
+
+    await rp(options)
+  }
+
   async startBuild (id) {
     const url = this.resource + id + this.startEndpoint
 
