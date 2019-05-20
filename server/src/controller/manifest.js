@@ -71,9 +71,10 @@ class ManifestController {
     return manifest.toJSON()
   }
 
-  // TODO: filters
-  async list () {
+  async list (name, sort, direction) {
     const manifests = await this.app.database.model.manifest
+      .where('name', 'LIKE', name + '%')
+      .orderBy(sort, direction)
       .fetchAll({ withRelated: ['history'] })
 
     return manifests.toJSON()
