@@ -20,12 +20,12 @@ class Routing {
       .use('/build', express.Router()
         .post('/', this.app.action.build.create.routes)
         .use('/:id', express.Router({ mergeParams: true })
-          // TODO: protect this routes with a token used only by the builder
+          .get('/', this.app.action.build.get.routes)
+          .use('/', this.app.action.build.authorization.routes)
           .put('/start', this.app.action.build.start.routes)
           .put('/stdout', this.app.action.build.stdout.routes)
           .put('/stderr', this.app.action.build.stderr.routes)
           .put('/end', this.app.action.build.end.routes)
-          .get('/', this.app.action.build.get.routes)
         )
         .get('/', this.app.action.build.list.routes)
       )
@@ -42,7 +42,7 @@ class Routing {
         errorParam.push({ param, detail: details[param].msg })
       }
     }
-    console.error(err.stack)
+    console.error('[error]', err.stack)
     res.status(err.status || 400)
     res.json({ message: err.message, errors: errorParam })
   }

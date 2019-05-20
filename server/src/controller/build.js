@@ -20,6 +20,12 @@ class BuildController {
     return buildModel
   }
 
+  authorization (apikey) {
+    if (apikey !== this.app.config.builder_apikey) {
+      throw new this.app.errors.Forbidden('Invalid builder apikey')
+    }
+  }
+
   async _get (id) {
     const buildModel = await this.app.database.model.build
       .where('id', id)
