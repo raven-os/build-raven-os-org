@@ -12,8 +12,8 @@
         <p v-if="successCreation" class="build-error">The build has been successfully added!</p>
 
         <form id="form-create" @submit.prevent="addBuild()">
-        <b-container>
-          <b-row class="m-2">
+          <b-container>
+            <b-row class="m-2">
               <b-col>
                 <b-input-group class="search-input-group create-input-group">
                   <b-input-group-prepend>
@@ -29,7 +29,10 @@
                   <b-input-group-prepend>
                     <div class="input-prepend" style="background:grey;">Package id</div>
                   </b-input-group-prepend>
-                  <input id="package_id" v-model="package_id" class="form-control create-input" type="text" placeholder="Package id" readonly="true">
+                  <input
+                    id="package_id" v-model="package_id" class="form-control create-input" type="text"
+                    placeholder="Package id"
+                    readonly="true">
                 </b-input-group>
               </b-col>
             </b-row>
@@ -46,17 +49,17 @@
             </b-row>
             <b-row class="m-2">
               <AceEditor
-                :fontSize="14"
-                :showPrintMargin="true"
-                :showGutter="true"
-                :highlightActiveLine="true"
+                :font-size="14"
+                :show-print-margin="true"
+                :show-gutter="true"
+                :highlight-active-line="true"
+                :on-change="onChange"
+                :editor-props="{$blockScrolling: true}"
                 mode="python"
                 theme="tomorrow_night"
-                :onChange="onChange"
                 name="editor"
-                :editorProps="{$blockScrolling: true}"
                 width="100%"
-                className="code-editor"/>
+                class-name="code-editor"/>
             </b-row>
             <b-row>
               <button class="create-add" type="submit">Add build</button>
@@ -69,7 +72,7 @@
 </template>
 
 <script>
-import brace from 'brace'
+// import brace from 'brace'
 import { Ace as AceEditor, Split as SplitEditor } from 'vue2-brace-editor'
 import uuidv4 from 'uuid/v4'
 

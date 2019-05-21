@@ -60,9 +60,6 @@ from nbuild.stdenv.autotools.autoconf import do_configure
 def install_libc():
     package = get_package()
 
-    # TODO FIXME Remove this
-    cmd('sed \'/test-installation/s@$(PERL)@echo not running@\' -i Makefile')
-
     # Install most parts of glibc
     do_make(target='install')
 

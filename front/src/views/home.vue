@@ -51,7 +51,7 @@
         </div>
         <div
           v-for="item in sortItems()"
-          v-bind:class="{ queued: item.state == 0, running: item.state == 1, failed: item.state == 2, success: item.state == 3 }"
+          :class="{ queued: item.state == 0, running: item.state == 1, failed: item.state == 2, success: item.state == 3 }"
           :key="item.id"
           class="build-item"
           @click="onRowClick(item)">
