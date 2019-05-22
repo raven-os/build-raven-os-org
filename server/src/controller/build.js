@@ -1,6 +1,11 @@
 class BuildController {
   constructor (app) {
     this.app = app
+    this.state = {
+      QUEUING: 'queuing',
+      RUNNING: 'running',
+      FINISHED: 'finished'
+    }
   }
 
   async _get (id) {
@@ -26,14 +31,13 @@ class BuildController {
 
     const build = await this.app.database.model.build.forge({
       manifest_id: ids,
-      queuing: true,
-      running: false,
       exit_status: null,
       stdout: '',
       stderr: '',
       creation_date: date,
       start_date: null,
-      end_date: null
+      end_date: null,
+      state: this.state.QUEUING
     })
       .save()
 
@@ -73,8 +77,7 @@ class BuildController {
 
     await build
       .save({
-        queuing: false,
-        running: true,
+        state: this.state.RUNNING,
         start_date: date
       })
 
@@ -89,7 +92,7 @@ class BuildController {
 
     await build
       .save({
-        running: false,
+        state: this.state.FINISHED,
         exit_status: exitStatus,
         end_date: date
       })
