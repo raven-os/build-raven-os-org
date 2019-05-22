@@ -8,18 +8,6 @@ class BuildController {
     }
   }
 
-  async _get (id) {
-    const buildModel = await this.app.database.model.build
-      .where('id', id)
-      .fetch()
-
-    if (!buildModel) {
-      throw new this.app.errors.NotFound(`Build #${id} not found`)
-    }
-
-    return buildModel
-  }
-
   authorization (apikey) {
     if (apikey !== this.app.config.builder_apikey) {
       throw new this.app.errors.Forbidden('Invalid builder apikey')
@@ -56,21 +44,6 @@ class BuildController {
       start_date: null,
       end_date: null,
       state: this.state.QUEUING
-    })
-      .save()
-
-    const date = new Date()
-
-    const build = await this.app.database.model.build.forge({
-      manifest_id: ids,
-      queuing: true,
-      running: false,
-      exit_status: null,
-      stdout: '',
-      stderr: null,
-      creation_date: date,
-      start_date: null,
-      end_date: null
     })
       .save()
 

@@ -30,7 +30,7 @@ class Receiver {
   }
 
   async getManifestList (ids) {
-    const url = this.config.api_url + 'manifest/'
+    const url = this.config.build_api_url + 'manifest/'
     const path = this.config.manifest_dir + 'manifest_'
     const manifests = []
     let result
@@ -63,7 +63,7 @@ class Receiver {
 
       fs.writeFileSync(manifest.name, manifest.content)
 
-      const child = execFile(this.config.nbuild, [manifest.name])
+      const child = execFile(this.config.nbuild_path, [manifest.name])
 
       child.stdout.on('data', async (data) => {
         await this.communication.updateStdout(buildId, data)

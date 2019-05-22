@@ -4,7 +4,7 @@ const Buffer = require('./buffer')
 class Communication {
   constructor (config) {
     this.config = config
-    this.resource = this.config.api_url + 'build/'
+    this.resource = this.config.build_api_url + 'build/'
     this.startEndpoint = '/start'
     this.stdoutEndpoint = '/stdout'
     this.stderrEndpoint = '/stderr'
