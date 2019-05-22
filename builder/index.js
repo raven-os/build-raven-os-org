@@ -1,4 +1,4 @@
-const Queue = require('./rabbitmq')
+const Queue = require('./queue')
 const execFile = require('child_process').execFile
 const config = require('./config')
 const rp = require('request-promise')
@@ -13,7 +13,7 @@ async function receiver () {
 
   await queue.receive(async (msg) => {
     const data = [...msg.content]
-    const url = config.url + 'manifest/'
+    const url = config.build_api_url + 'manifest/'
     const manifests = []
     const path = config.manifest_dir + 'manifest_'
     let result
@@ -37,7 +37,7 @@ async function receiver () {
         fs.writeFileSync(file.name, file.content)
       }
 
-      const child = execFile(config.nbuild, names, {
+      const child = execFile(config.nbuild_path, names, {
         detached: true,
         stdio: [ 'ignore', 1, 2 ]
       })

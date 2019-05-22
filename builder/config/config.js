@@ -1,5 +1,5 @@
 module.exports = {
-  nbuild: 'path_to_nbuild',
-  api_url: 'URL_OF_THE_API/',
+  nbuild_path: 'path_to_nbuild',
+  build_api_url: 'URL_OF_THE_API/',
   manifest_dir: '/path/to/manifest/directory'
 }

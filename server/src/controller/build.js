@@ -30,7 +30,7 @@ class BuildController {
       running: false,
       exit_status: null,
       stdout: '',
-      stderr: null,
+      stderr: '',
       creation_date: date,
       start_date: null,
       end_date: null
