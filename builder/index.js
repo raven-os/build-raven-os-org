@@ -1,17 +1,19 @@
-const Queue = require('../rabbitmq')
+const Queue = require('./queue')
 const execFile = require('child_process').execFile
-const config = require('../src/config')
+const config = require('./config')
 const rp = require('request-promise')
 const fs = require('fs')
 
 receiver().then(console.log('receiver started'))
+
+// TODO: Bufferize the output to send 4096 char at a time to not send too much requests
 
 async function receiver () {
   const queue = new Queue('build-raven-os-org')
 
   await queue.receive(async (msg) => {
     const data = [...msg.content]
-    const url = config.url + 'manifest/'
+    const url = config.build_api_url + 'manifest/'
     const manifests = []
     const path = config.manifest_dir + 'manifest_'
     let result
@@ -35,7 +37,7 @@ async function receiver () {
         fs.writeFileSync(file.name, file.content)
       }
 
-      const child = execFile('./nbuild.py', names, {
+      const child = execFile(config.nbuild_path, names, {
         detached: true,
         stdio: [ 'ignore', 1, 2 ]
       })

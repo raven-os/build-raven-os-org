@@ -1,7 +1,7 @@
 {
-  "name": "build-raven-os-org-server",
+  "name": "build-raven-os-org-builder",
   "version": "1.0.0",
-  "description": "build-raven-os-org server",
+  "description": "build-raven-os-org builder",
   "main": "src/index.js",
   "author": "raven-os",
   "repository": {
@@ -10,23 +10,11 @@
   },
   "license": "ISC",
   "scripts": {
-    "start": "eslint . && node src/index.js",
-    "test": "echo \"no test specified yet\" && exit 0",
-    "migrate:make": "knex migrate:make",
-    "migrate:latest": "knex migrate:latest",
-    "migrate:rollback": "knex migrate:rollback",
-    "builder": "node builder/receiver.js"
+    "start": "eslint . && node index.js",
+    "test": "echo \"no test specified yet\" && exit 0"
   },
   "dependencies": {
     "amqplib": "^0.5.3",
-    "body-parser": "^1.18.3",
-    "bookshelf": "^0.14.2",
-    "express": "^4.16.4",
-    "express-validator": "^5.3.1",
-    "knex": "<0.15.0",
-    "lodash": "^4.17.11",
-    "pg": "^7.8.0",
-    "pg-native": "^3.0.0",
     "request": "^2.88.0",
     "request-promise": "^4.2.4"
   },

@@ -3,6 +3,26 @@ class ManifestController {
     this.app = app
   }
 
+  async exists (id) {
+    const count = await this.app.database.model.manifest
+      .where('id', id)
+      .count()
+
+    return count === '1'
+  }
+
+  async _get (id) {
+    const manifestModel = await this.app.database.model.manifest
+      .where('id', id)
+      .fetch({ withRelated: ['history'] })
+
+    if (!manifestModel) {
+      throw new this.app.errors.NotFound(`Manifest #${id} not found`)
+    }
+
+    return manifestModel
+  }
+
   async create (name, content) {
     const date = new Date()
 
@@ -14,7 +34,7 @@ class ManifestController {
       .save()
       .get('attributes')
 
-    const manifestContent = await this.insertContent(manifest.id, content, date)
+    const manifestContent = await this._insertContent(manifest.id, content, date)
 
     return {
       ...manifest,
@@ -22,7 +42,7 @@ class ManifestController {
     }
   }
 
-  async insertContent (manifestId, content, editionDate) {
+  async _insertContent (manifestId, content, editionDate) {
     return this.app.database.model.manifestContent.forge({
       manifest_id: manifestId,
       content,
@@ -32,14 +52,12 @@ class ManifestController {
       .get('attributes')
   }
 
-  async updateContent (manifestId, content) {
+  async updateContent (id, content) {
     const date = new Date()
 
-    const manifestContent = await this.insertContent(manifestId, content, date)
+    const manifest = await this._get(id)
 
-    const manifest = await this.app.database.model.manifest
-      .where('id', manifestId)
-      .fetch()
+    const manifestContent = await this._insertContent(id, content, date)
 
     await manifest
       .save({ last_update: date })
@@ -47,10 +65,8 @@ class ManifestController {
     return manifestContent
   }
 
-  async get (manifestId) {
-    const manifest = await this.app.database.model.manifest
-      .where('id', manifestId)
-      .fetch({ withRelated: ['history'] })
+  async get (id) {
+    const manifest = await this._get(id)
 
     return manifest.toJSON()
   }
