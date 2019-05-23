@@ -30,6 +30,19 @@ class AbstractAction {
       next(err)
     }
   }
+
+  _middlewareHandler (req, res, next) {
+    try {
+      const errors = validationResult(req)
+      if (!errors.isEmpty()) {
+        errors.throw()
+      }
+
+      return next()
+    } catch (err) {
+      next(err)
+    }
+  }
 }
 
 module.exports = AbstractAction

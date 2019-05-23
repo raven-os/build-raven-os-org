@@ -1,3 +1,4 @@
+const AuthorizationBuild = require('./authorization')
 const CreateBuild = require('./create')
 const UpdateBuildStdout = require('./stdout')
 const UpdateBuildStderr = require('./stderr')
@@ -8,6 +9,7 @@ const ListBuild = require('./list')
 
 class BuildAction {
   constructor (app) {
+    this.authorization = new AuthorizationBuild(app)
     this.create = new CreateBuild(app)
     this.stdout = new UpdateBuildStdout(app)
     this.stderr = new UpdateBuildStderr(app)

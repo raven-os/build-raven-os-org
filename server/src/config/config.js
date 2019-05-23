@@ -9,7 +9,5 @@ module.exports = {
       password: 'postgres'
     }
   },
-  nbuild: 'nbuild',
-  url: 'URL_OF_THE_API',
-  manifest_dir: '/path/to/manifest/directory'
+  builder_apikey: 'DEFINE_BUILDER_APIKEY'
 }

@@ -8,6 +8,12 @@ class BuildController {
     }
   }
 
+  authorization (apikey) {
+    if (apikey !== this.app.config.builder_apikey) {
+      throw new this.app.errors.Forbidden('Invalid builder apikey')
+    }
+  }
+
   async _get (id) {
     const buildModel = await this.app.database.model.build
       .where('id', id)
@@ -41,7 +47,12 @@ class BuildController {
     })
       .save()
 
-    await this.app.queue.send(Buffer.from(ids))
+    const msg = {
+      build: build.id,
+      manifests: ids
+    }
+
+    await this.app.queue.send(Buffer.from(JSON.stringify(msg)))
     return build.toJSON()
   }
 
