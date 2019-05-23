@@ -17,7 +17,7 @@ class Communication {
     const options = {
       method: 'PUT',
       uri,
-      json: (body && true) || false,
+      json: body !== null,
       body: body || null,
       headers: {
         Authorization: this.config.apikey
