@@ -21,11 +21,11 @@ class ListBuild extends AbstractAction {
       query('sort')
         .optional()
         .isString().withMessage('must be a string')
-        .isIn(['creation', 'start', 'end']).withMessage('sort by creation, start, end'),
+        .isIn(['creation', 'start', 'end']).withMessage('sort should either be "creation", "start" or "end"'),
       query('dir')
         .optional()
         .isString().withMessage('must be a string')
-        .isIn(['asc', 'desc']).withMessage('direction is asc or desc')
+        .isIn(['asc', 'desc']).withMessage('direction should either be "asc" or "desc"')
     ]
   }
 
@@ -37,7 +37,7 @@ class ListBuild extends AbstractAction {
     }
     // Default filters
     const sort = sortToColumnName[req.query.sort || 'creation']
-    // Default direction is DESCENDING only if sort by creation
+    // Default direction is DESCENDING only if we are sorting by creation date
     const dir = req.query.dir || (sort === 'creation_date' ? 'desc' : 'asc')
     const filters = {
       queuing: req.query.queuing || null,

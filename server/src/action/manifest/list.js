@@ -17,7 +17,7 @@ class ListManifest extends AbstractAction {
       query('dir')
         .optional()
         .isString().withMessage('must be a string')
-        .isIn(['asc', 'desc']).withMessage('direction is asc or desc')
+        .isIn(['asc', 'desc']).withMessage('direction should either be "asc" or "desc"')
     ]
   }
 
@@ -30,7 +30,7 @@ class ListManifest extends AbstractAction {
     // Default filters
     const name = req.query.name || ''
     const sort = sortToColumnName[req.query.sort || 'creation']
-    // Default direction is DESCENDING only if sort by creation
+    // Default direction is DESCENDING only if we are sorting by creation date
     const dir = req.query.dir || (sort === 'creation_date' ? 'desc' : 'asc')
 
     return this.app.controller.manifest.list(name, sort, dir)
