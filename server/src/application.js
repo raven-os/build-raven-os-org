@@ -8,6 +8,7 @@ const express = require('express')
 const Routing = require('./routing')
 const Errors = require('./errors')
 const Websocket = require('./websocket')
+const cors = require('cors')
 
 class Application {
   constructor () {
@@ -23,6 +24,7 @@ class Application {
   run () {
     this.express = express()
     this.express.use(this.logger)
+    this.express.use(cors(this.config.cors))
 
     const routing = new Routing(this)
     routing.routing()
