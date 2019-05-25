@@ -17,7 +17,13 @@ class ListManifest extends AbstractAction {
       query('dir')
         .optional()
         .isString().withMessage('must be a string')
-        .isIn(['asc', 'desc']).withMessage('direction should either be "asc" or "desc"')
+        .isIn(['asc', 'desc']).withMessage('direction should either be "asc" or "desc"'),
+      query('page')
+        .optional()
+        .isInt({ min: 1 }).withMessage('must be an integer higher or equal to 1'),
+      query('per_page')
+        .optional()
+        .isInt({ min: 1 }).withMessage('must be an integer higher or equal to 1')
     ]
   }
 
@@ -33,7 +39,12 @@ class ListManifest extends AbstractAction {
     // Default direction is DESCENDING only if we are sorting by creation date
     const dir = req.query.dir || (sort === 'creation_date' ? 'desc' : 'asc')
 
-    return this.app.controller.manifest.list(name, sort, dir)
+    const pagination = {
+      page: req.query.page || 1,
+      perPage: req.query.per_page || this.DEFAULT_ITEM_PER_PAGE
+    }
+
+    return this.app.controller.manifest.list(name, sort, dir, pagination)
   }
 }
 

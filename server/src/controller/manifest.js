@@ -71,13 +71,17 @@ class ManifestController {
     return manifest.toJSON()
   }
 
-  async list (name, sort, direction) {
+  async list (name, sort, direction, pagination) {
     const manifests = await this.app.database.model.manifest
       .where('name', 'LIKE', name + '%')
       .orderBy(sort, direction)
-      .fetchAll({ withRelated: ['history'] })
+      .simplePaginate({
+        limit: pagination.perPage,
+        page: pagination.page,
+        withRelated: ['history']
+      })
 
-    return manifests.toJSON()
+    return manifests
   }
 }
 

@@ -119,7 +119,7 @@ class BuildController {
     return build.toJSON()
   }
 
-  async list (sort, direction, filters) {
+  async list (sort, direction, filters, pagination) {
     const builds = await this.app.database.model.build
       .query(queryBuilder => {
         if (filters.queuing !== null) {
@@ -136,9 +136,12 @@ class BuildController {
         }
       })
       .orderBy(sort, direction)
-      .fetchAll()
+      .simplePaginate({
+        limit: pagination.perPage,
+        page: pagination.page
+      })
 
-    return builds.toJSON()
+    return builds
   }
 }
 

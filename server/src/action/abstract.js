@@ -7,6 +7,8 @@ class AbstractAction {
       this.validate,
       this._handler.bind(this)
     ]
+
+    this.DEFAULT_ITEM_PER_PAGE = 15
   }
 
   get validate () {
