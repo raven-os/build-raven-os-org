@@ -43,7 +43,7 @@ class Routing {
     let errorParam = []
     if (details) {
       for (let param of Object.keys(details)) {
-        errorParam.push({ param, detail: details[param].msg })
+        errorParam.push({ param, detail: details[param].msg, value: details[param].value })
       }
     }
     console.error('[error]', err.stack)
