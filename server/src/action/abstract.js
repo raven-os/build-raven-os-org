@@ -8,7 +8,7 @@ class AbstractAction {
       this._handler.bind(this)
     ]
 
-    this.DEFAULT_ITEM_PER_PAGE = 15
+    this.DEFAULT_ITEM_PER_PAGE = this.app.config.pagination.default_item_per_page
   }
 
   get validate () {
