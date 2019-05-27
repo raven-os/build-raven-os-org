@@ -13,7 +13,7 @@ class ListManifest extends AbstractAction {
       query('sort')
         .optional()
         .isString().withMessage('must be a string')
-        .isIn(['name', 'creation', 'update']).withMessage('sort by name, creation or update'),
+        .isIn(['name', 'creation', 'update']).withMessage('sort should either be "name", "creation" or "update"'),
       query('dir')
         .optional()
         .isString().withMessage('must be a string')
