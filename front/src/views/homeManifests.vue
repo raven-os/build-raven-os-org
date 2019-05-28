@@ -9,21 +9,16 @@
         <div class="search-zone">
           <b-row>
             <b-col/>
-            <b-col
-              cols="12"
-              md="10">
-              <b-input-group
-                class="search-input-group">
+            <b-col cols="12" md="10">
+              <b-input-group class="search-input-group">
                 <input
                   ref="search"
                   v-model="query"
                   class="form-control search-input"
                   type="text"
                   placeholder="Search">
-                <select
-                  slot="prepend"
-                  v-model="field"
-                  class="search-select">
+                <select slot="prepend" v-model="field" class="search-select">
+                  <option value="created_at">Creation date</option>
                 </select>
               </b-input-group>
             </b-col>
@@ -32,72 +27,131 @@
         </div>
       </b-container>
     </section>
+
+    <!--==========================
+    App - List
+    ============================-->
+    <section id="manifests-list">
+      <b-container>
+        <div class="builds-sort">
+          <b-form-select
+            v-model="selected"
+            :options="optionSort"
+            class="sort-select"
+            @change="onSortChange"
+          />
+        </div>
+        <div
+          v-for="item in sortItems()"
+          :key="item.id"
+          class="build-item"
+          @click="onRowClick(item)"
+        >
+          <b-container>
+            <b-row>
+              <b-col>
+                <div class="item-info">
+                  {{ item.name }}
+                </div>
+              </b-col>
+              <b-col cols="12" md="4" lg="2">
+                <div class="item-date">
+                  <i class="far fa-calendar-alt"/>
+                  {{ item.created_at | momentFromNow }}
+                </div>
+              </b-col>
+            </b-row>
+          </b-container>
+        </div>
+      </b-container>
+    </section>
   </div>
 </template>
 
 <script>
+const manifests = [
+  { id: 1, name: "Manifest 1", created_at: "2018-06-15T11:45:30Z", updated_at: "2018-06-15T11:45:35Z" },
+  { id: 2, name: "Manifest 2", created_at: "2018-06-15T11:45:30Z", updated_at: "2018-06-15T11:45:35Z" }
+];
+
 export default {
   filters: {
-    momentFromNow: function (date) {
-      return moment(date).fromNow()
+    momentFromNow: function(date) {
+      return moment(date).fromNow();
     },
-    momentDuration: function (start, end) {
-      return moment.utc(moment.duration(moment(end).diff(moment(start))).asMilliseconds()).format('HH:mm:ss')
+    momentDuration: function(start, end) {
+      return moment
+        .utc(moment.duration(moment(end).diff(moment(start))).asMilliseconds())
+        .format("HH:mm:ss");
     }
   },
-  data () {
+  data() {
     return {
-      manifests: []
-    }
+      query: '',
+      field: 'created_at',
+      sortBy: 'created_at',
+      sortDesc: true,
+      selected: { by: 'created_at', desc: true },
+      optionSort: [
+        { text: 'From newest to oldest', value: { by: 'created_at', desc: true } },
+        { text: 'From oldest to newest', value: { by: 'created_at', desc: false } },
+        { text: 'From A to Z', value: { by: 'name', desc: false } },
+        { text: 'From Z to A', value: { by: 'name', desc: true } }
+      ],
+    };
   },
-  computed: {
-  },
+  computed: {},
   watch: {
-    query: 'search',
-    field: 'search'
+    query: "search",
+    field: "search"
   },
-  mounted () {
-  },
-  beforeMount () {
-    this.getManifests()
+  mounted() {},
+  beforeMount() {
+    this.getManifests();
   },
   methods: {
-    search () {
-      this.getManifests()
+    search() {
+      this.getManifests();
     },
-    getManifests () {
+    getManifests() {
+      return this.manifests
     },
-    onRowClick (item) {
-      this.$router.push({name: 'DetailsManifest',
+    onRowClick(item) {
+      this.$router.push({
+        name: "DetailsManifest",
         params: {
-          id: item.id.toString()
-        }})
+          id: item.id.toString(),
+          name: item.name,
+          created_at: item.created_at,
+          updated_at: item.updated_at
+        }
+      });
     },
-    sortItems () {
-      let items = this.manifests
+    sortItems() {
+      let items = manifests;
       switch (this.sortBy) {
-        case 'created_at':
-          items.sort(function (a, b) {
-            return moment(a['created_at']).diff(moment(b['created_at']))
-          })
-          break
-        case 'name':
-          items.sort(function (a, b) {
-            return a['name'] > b['name']
-          })
-          break
+        case "created_at":
+          items.sort(function(a, b) {
+            return moment(a["created_at"]).diff(moment(b["created_at"]));
+          });
+          break;
+        case "name":
+          items.sort(function(a, b) {
+            return a["name"] > b["name"];
+          });
+          break;
       }
       if (this.sortDesc) {
-        items.reverse()
+        items.reverse();
       }
-      return items
+      return items;
     },
-    onSortChange (value) {
-      this.sortBy = value['by']
-      this.sortDesc = value['desc']
+    onSortChange(value) {
+      this.sortBy = value["by"];
+      this.sortDesc = value["desc"];
     }
   }
-}
+};
 </script>
 
 <style scoped>
@@ -152,7 +206,9 @@ h1 {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  background: var(--accent) url('https://cdn3.iconfinder.com/data/icons/google-material-design-icons/48/ic_keyboard_arrow_down_48px-128.png') no-repeat;
+  background: var(--accent)
+    url("https://cdn3.iconfinder.com/data/icons/google-material-design-icons/48/ic_keyboard_arrow_down_48px-128.png")
+    no-repeat;
   background-size: 20px;
   background-position: right 10px center;
   width: 175px;
@@ -173,7 +229,8 @@ h1 {
   }
 }
 
-.sort-select, .sort-select:focus {
+.sort-select,
+.sort-select:focus {
   font-family: sans-serif;
   font-size: 16px;
   display: inline-block;
@@ -187,62 +244,26 @@ h1 {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  background: var(--accent) url('https://cdn3.iconfinder.com/data/icons/google-material-design-icons/48/ic_keyboard_arrow_down_48px-128.png') no-repeat;
+  background: var(--accent)
+    url("https://cdn3.iconfinder.com/data/icons/google-material-design-icons/48/ic_keyboard_arrow_down_48px-128.png")
+    no-repeat;
   background-size: 20px;
   background-position: right 10px center;
 }
 
-/* BUILDS-LIST
+/* MANIFESTS-LIST
 ----------------------------------- */
-#builds-list {
+#manifests-list {
   margin-top: 75px;
 }
 
 .build-item {
   padding: 10px;
-  border-bottom: 1px solid var(--primary-dark);
-  border-top: 1px solid var(--primary-dark);
-  border-right: 1px solid var(--primary-dark);
+  border: 1px solid var(--primary-dark);
   margin-bottom: 5px;
 }
 .build-item:hover {
   background-color: rgba(237, 37, 78, 0.25) !important;
-}
-
-.running {
-  border-left: 15px solid #FFC30B;
-}
-.text-running {
-  color: #FFC30B;
-  margin-right: 10px;
-  width: 20px;
-}
-
-.queued {
-  border-left: 15px solid #2E77BB;
-}
-.text-queued {
-  color: #2E77BB;
-  margin-right: 10px;
-  width: 20px;
-}
-
-.failed {
-  border-left: 15px solid #E74F4E;
-}
-.text-failed {
-  color: #E74F4E;
-  margin-right: 10px;
-  width: 20px;
-}
-
-.success {
-  border-left: 15px solid #85CD3F;
-}
-.text-success {
-  color: #85CD3F;
-  margin-right: 10px;
-  width: 20px;
 }
 
 .item-info {

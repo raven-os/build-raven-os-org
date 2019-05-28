@@ -6,7 +6,7 @@
     <section id="create-build">
       <b-container>
         <!-- Create Build section -->
-        <h1>Creation</h1>
+        <h1>Create build</h1>
         <!-- Error handling -->
         <p v-if="errorCreation" class="build-error">{{ errorCreation }}</p>
         <p v-if="successCreation" class="build-error">The build has been successfully added!</p>
@@ -37,29 +37,7 @@
               </b-col>
             </b-row>
             <b-row>
-              <b-col>
-                <div class="manifest-explain">Select a file or write manually the manifest</div>
-              </b-col>
-            </b-row>
-            <b-row class="m-2">
-              <b-col>
-                <b-file :state="isValidImport" class="file-import" placeholder="Browse or drag and drop a manifest" @change="readFile"/>
-                <span v-if="isValidImport === false">Invalid file, must be a python file</span>
-              </b-col>
-            </b-row>
-            <b-row class="m-2">
-              <AceEditor
-                :font-size="14"
-                :show-print-margin="true"
-                :show-gutter="true"
-                :highlight-active-line="true"
-                :on-change="onChange"
-                :editor-props="{$blockScrolling: true}"
-                mode="python"
-                theme="tomorrow_night"
-                name="editor"
-                width="100%"
-                class-name="code-editor"/>
+              List of available manifests here
             </b-row>
             <b-row>
               <button class="create-add" type="submit">Add build</button>
