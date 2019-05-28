@@ -5,26 +5,17 @@
     ============================-->
     <header id="header">
       <div class="container">
-        <b-navbar
-          class="app-navbar"
-          toggleable="md"
-          type="dark">
-          <b-navbar-toggle target="nav_collapse" />
-          <b-navbar-brand to="/"><img src="/img/raven_title.png"></b-navbar-brand>
-          <b-collapse
-            id="nav_collapse"
-            is-nav>
+        <b-navbar class="app-navbar" toggleable="md" type="dark">
+          <b-navbar-toggle target="nav_collapse"/>
+          <b-navbar-brand to="/">
+            <img src="/img/raven_title.png">
+          </b-navbar-brand>
+          <b-collapse id="nav_collapse" is-nav>
             <b-navbar-nav class="ml-auto">
-              <b-nav-item
-                to="/"
-                exact
-                class="nav-item"
-                active-class="nav-item-active">Home</b-nav-item>
-              <b-nav-item
-                to="/builds/create"
-                exact
-                class="nav-item"
-                active-class="nav-item-active">Create</b-nav-item>
+              <b-nav-item to="/" exact class="nav-item" active-class="nav-item-active">Builds</b-nav-item>
+              <b-nav-item to="/builds/create" exact class="nav-item" active-class="nav-item-active">Create build</b-nav-item>
+              <b-nav-item to="/manifests" exact class="nav-item" active-class="nav-item-active">Manifests</b-nav-item>
+              <b-nav-item to="/manifests/create" exact class="nav-item" active-class="nav-item-active">Create manifest</b-nav-item>
             </b-navbar-nav>
           </b-collapse>
         </b-navbar>
@@ -45,7 +36,10 @@
         <div class="container"/>
       </div>
       <div class="container">
-        <div class="copyright">&copy; Copyright <strong>Raven</strong>. All Rights Reserved</div>
+        <div class="copyright">
+          &copy; Copyright
+          <strong>Raven</strong>. All Rights Reserved
+        </div>
       </div>
     </footer>
   </div>

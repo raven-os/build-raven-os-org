@@ -126,7 +126,7 @@ export default {
       field: 'created_at',
       sort: '',
       results: {
-        builds: {loading: false, error: null, data: []}
+        builds: { loading: false, error: null, data: [] }
       },
       queue: null,
       sortBy: 'created_at',
