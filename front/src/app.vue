@@ -21,7 +21,7 @@
                 class="nav-item"
                 active-class="nav-item-active">Home</b-nav-item>
               <b-nav-item
-                to="/create"
+                to="/builds/create"
                 exact
                 class="nav-item"
                 active-class="nav-item-active">Create</b-nav-item>

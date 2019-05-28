@@ -206,7 +206,7 @@ export default {
       })
     },
     onRowClick (item) {
-      this.$router.push({name: 'Details',
+      this.$router.push({name: 'DetailsBuild',
         params: {
           id: item.id.toString(),
           name: item.name,
