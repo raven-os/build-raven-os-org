@@ -36,8 +36,11 @@
                 </b-input-group>
               </b-col>
             </b-row>
-            <b-row>
-              List of available manifests here
+            <b-row class="m-2 mb-4 text-center">
+              <b-col>
+                <treeselect v-model="manifests" :multiple="true" :options="allManifests"
+                  placeholder="Select the manifests" class="tree-select text-center" />
+              </b-col>
             </b-row>
             <b-row>
               <button class="create-add" type="submit">Add build</button>
@@ -50,14 +53,17 @@
 </template>
 
 <script>
-// import brace from 'brace'
-import { Ace as AceEditor, Split as SplitEditor } from 'vue2-brace-editor'
-import uuidv4 from 'uuid/v4'
+import Treeselect from '@riophae/vue-treeselect'
+import '@riophae/vue-treeselect/dist/vue-treeselect.css'
+
+const fakeList = [
+  { id: 1, label: 'Manifest 1' },
+  { id: 2, label: 'Manifest 2' }
+]
 
 export default {
   components: {
-    AceEditor,
-    SplitEditor
+    Treeselect
   },
   data () {
     return {
@@ -65,16 +71,13 @@ export default {
         creation: { loading: false, error: null, data: [], success: false },
         compilation: { loading: false, error: null, success: '' }
       },
-      file: null,
       name: null,
-      manifest: null,
+      allManifests: fakeList, // you will need to fetch this somewhere, it's the list of all manifests available to build
+      manifests: null, // this one is the manifests selected for the build
       package_id: null
     }
   },
   computed: {
-    isValidImport () {
-      return this.file ? this.file.type === 'text/x-python' : null
-    },
     loadingCreation () {
       return this.results.creation.loading
     },
@@ -95,22 +98,6 @@ export default {
     }
   },
   methods: {
-    readFile (event) {
-      this.file = event.target.files[0]
-
-      if (!this.isValidImport) {
-        this.file = null
-        return
-      }
-      const reader = new FileReader()
-
-      this.name = this.file.name
-      reader.onload = function (fileLoadedEvent) {
-        this.manifest = fileLoadedEvent.target.result
-        this.getPackageId()
-      }.bind(this)
-      reader.readAsText(this.file, 'UTF-8')
-    },
     getPackageId () {
       const idRegex = /@package\s*\(\s*id\s*=\s*"(.*)"/g
 
@@ -173,9 +160,6 @@ export default {
         this.results.creation.error = err.body.error_description
         this.results.creation.success = false
       })
-    },
-    onChange (newValue) {
-      this.manifest = newValue
     }
   }
 }
@@ -283,6 +267,9 @@ input[type="file"]:focus {
 .code-editor {
   margin-top: 50px;
   margin-bottom: 50px;
+}
+
+.tree-select {
 }
 
 /* BUILD-ERROR

@@ -137,6 +137,9 @@ export default {
     this.ended_at = this.$route.params.ended_at
     this.state = this.$route.params.state
     this.packages = this.$route.params.packages
+
+    // WE NEED TO FETCH THE BUILD FROM THE DATABASE INSTEAD OF GETTING 
+    // ITS PARAMS FROM THE HOME VUE
   },
   mounted () {
     if (!window.ws) {

@@ -44,9 +44,8 @@
         <div
           v-for="item in sortItems()"
           :key="item.id"
-          class="build-item"
-          @click="onRowClick(item)"
-        >
+          class="build-item">
+          <a :href="'/manifests/details/' + item.id" class="item-desc">
           <b-container>
             <b-row>
               <b-col>
@@ -62,6 +61,7 @@
               </b-col>
             </b-row>
           </b-container>
+          </a>
         </div>
       </b-container>
     </section>
@@ -117,15 +117,15 @@ export default {
       return this.manifests
     },
     onRowClick(item) {
-      this.$router.push({
-        name: "DetailsManifest",
-        params: {
-          id: item.id.toString(),
-          name: item.name,
-          created_at: item.created_at,
-          updated_at: item.updated_at
-        }
-      });
+      // this.$router.push({
+      //   name: "DetailsManifest",
+      //   params: {
+      //     id: item.id.toString(),
+      //     name: item.name,
+      //     created_at: item.created_at,
+      //     updated_at: item.updated_at
+      //   }
+      // });
     },
     sortItems() {
       let items = manifests;
@@ -266,6 +266,11 @@ h1 {
   background-color: rgba(237, 37, 78, 0.25) !important;
 }
 
+.item-desc,
+.item-desc:hover {
+  color: var(--primary-dark) !important;
+}
+
 .item-info {
   display: flex;
   flex-direction: column;
@@ -274,12 +279,6 @@ h1 {
 
 .item-name {
   font-size: 20px;
-}
-
-.item-pkg {
-  font-style: italic;
-  font-size: 15px;
-  margin-top: 5px;
 }
 
 .item-date {

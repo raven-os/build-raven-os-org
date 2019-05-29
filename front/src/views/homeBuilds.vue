@@ -53,8 +53,8 @@
           v-for="item in sortItems()"
           :class="{ queued: item.state == 0, running: item.state == 1, failed: item.state == 2, success: item.state == 3 }"
           :key="item.id"
-          class="build-item"
-          @click="onRowClick(item)">
+          class="build-item">
+          <a :href="'/builds/details/' + item.id" class="item-desc">
           <b-container>
             <b-row>
               <b-col>
@@ -93,6 +93,7 @@
               </b-col>
             </b-row>
           </b-container>
+          </a>
         </div>
       </b-container>
     </section>
@@ -206,16 +207,16 @@ export default {
       })
     },
     onRowClick (item) {
-      this.$router.push({name: 'DetailsBuild',
-        params: {
-          id: item.id.toString(),
-          name: item.name,
-          created_at: item.created_at,
-          state: item.state,
-          started_at: item.started_at,
-          ended_at: item.ended_at,
-          packages: item.packages
-        }})
+      // this.$router.push({name: 'DetailsBuild',
+      //   params: {
+      //     id: item.id.toString(),
+      //     name: item.name,
+      //     created_at: item.created_at,
+      //     state: item.state,
+      //     started_at: item.started_at,
+      //     ended_at: item.ended_at,
+      //     packages: item.packages
+      //   }})
     },
     sortItems () {
       let items = builds
@@ -354,6 +355,11 @@ h1 {
 }
 .build-item:hover {
   background-color: rgba(237, 37, 78, 0.25) !important;
+}
+
+.item-desc,
+.item-desc:hover {
+  color: var(--primary-dark) !important;
 }
 
 .running {

@@ -9,8 +9,6 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'prismjs'
 import 'prismjs/components/prism-python'
-import 'brace/mode/python'
-import 'brace/theme/tomorrow_night'
 
 // remove prod tip from console
 Vue.config.productionTip = false
