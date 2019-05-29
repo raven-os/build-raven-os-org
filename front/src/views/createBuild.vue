@@ -19,7 +19,7 @@
                   <b-input-group-prepend>
                     <div class="input-prepend">Name</div>
                   </b-input-group-prepend>
-                  <input id="name" v-model="name" class="form-control create-input" type="text" placeholder="Manifest name">
+                  <input id="name" v-model="name" class="form-control create-input" type="text" placeholder="Build name">
                 </b-input-group>
               </b-col>
             </b-row>
@@ -27,11 +27,11 @@
               <b-col>
                 <b-input-group class="search-input-group create-input-group">
                   <b-input-group-prepend>
-                    <div class="input-prepend" style="background:grey;">Package id</div>
+                    <div class="input-prepend" style="background:grey;">ID</div>
                   </b-input-group-prepend>
                   <input
                     id="package_id" v-model="package_id" class="form-control create-input" type="text"
-                    placeholder="Package id"
+                    placeholder="ID"
                     readonly="true">
                 </b-input-group>
               </b-col>

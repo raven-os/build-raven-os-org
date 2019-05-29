@@ -33,20 +33,20 @@
               <b-col>
                 <b-input-group class="search-input-group create-input-group">
                   <b-input-group-prepend>
-                    <div class="input-prepend" style="background:grey;">Package id</div>
+                    <div class="input-prepend" style="background:grey;">ID</div>
                   </b-input-group-prepend>
                   <input
                     id="package_id"
                     v-model="package_id"
                     class="form-control create-input"
                     type="text"
-                    placeholder="Package id"
+                    placeholder="ID"
                     readonly="true"
                   >
                 </b-input-group>
               </b-col>
             </b-row>
-            <b-row>
+            <b-row class="m-2">
               <b-col>
                 <div class="manifest-explain">Select a file or write the manifest</div>
               </b-col>
@@ -62,7 +62,7 @@
                 <span v-if="isValidImport === false">Invalid file, must be a python file</span>
               </b-col>
             </b-row>
-            <b-row class="m-2">
+            <b-row class="m-2 my-4">
               <b-col>
                 <Monaco
                   height="600"
