@@ -62,16 +62,19 @@
                 <span v-if="isValidImport === false">Invalid file, must be a python file</span>
               </b-col>
             </b-row>
-            <b-row class="my-5">
-              <Monaco
-                height=600
-                language="python"
-                :changeThrottle="500"
-                :code="code"
-                :options="options"
-                theme="vs-dark"
-                @mounted="onMounted"
-                @codeChange="onChange"/>
+            <b-row class="m-2">
+              <b-col>
+                <Monaco
+                  height="600"
+                  language="python"
+                  :changeThrottle="500"
+                  :code="code"
+                  :options="options"
+                  theme="vs-dark"
+                  @mounted="onMounted"
+                  @codeChange="onChange"
+                />
+              </b-col>
             </b-row>
             <b-row>
               <button class="create-add" type="submit">Add manifest</button>
@@ -84,111 +87,111 @@
 </template>
 
 <script>
-import Monaco from 'monaco-editor-forvue'
+import Monaco from "monaco-editor-forvue";
 
 export default {
   components: {
     Monaco
   },
-  data () {
+  data() {
     return {
       results: {
         creation: { loading: false, error: null, data: [], success: false },
-        compilation: { loading: false, error: null, success: '' }
+        compilation: { loading: false, error: null, success: "" }
       },
-      code: '# Write your own manifest\n',
+      code: "# Write your own manifest\n",
       options: {},
       file: null,
       name: null,
       manifest: null,
       package_id: null
-    }
+    };
   },
   computed: {
-    isValidImport () {
-      return this.file ? this.file.type === 'text/x-python' : null
+    isValidImport() {
+      return this.file ? this.file.type === "text/x-python" : null;
     },
-    loadingCreation () {
-      return this.results.creation.loading
+    loadingCreation() {
+      return this.results.creation.loading;
     },
-    errorCreation () {
-      return this.results.creation.error
+    errorCreation() {
+      return this.results.creation.error;
     },
-    successCreation () {
-      return this.results.creation.success
+    successCreation() {
+      return this.results.creation.success;
     },
-    loadingCompilation () {
-      return this.results.compilation.loading
+    loadingCompilation() {
+      return this.results.compilation.loading;
     },
-    errorCompilation () {
-      return this.results.compilation.error || ''
+    errorCompilation() {
+      return this.results.compilation.error || "";
     },
-    successCompilation () {
-      return this.results.compilation.success
+    successCompilation() {
+      return this.results.compilation.success;
     }
   },
   methods: {
-    readFile (event) {
-      this.file = event.target.files[0]
+    readFile(event) {
+      this.file = event.target.files[0];
 
       if (!this.isValidImport) {
-        this.file = null
-        return
+        this.file = null;
+        return;
       }
-      const reader = new FileReader()
+      const reader = new FileReader();
 
-      this.name = this.file.name
-      reader.onload = function (fileLoadedEvent) {
-        this.manifest = fileLoadedEvent.target.result
-        this.getPackageId()
-      }.bind(this)
-      reader.readAsText(this.file, 'UTF-8')
+      this.name = this.file.name;
+      reader.onload = function(fileLoadedEvent) {
+        this.manifest = fileLoadedEvent.target.result;
+        this.getPackageId();
+      }.bind(this);
+      reader.readAsText(this.file, "UTF-8");
     },
-    getPackageId () {
-      const idRegex = /@package\s*\(\s*id\s*=\s*"(.*)"/g
+    getPackageId() {
+      const idRegex = /@package\s*\(\s*id\s*=\s*"(.*)"/g;
 
-      const match = idRegex.exec(this.manifest)
-      this.package_id = (match && match[1]) || null
+      const match = idRegex.exec(this.manifest);
+      this.package_id = (match && match[1]) || null;
     },
-    addCompileOutput (txt) {
-      this.results.compilation.success += txt
+    addCompileOutput(txt) {
+      this.results.compilation.success += txt;
     },
-    addManifest () {
-      console.log(this.manifest)
+    addManifest() {
+      console.log(this.manifest);
       if (!this.name || !this.manifest) {
-        this.results.creation.error = 'You must complete all fields.'
-        return
+        this.results.creation.error = "You must complete all fields.";
+        return;
       }
-      this.results.creation.error = null
-      this.results.creation.loading = true
+      this.results.creation.error = null;
+      this.results.creation.loading = true;
       const data = {
         manifest: this.manifest,
         name: this.name
-      }
-      this.$http.post('http://localhost:8000/builds/', data).then(
+      };
+      this.$http.post("http://localhost:8000/builds/", data).then(
         res => {
-          this.results.creation.data = res.body
-          this.results.creation.loading = false
-          this.results.creation.success = true
+          this.results.creation.data = res.body;
+          this.results.creation.loading = false;
+          this.results.creation.success = true;
           // this.getPackages()
         },
         err => {
           // console.log(err)
-          this.results.creation.loading = false
-          this.results.creation.error = err.body.error_description
-          this.results.creation.success = false
+          this.results.creation.loading = false;
+          this.results.creation.error = err.body.error_description;
+          this.results.creation.success = false;
         }
-      )
+      );
     },
-    onMounted (editor) {
-      this.editor = editor
+    onMounted(editor) {
+      this.editor = editor;
     },
-    onChange (editor) {
-      this.manifest = this.editor.getValue()
-      console.log(this.manifest)
+    onChange(editor) {
+      this.manifest = this.editor.getValue();
+      console.log(this.manifest);
     }
   }
-}
+};
 </script>
 
 <style scoped>
