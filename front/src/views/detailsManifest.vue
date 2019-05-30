@@ -14,13 +14,14 @@
           <th>Last update</th>
         </tr>
         <tr>
-          <td>{{ manifest && manifest.creation_date}}</td>
+          <td>{{ manifest && manifest.creation_date }}</td>
           <td>{{ manifest && manifest.last_update }}</td>
         </tr>
       </table>
-      <b-table invisible
+      <b-table
         id="date-table"
         :fields="dateFields"
+        invisible
         tbody-tr-class="table-row-nohover"
         thead-class="list-thead"
         responsive

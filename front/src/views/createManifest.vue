@@ -88,6 +88,7 @@
 
 <script>
 import Monaco from 'monaco-editor-forvue'
+import { mapActions } from 'vuex'
 
 export default {
   components: {
@@ -131,6 +132,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions('manifest', ['createManifest']),
     readFile (event) {
       this.file = event.target.files[0]
 
@@ -157,38 +159,22 @@ export default {
       this.results.compilation.success += txt
     },
     addManifest () {
-      console.log(this.manifest)
       if (!this.name || !this.manifest) {
         this.results.creation.error = 'You must complete all fields.'
         return
       }
-      this.results.creation.error = null
-      this.results.creation.loading = true
       const data = {
-        manifest: this.manifest,
+        content: this.manifest,
         name: this.name
       }
-      this.$http.post('http://localhost:8000/builds/', data).then(
-        res => {
-          this.results.creation.data = res.body
-          this.results.creation.loading = false
-          this.results.creation.success = true
-          // this.getPackages()
-        },
-        err => {
-          // console.log(err)
-          this.results.creation.loading = false
-          this.results.creation.error = err.body.error_description
-          this.results.creation.success = false
-        }
-      )
+
+      this.createManifest(data)
     },
     onMounted (editor) {
       this.editor = editor
     },
     onChange (editor) {
       this.manifest = this.editor.getValue()
-      console.log(this.manifest)
     }
   }
 }
