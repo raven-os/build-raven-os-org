@@ -15,7 +15,8 @@
           <b-container>
             <b-row class="m-2">
               <b-col>
-                <b-input-group class="search-input-group create-input-group">
+                <!-- A build has no name -->
+                <b-input-group invisible class="search-input-group create-input-group">
                   <b-input-group-prepend>
                     <div class="input-prepend">Name</div>
                   </b-input-group-prepend>
@@ -56,11 +57,7 @@
 <script>
 import Treeselect from '@riophae/vue-treeselect'
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
-
-const fakeList = [
-  { id: 1, label: 'Manifest 1' },
-  { id: 2, label: 'Manifest 2' }
-]
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -73,12 +70,17 @@ export default {
         compilation: { loading: false, error: null, success: '' }
       },
       name: null,
-      allManifests: fakeList, // you will need to fetch this somewhere, it's the list of all manifests available to build
       manifests: null, // this one is the manifests selected for the build
       package_id: null
     }
   },
   computed: {
+    ...mapGetters('manifest', ['getManifests']),
+    allManifests () {
+      return Object.keys(this.getManifests).map((key) => {
+        return { id: key, label: '#' + key + ': ' + this.getManifests[key].name }
+      })
+    },
     loadingCreation () {
       return this.results.creation.loading
     },
@@ -98,7 +100,12 @@ export default {
       return this.results.compilation.success
     }
   },
+  beforeMount () {
+    this.listManifests()
+  },
   methods: {
+    ...mapActions('manifest', ['listManifests']),
+    ...mapActions('build', ['createBuild']),
     getPackageId () {
       const idRegex = /@package\s*\(\s*id\s*=\s*"(.*)"/g
 
@@ -108,59 +115,8 @@ export default {
     addCompileOutput (txt) {
       this.results.compilation.success += txt
     },
-    build () {
-      if (!this.results.compilation.loading) {
-        this.results.compilation.sucess = ' '
-        var ws = new WebSocket('ws://127.0.0.1:2794', ['rust-websocket'])
-        ws.vue = this
-        ws.onmessage = function (e) {
-          this.vue.addCompileOutput(e.data)
-        }
-        const uid = uuidv4()
-        ws.onopen = function () {
-          ws.send('.packager.compile.client ' + uid)
-        }
-        this.results.compilation.error = null
-        this.results.compilation.loading = true
-        const headers = {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }
-        this.$http.post('http://127.0.0.1:8000/packages/compile/' + uid, null, headers).then(res => {
-          this.results.compilation.success = res.body
-          this.results.compilation.loading = false
-        }, err => {
-          console.log(err)
-          this.results.compilation.loading = false
-          this.results.compilation.success = err
-          this.results.compilation.error = err
-        })
-      }
-    },
     addBuild () {
-      console.log(this.manifest)
-      if (!this.name || !this.manifest) {
-        this.results.creation.error = 'You must complete all fields.'
-        return
-      }
-      this.results.creation.error = null
-      this.results.creation.loading = true
-      const data = {
-        manifest: this.manifest,
-        name: this.name
-      }
-      this.$http.post('http://localhost:8000/builds/', data).then(res => {
-        this.results.creation.data = res.body
-        this.results.creation.loading = false
-        this.results.creation.success = true
-        // this.getPackages()
-      }, err => {
-        // console.log(err)
-        this.results.creation.loading = false
-        this.results.creation.error = err.body.error_description
-        this.results.creation.success = false
-      })
+      this.createBuild(this.manifests)
     }
   }
 }
