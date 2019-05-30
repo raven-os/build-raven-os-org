@@ -38,11 +38,11 @@
             v-model="selected"
             :options="optionSort"
             class="sort-select"
-            @change="onSortChange"
+            @change="true"
           />
         </div>
         <div
-          v-for="item in sortItems()"
+          v-for="item in getManifests"
           :key="item.id"
           class="build-item">
           <a :href="'/manifests/details/' + item.id" class="item-desc">
@@ -50,13 +50,13 @@
               <b-row>
                 <b-col>
                   <div class="item-info">
-                    {{ item.name }}
+                    #{{ item.id }}: {{ item.name }}
                   </div>
                 </b-col>
                 <b-col cols="12" md="4" lg="2">
                   <div class="item-date">
                     <i class="far fa-calendar-alt"/>
-                    {{ item.created_at | momentFromNow }}
+                    {{ item.creation_date | momentFromNow }}
                   </div>
                 </b-col>
               </b-row>
@@ -69,10 +69,7 @@
 </template>
 
 <script>
-const manifests = [
-  { id: 1, name: 'Manifest 1', created_at: '2018-06-15T11:45:30Z', updated_at: '2018-06-15T11:45:35Z' },
-  { id: 2, name: 'Manifest 2', created_at: '2018-06-15T11:45:30Z', updated_at: '2018-06-15T11:45:35Z' }
-]
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   filters: {
@@ -100,21 +97,20 @@ export default {
       ]
     }
   },
-  computed: {},
+  computed: {
+    ...mapGetters('manifest', ['getManifests'])
+  },
   watch: {
     query: 'search',
     field: 'search'
   },
-  mounted () {},
   beforeMount () {
-    this.getManifests()
+    this.listManifests()
   },
   methods: {
+    ...mapActions('manifest', ['listManifests']),
     search () {
       this.getManifests()
-    },
-    getManifests () {
-      return this.manifests
     },
     onRowClick (item) {
       // this.$router.push({
@@ -126,29 +122,6 @@ export default {
       //     updated_at: item.updated_at
       //   }
       // });
-    },
-    sortItems () {
-      let items = manifests
-      switch (this.sortBy) {
-        case 'created_at':
-          items.sort(function (a, b) {
-            return moment(a['created_at']).diff(moment(b['created_at']))
-          })
-          break
-        case 'name':
-          items.sort(function (a, b) {
-            return a['name'] > b['name']
-          })
-          break
-      }
-      if (this.sortDesc) {
-        items.reverse()
-      }
-      return items
-    },
-    onSortChange (value) {
-      this.sortBy = value['by']
-      this.sortDesc = value['desc']
     }
   }
 }
