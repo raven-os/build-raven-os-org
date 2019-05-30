@@ -51,6 +51,15 @@
         show-empty
         invisible
         empty-text="No package for this manifest" />
+
+        <div>
+          <h3>Output</h3>
+          <code>{{ build && build.stdout }}</code>
+        </div>
+        <div>
+          <h4>Error</h4>
+          <code>{{ build && build.stderr }}</code>
+        </div>
     </b-container>
   </div>
 </template>
@@ -150,9 +159,21 @@ export default {
   },
   beforeMount () {
     this.retrieveBuild(this.id)
+    this.update()
+
   },
   methods: {
-    ...mapActions('build', ['retrieveBuild'])
+    ...mapActions('build', ['retrieveBuild']),
+    update () {
+      if (this.$route.name !== 'DetailsBuild') {
+        return
+      }
+      setTimeout(() => {
+        console.log('retrieve')
+        this.retrieveBuild(this.id)
+        this.update()
+      }, 1000)
+    }
   }
 }
 </script>

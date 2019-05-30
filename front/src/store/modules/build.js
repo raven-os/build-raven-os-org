@@ -29,6 +29,7 @@ const actions = {
       store.commit(types.BUILD_CREATE_REQUEST)
       const res = await buildApi.create(manifestIds)
       store.commit(types.BUILD_CREATE_SUCCESS, res.body)
+      return res.body
     } catch (err) {
       store.commit(types.BUILD_CREATE_ERROR, err.body)
     }

@@ -46,6 +46,7 @@
             </b-row>
             <b-row>
               <button class="create-add" type="submit">Add build</button>
+              <p :if="buildId">#{{ buildId }} created</p>
             </b-row>
           </b-container>
         </form>
@@ -71,7 +72,8 @@ export default {
       },
       name: null,
       manifests: null, // this one is the manifests selected for the build
-      package_id: null
+      package_id: null,
+      buildId: null
     }
   },
   computed: {
@@ -116,7 +118,9 @@ export default {
       this.results.compilation.success += txt
     },
     addBuild () {
-      this.createBuild(this.manifests)
+      this.createBuild(this.manifests).then(build=> {
+        this.buildId = build && build.id
+      })
     }
   }
 }
