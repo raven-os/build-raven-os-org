@@ -46,21 +46,21 @@
           :key="item.id"
           class="build-item">
           <a :href="'/manifests/details/' + item.id" class="item-desc">
-          <b-container>
-            <b-row>
-              <b-col>
-                <div class="item-info">
-                  {{ item.name }}
-                </div>
-              </b-col>
-              <b-col cols="12" md="4" lg="2">
-                <div class="item-date">
-                  <i class="far fa-calendar-alt"/>
-                  {{ item.created_at | momentFromNow }}
-                </div>
-              </b-col>
-            </b-row>
-          </b-container>
+            <b-container>
+              <b-row>
+                <b-col>
+                  <div class="item-info">
+                    {{ item.name }}
+                  </div>
+                </b-col>
+                <b-col cols="12" md="4" lg="2">
+                  <div class="item-date">
+                    <i class="far fa-calendar-alt"/>
+                    {{ item.created_at | momentFromNow }}
+                  </div>
+                </b-col>
+              </b-row>
+            </b-container>
           </a>
         </div>
       </b-container>
@@ -70,22 +70,22 @@
 
 <script>
 const manifests = [
-  { id: 1, name: "Manifest 1", created_at: "2018-06-15T11:45:30Z", updated_at: "2018-06-15T11:45:35Z" },
-  { id: 2, name: "Manifest 2", created_at: "2018-06-15T11:45:30Z", updated_at: "2018-06-15T11:45:35Z" }
-];
+  { id: 1, name: 'Manifest 1', created_at: '2018-06-15T11:45:30Z', updated_at: '2018-06-15T11:45:35Z' },
+  { id: 2, name: 'Manifest 2', created_at: '2018-06-15T11:45:30Z', updated_at: '2018-06-15T11:45:35Z' }
+]
 
 export default {
   filters: {
-    momentFromNow: function(date) {
-      return moment(date).fromNow();
+    momentFromNow: function (date) {
+      return moment(date).fromNow()
     },
-    momentDuration: function(start, end) {
+    momentDuration: function (start, end) {
       return moment
         .utc(moment.duration(moment(end).diff(moment(start))).asMilliseconds())
-        .format("HH:mm:ss");
+        .format('HH:mm:ss')
     }
   },
-  data() {
+  data () {
     return {
       query: '',
       field: 'created_at',
@@ -97,26 +97,26 @@ export default {
         { text: 'From oldest to newest', value: { by: 'created_at', desc: false } },
         { text: 'From A to Z', value: { by: 'name', desc: false } },
         { text: 'From Z to A', value: { by: 'name', desc: true } }
-      ],
-    };
+      ]
+    }
   },
   computed: {},
   watch: {
-    query: "search",
-    field: "search"
+    query: 'search',
+    field: 'search'
   },
-  mounted() {},
-  beforeMount() {
-    this.getManifests();
+  mounted () {},
+  beforeMount () {
+    this.getManifests()
   },
   methods: {
-    search() {
-      this.getManifests();
+    search () {
+      this.getManifests()
     },
-    getManifests() {
+    getManifests () {
       return this.manifests
     },
-    onRowClick(item) {
+    onRowClick (item) {
       // this.$router.push({
       //   name: "DetailsManifest",
       //   params: {
@@ -127,31 +127,31 @@ export default {
       //   }
       // });
     },
-    sortItems() {
-      let items = manifests;
+    sortItems () {
+      let items = manifests
       switch (this.sortBy) {
-        case "created_at":
-          items.sort(function(a, b) {
-            return moment(a["created_at"]).diff(moment(b["created_at"]));
-          });
-          break;
-        case "name":
-          items.sort(function(a, b) {
-            return a["name"] > b["name"];
-          });
-          break;
+        case 'created_at':
+          items.sort(function (a, b) {
+            return moment(a['created_at']).diff(moment(b['created_at']))
+          })
+          break
+        case 'name':
+          items.sort(function (a, b) {
+            return a['name'] > b['name']
+          })
+          break
       }
       if (this.sortDesc) {
-        items.reverse();
+        items.reverse()
       }
-      return items;
+      return items
     },
-    onSortChange(value) {
-      this.sortBy = value["by"];
-      this.sortDesc = value["desc"];
+    onSortChange (value) {
+      this.sortBy = value['by']
+      this.sortDesc = value['desc']
     }
   }
-};
+}
 </script>
 
 <style scoped>

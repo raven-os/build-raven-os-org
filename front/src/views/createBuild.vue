@@ -38,7 +38,8 @@
             </b-row>
             <b-row class="m-2 mb-4 text-center">
               <b-col>
-                <treeselect v-model="manifests" :multiple="true" :options="allManifests"
+                <treeselect
+                  v-model="manifests" :multiple="true" :options="allManifests"
                   placeholder="Select the manifests" class="tree-select text-center" />
               </b-col>
             </b-row>

@@ -47,52 +47,52 @@
             v-model="selected"
             :options="optionSort"
             class="sort-select"
-            @change="onSortChange"/>
+            @change="true"/>
         </div>
         <div
-          v-for="item in sortItems()"
+          v-for="item in getBuilds"
           :class="{ queued: item.state == 0, running: item.state == 1, failed: item.state == 2, success: item.state == 3 }"
           :key="item.id"
           class="build-item">
           <a :href="'/builds/details/' + item.id" class="item-desc">
-          <b-container>
-            <b-row>
-              <b-col>
-                <div class="item-info">
-                  <div v-if="item.state === 3">
-                    <i class="fas fa-check text-success"/> <span class="item-name">{{ item.name }}</span>
+            <b-container>
+              <b-row>
+                <b-col>
+                  <div class="item-info">
+                    <div v-if="item.state === 3">
+                      <i class="fas fa-check text-success"/> <span class="item-name">#{{ item.id }}</span>
+                    </div>
+                    <div v-else-if="item.state === 2">
+                      <i class="fas fa-times text-failed"/> <span class="item-name">#{{ item.id }}</span>
+                    </div>
+                    <div v-else-if="item.state === 1">
+                      <i class="fas fa-bolt text-running"/> <span class="item-name">#{{ item.id }}</span>
+                    </div>
+                    <div v-else>
+                      <i class="fas fa-history text-queued"/> <span class="item-name">#{{ item.id }}</span>
+                    </div>
+                    <div v-if="item.packages && item.packages.length" class="item-pkg">
+                      Package(s): <span v-for="(pkgItem, index) in item.packages" :key="index"><span v-if="index > 0">;</span> {{ item.repository }}/{{ pkgItem }}
+                      </span>
+                    </div>
                   </div>
-                  <div v-else-if="item.state === 2">
-                    <i class="fas fa-times text-failed"/> <span class="item-name">{{ item.name }}</span>
+                </b-col>
+                <b-col cols="12" md="4" lg="2">
+                  <div class="item-date">
+                    <i class="far fa-calendar-alt"/> {{ item.creation_date | momentFromNow }}
+                    <div v-if="item.start_date && item.end_date">
+                      <i class="far fa-clock"/> {{ item.start_date | momentDuration(item.end_date) }}
+                    </div>
+                    <div v-else-if="item.start_date && !item.end_date">
+                      <i class="far fa-clock"/> Running since {{ item.start_date | momentFromNow }}
+                    </div>
+                    <div v-else>
+                      <i class="far fa-clock"/> Queued
+                    </div>
                   </div>
-                  <div v-else-if="item.state === 1">
-                    <i class="fas fa-bolt text-running"/> <span class="item-name">{{ item.name }}</span>
-                  </div>
-                  <div v-else>
-                    <i class="fas fa-history text-queued"/> <span class="item-name">{{ item.name }}</span>
-                  </div>
-                  <div class="item-pkg">
-                    Package(s): <span v-for="(pkgItem, index) in getPkgs(item)" :key="pkgItem"><span v-if="index > 0">;</span> {{ item.repository }}/{{ pkgItem }}
-                    </span>
-                  </div>
-                </div>
-              </b-col>
-              <b-col cols="12" md="4" lg="2">
-                <div class="item-date">
-                  <i class="far fa-calendar-alt"/> {{ item.created_at | momentFromNow }}
-                  <div v-if="item.started_at && item.ended_at">
-                    <i class="far fa-clock"/> {{ item.started_at | momentDuration(item.ended_at) }}
-                  </div>
-                  <div v-else-if="item.started_at && !item.ended_at">
-                    <i class="far fa-clock"/> Running since {{ item.started_at | momentFromNow }}
-                  </div>
-                  <div v-else>
-                    <i class="far fa-clock"/> Queued
-                  </div>
-                </div>
-              </b-col>
-            </b-row>
-          </b-container>
+                </b-col>
+              </b-row>
+            </b-container>
           </a>
         </div>
       </b-container>
@@ -101,16 +101,7 @@
 </template>
 
 <script>
-const builds = [
-  { id: 1, name: 'Htop', state: 2, created_at: '2018-06-15T11:45:30Z', started_at: '2018-06-15T11:45:35Z', ended_at: '2018-06-15T11:45:40Z', repository: 'stable', packages: 'htop' },
-  { id: 2, name: 'Browsers', state: 3, created_at: '2018-10-23T11:45:30Z', started_at: '2018-10-23T11:50:30Z', ended_at: '2018-10-23T11:56:12Z', repository: 'stable', packages: 'firefox,chrome' },
-  { id: 3, name: 'Test', state: 0, created_at: '2018-10-02T11:45:30Z', started_at: '', ended_at: '', repository: 'stable', packages: 'test' },
-  { id: 4, name: 'Discord', state: 1, created_at: '2018-10-24T11:45:30Z', started_at: '2018-10-24T12:45:30Z', ended_at: '', repository: 'stable', packages: 'discord' }
-]
-
-const runningItems = [
-  { id: 4, name: 'Manifest 1', state: 1, created_at: '2018-06-15T11:45:30Z', started_at: '', ended_at: '' }
-]
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   filters: {
@@ -138,73 +129,26 @@ export default {
         { text: 'From oldest to newest', value: { by: 'created_at', desc: false } },
         { text: 'From A to Z', value: { by: 'name', desc: false } },
         { text: 'From Z to A', value: { by: 'name', desc: true } }
-      ],
-      runningItems: runningItems
+      ]
     }
   },
   computed: {
-    loadingBuild () {
-      return this.results.builds.loading
-    },
-    errorBuild () {
-      return this.results.builds.error
-    },
+    ...mapGetters('build', ['getBuilds']),
     builds () {
-      return this.results.builds.data
-    },
-    queuing () {
-      return (this.queue && this.queue.queuing) || null
-    },
-    running () {
-      return (this.queue && this.queue.running) || null
+      return this.getBuilds
     }
   },
   watch: {
     query: 'search',
     field: 'search'
   },
-  mounted () {
-    window.ws = new WebSocket('ws://127.0.0.1:2794', ['rust-websocket'])
-    window.ws.vue = this
-    window.ws.onmessage = function (e) {
-      const json = e.data.replace(/[^\x20-\x7E]/g, '\\n')
-      console.log(json)
-      this.vue.queue = JSON.parse(json)
-      console.log(this.vue.queue)
-    }
-    window.ws.onopen = function () {
-      window.ws.send('.packager.compile.client 1')
-    }
-  },
   beforeMount () {
-    this.getBuilds()
+    this.listBuilds()
   },
   methods: {
-    runQueue () {
-      this.$http.post('http://localhost:8000/queue/run')
-    },
+    ...mapActions('build', ['listBuilds']),
     search () {
-      this.getBuilds()
-    },
-    getBuilds () {
-      let url = 'http://localhost:8000/builds/'
-      if (this.query) {
-        url += `?${this.field}=${this.query}`
-      }
-      if (this.sort) {
-        url += this.query ? '&' : '?'
-        url += `order_by=${this.sort}`
-      }
-      this.results.builds.error = null
-      this.results.builds.loading = true
-      this.$http.get(url).then(res => {
-        this.results.builds.data = res.body
-        this.results.builds.loading = false
-      }, err => {
-        console.log(err)
-        this.results.builds.loading = false
-        this.results.builds.error = err.body.error_description
-      })
+      this.listBuilds()
     },
     onRowClick (item) {
       // this.$router.push({name: 'DetailsBuild',
@@ -217,32 +161,6 @@ export default {
       //     ended_at: item.ended_at,
       //     packages: item.packages
       //   }})
-    },
-    sortItems () {
-      let items = builds
-      switch (this.sortBy) {
-        case 'created_at':
-          items.sort(function (a, b) {
-            return moment(a['created_at']).diff(moment(b['created_at']))
-          })
-          break
-        case 'name':
-          items.sort(function (a, b) {
-            return a['name'] > b['name']
-          })
-          break
-      }
-      if (this.sortDesc) {
-        items.reverse()
-      }
-      return items
-    },
-    onSortChange (value) {
-      this.sortBy = value['by']
-      this.sortDesc = value['desc']
-    },
-    getPkgs (item) {
-      return item.packages.split(',')
     }
   }
 }

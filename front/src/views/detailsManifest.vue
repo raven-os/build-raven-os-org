@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import Prism from "vue-prism-component";
+import Prism from 'vue-prism-component'
 
 const manifest = `#!/usr/bin/env python3.6
 # -*- coding: utf-8 -*-
@@ -140,7 +140,7 @@ def build_libc():
         ),
         install=install_libc,
     )
-`;
+`
 
 export default {
   components: {
@@ -152,36 +152,36 @@ export default {
       required: true
     }
   },
-  data() {
+  data () {
     return {
-      name: "",
-      created_at: "",
-      updated_at: "",
+      name: '',
+      created_at: '',
+      updated_at: '',
       manifestBody: manifest,
       dateFields: [
         {
-          key: "created_at",
-          label: "Creation date",
-          class: "td-date",
-          tdClass: "list-table-cell",
+          key: 'created_at',
+          label: 'Creation date',
+          class: 'td-date',
+          tdClass: 'list-table-cell',
           formatter: value => {
             if (value) {
-              return moment(value).format("MMMM Do YYYY, HH:mm:ss")
+              return moment(value).format('MMMM Do YYYY, HH:mm:ss')
             } else {
-              return ""
+              return ''
             }
           }
         },
         {
-          key: "updated_at",
-          label: "Update date",
-          class: "td-date",
-          tdClass: "list-table-cell",
+          key: 'updated_at',
+          label: 'Update date',
+          class: 'td-date',
+          tdClass: 'list-table-cell',
           formatter: value => {
             if (value) {
-              return moment(value).format("MMMM Do YYYY, HH:mm:ss")
+              return moment(value).format('MMMM Do YYYY, HH:mm:ss')
             } else {
-              return ""
+              return ''
             }
           }
         }
@@ -189,11 +189,11 @@ export default {
     }
   },
   computed: {
-    manifest() {
+    manifest () {
       return (this.build && this.build.manifest) || null
     }
   },
-  created() {
+  created () {
     this.name = this.$route.params.name
     this.created_at = this.$route.params.created_at
     this.updated_at = this.$route.params.updated_at
@@ -201,9 +201,9 @@ export default {
     // WE NEED TO FETCH THE MANIFEST FROM THE DATABASE INSTEAD OF GETTING
     // ITS PARAMS FROM THE HOME VUE
   },
-  mounted() {},
+  mounted () {},
   methods: {
-    dateProvider(ctx) {
+    dateProvider (ctx) {
       let items = []
       var newItem = {
         created_at: this.created_at,
