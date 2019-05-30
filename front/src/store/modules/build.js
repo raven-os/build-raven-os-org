@@ -20,7 +20,7 @@ const getters = {
   getBuildLoadings: state => state.loading,
   getBuildErrors: state => state.error,
   getBuilds: state => state.builds,
-  getBuild: state => id => state.build[id] || {}
+  getBuild: state => id => state.builds[id] || null
 }
 
 const actions = {
@@ -44,7 +44,7 @@ const actions = {
     }
   },
 
-  async getBuild (store, id) {
+  async retrieveBuild (store, id) {
     try {
       store.commit(types.BUILD_GET_REQUEST)
       const res = await buildApi.get(id)

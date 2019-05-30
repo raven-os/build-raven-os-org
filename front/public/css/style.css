@@ -3,7 +3,7 @@ GENERAL
 ----------------------------------- */
 :root {
     --accent: #ed254e;
-    --primary: #f7f4f8;
+    --primary: #ffffff;
     --white: #ffffff;
     --primary-dark: #343432;
 }
@@ -43,8 +43,8 @@ h1, h2, h3, h4, h5, h6 {
     padding: 0;
 }
 
-/*  Global classes to customize tables 
-    Don't remove nor move 
+/*  Global classes to customize tables
+    Don't remove nor move
 */
 
 table.b-table[aria-busy=false], table.b-table[aria-busy=true] {
@@ -53,7 +53,7 @@ table.b-table[aria-busy=false], table.b-table[aria-busy=true] {
 
 .list-thead {
     background-color: rgba(52, 52, 50, 0.9);
-    color: var(--primary);
+    color: #ffffff;
 }
 
 .list-table-cell {
@@ -62,6 +62,11 @@ table.b-table[aria-busy=false], table.b-table[aria-busy=true] {
     text-overflow: ellipsis;
     white-space: nowrap;
     padding: 10px;
+    COLOR: WHITE;
+    color: white;
+    text-color: white;
+    font-coor: white;
+    COLOR: FFFFFFF
 }
 
 .metadata-table-cell {
@@ -72,13 +77,15 @@ table.b-table[aria-busy=false], table.b-table[aria-busy=true] {
 .table-row, .table-row-nohover {
     border-bottom: 1px solid var(--accent) !important;
 }
-  
+
 .table-row:hover {
     background-color: rgba(237, 37, 78, 0.25) !important;
 }
 
 .td-date {
     width: 27%;
+    COLOR: WHITE;
+    COLOR: #FFFFFF;
 }
 
 .td-state {

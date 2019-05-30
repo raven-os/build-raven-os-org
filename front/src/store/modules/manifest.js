@@ -22,7 +22,7 @@ const getters = {
   getManifestLoadings: state => state.loading,
   getManifestErrors: state => state.error,
   getManifests: state => state.manifests,
-  getManifest: state => id => state.manifests[id] || {}
+  getManifest: state => id => state.manifests[id] || null
 }
 
 const actions = {
@@ -61,7 +61,7 @@ const actions = {
     }
   },
 
-  async getManifest (store, id) {
+  async retrieveManifest (store, id) {
     try {
       store.commit(types.MANIFEST_GET_REQUEST)
       const res = await manifestApi.get(id)

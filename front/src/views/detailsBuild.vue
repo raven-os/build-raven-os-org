@@ -3,37 +3,61 @@
     <b-container class="top-container">
       <b-row>
         <b-col>
-          <div class="manifest-name">{{ name }}</div>
+          <div class="manifest-name">#{{ build && build.id }}</div>
         </b-col>
       </b-row>
     </b-container>
     <b-container class="mid-container">
+      <table border="2" align="center" style="text-align:center;">
+        <tr>
+          <th>Id</th>
+          <th>State</th>
+          <th>exit_status</th>
+          <th>creation date</th>
+          <th>start date</th>
+          <th>end at</th>
+        </tr>
+        <tr>
+          <td>{{ build && build.id }}</td>
+          <td>{{ build && build.state }}</td>
+          <td>{{ (build && build.exit_status) || '-' }}</td>
+          <td>{{ build && build.creation_date }}</td>
+          <td>{{ (build && build.start_date) || '-' }}</td>
+          <td>{{ (build && build.end_date) || '-' }}</td>
+        </tr>
+      </table>
+      Packages
+      <div :if="build && build.packages && build.packages.length">
+        <div v-for="(pkg, index) in build && build.packages" :key="index">
+          <template><span :key="index">{{ pkg }}</span></template>
+        </div>
+      </div>
       <b-table
         id="date-table"
-        :items="dateProvider"
         :fields="dateFields"
+        class="white"
+        style="color: white; color: #ffffff; color: { color: white; }"
         tbody-tr-class="table-row-nohover"
         thead-class="list-thead"
-        responsive />
+        responsive invisible />
+
       <b-table
         id="packages-table"
-        :items="pkgProvider"
         :fields="pkgFields"
         tbody-tr-class="table-row-nohover"
         thead-class="list-thead"
         responsive
         striped
         show-empty
+        invisible
         empty-text="No package for this manifest" />
-      <div class="manifest-space">
-        <div class="manifest-thead">Manifest</div>
-        <prism language="python">{{ manifestBody }}</prism>
-      </div>
     </b-container>
   </div>
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
+
 export default {
   props: {
     id: {
@@ -43,7 +67,6 @@ export default {
   },
   data () {
     return {
-      build: null,
       successCompilation: null,
       queue: null,
       name: '',
@@ -52,7 +75,6 @@ export default {
       ended_at: '',
       state: 0,
       packages: '',
-      manifestBody: manifest,
       dateFields: [
         { key: 'created_at',
           label: 'Creation date',
@@ -117,85 +139,29 @@ export default {
     }
   },
   computed: {
-    manifest () {
-      return (this.build && this.build.manifest) || null
+    ...mapGetters('build', ['getBuild']),
+    build () {
+      return this.getBuild(this.id)
     },
-    queuing () {
-      return (this.build && this.build.queuing) || (this.queue && this.queue.queuing && this.queue.queuing.includes(this.id + '')) || false
-    },
-    running () {
-      return (this.build && this.build.running) || (this.queue && this.queue.running && this.queue.running.includes(this.id + '')) || false
-    },
+
     output () {
       return (this.build && this.build.output) || (this.queue && this.queue.running.includes(this.id + '') && this.queue.output) || null
     }
   },
-  created () {
-    this.name = this.$route.params.name
-    this.created_at = this.$route.params.created_at
-    this.started_at = this.$route.params.started_at
-    this.ended_at = this.$route.params.ended_at
-    this.state = this.$route.params.state
-    this.packages = this.$route.params.packages
-
-    // WE NEED TO FETCH THE BUILD FROM THE DATABASE INSTEAD OF GETTING
-    // ITS PARAMS FROM THE HOME VUE
-  },
-  mounted () {
-    if (!window.ws) {
-      window.ws = new WebSocket('ws://127.0.0.1:2794', ['rust-websocket'])
-    }
-    window.ws.vue = this
-    window.ws.onmessage = function (e) {
-      const json = e.data.replace(/[^\x20-\x7E]/g, '\\n')
-      console.log(json)
-      this.vue.queue = JSON.parse(json)
-      console.log(this.vue.queue)
-      if (this.vue.build.running && !this.vue.queue.running.includes(this.vue.id + '')) {
-        this.vue.retrieve()
-      }
-    }
-    this.retrieve()
+  beforeMount () {
+    this.retrieveBuild(this.id)
   },
   methods: {
-    retrieve () {
-      this.$http.get('http://localhost:8000/builds/' + this.id).then(res => {
-        this.build = res.body
-        console.log(this.build)
-      }, err => {
-        console.error(err)
-      })
-    },
-    addToQueue () {
-      this.$http.post('http://localhost:8000/queue/', { name: this.id })
-    },
-    dateProvider (ctx) {
-      let items = []
-      var newItem = {
-        created_at: this.created_at,
-        state: this.state,
-        started_at: this.started_at,
-        ended_at: this.ended_at
-      }
-      items.push(newItem)
-      return items
-    },
-    pkgProvider (ctx) {
-      let items = []
-      var split = this.packages.split(',')
-      for (var i = 0; i < split.length; ++i) {
-        var newItem = {
-          name: split[i].charAt(0).toUpperCase() + split[i].slice(1)
-        }
-        items.push(newItem)
-      }
-      return items
-    }
+    ...mapActions('build', ['retrieveBuild'])
   }
 }
 </script>
 
 <style scoped>
+#package-table {
+  background-color: grey;
+  color: red;
+}
 .top-container {
   margin-top: 150px;
   border-bottom: 1px solid var(--accent);
