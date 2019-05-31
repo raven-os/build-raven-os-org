@@ -3,7 +3,7 @@ GENERAL
 ----------------------------------- */
 :root {
     --accent: #ed254e;
-    --primary: #ffffff;
+    --primary: #f7f4f8;
     --white: #ffffff;
     --primary-dark: #343432;
 }
@@ -84,8 +84,6 @@ table.b-table[aria-busy=false], table.b-table[aria-busy=true] {
 
 .td-date {
     width: 27%;
-    COLOR: WHITE;
-    COLOR: #FFFFFF;
 }
 
 .td-state {

@@ -8,49 +8,46 @@
       </b-row>
     </b-container>
     <b-container class="mid-container">
-      <table border="2" align="center" style="text-align:center;">
-        <tr>
-          <th>Id</th>
-          <th>State</th>
-          <th>exit_status</th>
-          <th>creation date</th>
-          <th>start date</th>
-          <th>end at</th>
-        </tr>
-        <tr>
-          <td>{{ build && build.id }}</td>
-          <td>{{ build && build.state }}</td>
-          <td>{{ (build && build.exit_status) || '-' }}</td>
-          <td>{{ build && build.creation_date }}</td>
-          <td>{{ (build && build.start_date) || '-' }}</td>
-          <td>{{ (build && build.end_date) || '-' }}</td>
-        </tr>
-      </table>
-      Packages
-      <div :if="build && build.packages && build.packages.length">
-        <div v-for="(pkg, index) in build && build.packages" :key="index">
-          <template><span :key="index">{{ pkg }}</span></template>
-        </div>
-      </div>
-      <b-table
-        id="date-table"
-        :fields="dateFields"
-        class="white"
-        style="color: white; color: #ffffff; color: { color: white; }"
-        tbody-tr-class="table-row-nohover"
-        thead-class="list-thead"
-        responsive invisible />
 
-      <b-table
-        id="packages-table"
-        :fields="pkgFields"
-        tbody-tr-class="table-row-nohover"
-        thead-class="list-thead"
-        responsive
-        striped
-        show-empty
-        invisible
-        empty-text="No package for this manifest" />
+      <table id="date-table" class="table b-table table-striped">
+        <thead class="list-thead">
+          <tr>
+            <th>Id</th>
+            <th>State</th>
+            <th>exit_status</th>
+            <th>creation date</th>
+            <th>start date</th>
+            <th>end at</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="table-row-nohover">
+            <td class="list-table-cell">{{ build && build.id }}</td>
+            <td class="list-table-cell">{{ build && build.state }}</td>
+            <td class="list-table-cell">{{ (build && build.exit_status) || '-' }}</td>
+            <td class="list-table-cell">{{ build && build.creation_date }}</td>
+            <td class="list-table-cell">{{ (build && build.start_date) || '-' }}</td>
+            <td class="list-table-cell">{{ (build && build.end_date) || '-' }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table id="packages-table" class="table b-table table-striped">
+        <thead class="list-thead">
+          <tr>
+            <th>Packages</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="table-row-nohover">
+            <div v-for="(pkg, index) in build && build.packages">
+              <td :key="index">
+                <a :href='pkg'>{{ pkg }}</a>
+              </td>
+            </div>
+          </tr>
+        </tbody>
+      </table>
 
       <div>
         <h3>Output</h3>
@@ -83,7 +80,6 @@ export default {
       started_at: '',
       ended_at: '',
       state: 0,
-      packages: '',
       dateFields: [
         { key: 'created_at',
           label: 'Creation date',
@@ -152,14 +148,16 @@ export default {
     build () {
       return this.getBuild(this.id)
     },
-
+    packages () {
+      return (this.build && this.build.packages && this.build.packages.length && this.build.packages) || []
+    },
     output () {
       return (this.build && this.build.output) || (this.queue && this.queue.running.includes(this.id + '') && this.queue.output) || null
     }
   },
   beforeMount () {
     this.retrieveBuild(this.id)
-    this.update()
+    // this.update()
   },
   methods: {
     ...mapActions('build', ['retrieveBuild']),
@@ -178,6 +176,10 @@ export default {
 </script>
 
 <style scoped>
+.list-table-cell {
+  color: black;
+}
+
 #package-table {
   background-color: grey;
   color: red;
