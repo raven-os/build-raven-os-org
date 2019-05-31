@@ -145,6 +145,7 @@ export default {
       this.name = this.file.name
       reader.onload = function (fileLoadedEvent) {
         this.manifest = fileLoadedEvent.target.result
+        this.editor.setValue(this.manifest)
         this.getPackageId()
       }.bind(this)
       reader.readAsText(this.file, 'UTF-8')
