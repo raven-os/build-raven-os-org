@@ -118,7 +118,7 @@ export default {
       this.results.compilation.success += txt
     },
     addBuild () {
-      this.createBuild(this.manifests).then(build=> {
+      this.createBuild(this.manifests).then(build => {
         this.buildId = build && build.id
       })
     }
