@@ -8,24 +8,24 @@
       </b-row>
     </b-container>
     <b-container class="mid-container">
-      <table border="2" align="center" style="text-align:center;">
-        <tr>
-          <th>Creation date</th>
-          <th>Last update</th>
-        </tr>
-        <tr>
-          <td>{{ manifest && manifest.creation_date }}</td>
-          <td>{{ manifest && manifest.last_update }}</td>
-        </tr>
+
+      <table id="date-table" class="table b-table table-striped">
+        <thead class="list-thead">
+          <tr>
+            <th>Id</th>
+            <th>creation date</th>
+            <th>last update</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="table-row-nohover">
+            <td class="list-table-cell">{{ manifest && manifest.id }}</td>
+            <td class="list-table-cell">{{ manifest && manifest.creation_date }}</td>
+            <td class="list-table-cell">{{ manifest && manifest.last_update }}</td>
+          </tr>
+        </tbody>
       </table>
-      <b-table
-        id="date-table"
-        :fields="dateFields"
-        invisible
-        tbody-tr-class="table-row-nohover"
-        thead-class="list-thead"
-        responsive
-      />
+
       <div class="manifest-space">
         <div class="manifest-thead">Manifest</div>
         <prism language="python">{{ content }}</prism>
@@ -108,6 +108,9 @@ export default {
 </script>
 
 <style scoped>
+.list-table-cell {
+  color: black;
+}
 .top-container {
   margin-top: 150px;
   border-bottom: 1px solid var(--accent);
