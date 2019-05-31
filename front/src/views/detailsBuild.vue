@@ -40,31 +40,44 @@
         </thead>
         <tbody>
           <tr class="table-row-nohover">
-            <div v-for="(pkg, index) in build && build.packages">
-              <td :key="index">
-                <a :href='pkg'>{{ pkg }}</a>
+            <div v-for="(pkg, index) in build && build.packages" :key="index">
+              <td>
+                <a :href="pkg">{{ pkg }}</a>
               </td>
             </div>
           </tr>
         </tbody>
       </table>
 
+      <div class="manifest-space">
+        <div class="manifest-thead">Output</div>
+        <prism language="python">{{ build && build.stdout }}</prism>
+        <div class="manifest-thead">Error</div>
+        <prism language="python">{{ build && build.stderr }}</prism>
+      </div>
+      <!--
       <div>
         <h3>Output</h3>
+
         <code>{{ build && build.stdout }}</code>
       </div>
       <div>
         <h4>Error</h4>
         <code>{{ build && build.stderr }}</code>
       </div>
+    -->
     </b-container>
   </div>
 </template>
 
 <script>
+import Prism from 'vue-prism-component'
 import { mapActions, mapGetters } from 'vuex'
 
 export default {
+  components: {
+    Prism
+  },
   props: {
     id: {
       type: String,
@@ -157,7 +170,7 @@ export default {
   },
   beforeMount () {
     this.retrieveBuild(this.id)
-    // this.update()
+    this.update()
   },
   methods: {
     ...mapActions('build', ['retrieveBuild']),
@@ -206,7 +219,7 @@ export default {
 
 .manifest-thead {
   background-color: rgba(52, 52, 50, 0.9);
-  color: var(--primary);
+  color: var(--white);
   font-weight: bold;
   padding: 14px;
   font-size: 16px;

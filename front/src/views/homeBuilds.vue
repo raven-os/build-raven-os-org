@@ -51,7 +51,7 @@
         </div>
         <div
           v-for="item in getBuilds"
-          :class="{ queued: item.state == 0, running: item.state == 1, failed: item.state == 2, success: item.state == 3 }"
+          :class="{ queued: item.state == 'queuing', running: item.state == 'running', failed: item.exit_status != 0, success: item.exit_status == 0 }"
           :key="item.id"
           class="build-item">
           <a :href="'/builds/details/' + item.id" class="item-desc">
