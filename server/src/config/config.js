@@ -9,5 +9,8 @@ module.exports = {
       password: 'postgres'
     }
   },
-  builder_apikey: 'DEFINE_BUILDER_APIKEY'
+  builder_apikey: 'DEFINE_BUILDER_APIKEY',
+  pagination: {
+    default_item_per_page: 15
+  }
 }

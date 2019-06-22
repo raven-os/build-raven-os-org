@@ -25,7 +25,13 @@ class ListBuild extends AbstractAction {
       query('dir')
         .optional()
         .isString().withMessage('must be a string')
-        .isIn(['asc', 'desc']).withMessage('direction should either be "asc" or "desc"')
+        .isIn(['asc', 'desc']).withMessage('direction should either be "asc" or "desc"'),
+      query('page')
+        .optional()
+        .isInt({ min: 1 }).withMessage('must be an integer higher or equal to 1'),
+      query('per_page')
+        .optional()
+        .isInt({ min: 1 }).withMessage('must be an integer higher or equal to 1')
     ]
   }
 
@@ -46,7 +52,12 @@ class ListBuild extends AbstractAction {
       exitStatus: req.query.exit_status || null
     }
 
-    return this.app.controller.build.list(sort, dir, filters)
+    const pagination = {
+      page: req.query.page || 1,
+      perPage: req.query.per_page || this.DEFAULT_ITEM_PER_PAGE
+    }
+
+    return this.app.controller.build.list(sort, dir, filters, pagination)
   }
 }
 

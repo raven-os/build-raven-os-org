@@ -1,3 +1,4 @@
+const simplepaginate = require('bookshelf-simplepaginate')
 const config = require('../config')
 const knex = require('knex')({
   client: 'pg',
@@ -8,5 +9,7 @@ const knex = require('knex')({
 })
 
 const bookshelf = require('bookshelf')(knex)
+
+bookshelf.plugin(simplepaginate)
 
 module.exports = bookshelf
