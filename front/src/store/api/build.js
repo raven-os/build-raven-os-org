@@ -8,8 +8,8 @@ export default {
     return http.post(buildUrl, { ids: manifestIds })
   },
 
-  async list () {
-    return http.get(buildUrl)
+  async list (params) {
+    return http.get(buildUrl, { params })
   },
 
   async get (id) {

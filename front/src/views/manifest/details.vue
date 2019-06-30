@@ -9,6 +9,15 @@
     </b-container>
     <b-container class="mid-container">
 
+      <!-- error handling -->
+      <div v-if="getManifestLoadings.get" class="loading">
+        retrieving manifest...
+      </div>
+      <div v-if="getManifestErrors.get" class="build-error">
+        <p>An error has occured during the retrieving of manifest #{{ id }}</p>
+        <p>{{ getManifestErrors.get }}</p>
+      </div>
+
       <table id="date-table" class="table b-table table-striped">
         <thead class="list-thead">
           <tr>
@@ -44,15 +53,12 @@ export default {
   },
   props: {
     id: {
-      type: String,
+      type: [Number, String],
       required: true
     }
   },
   data () {
     return {
-      name: '',
-      created_at: '',
-      updated_at: '',
       dateFields: [
         {
           key: 'created_at',
@@ -84,9 +90,12 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('manifest', ['getManifest']),
+    ...mapGetters('manifest', ['getManifest', 'getManifestLoadings', 'getManifestErrors']),
+    _id () {
+      return Number(this.id) || this.id
+    },
     manifest () {
-      return this.getManifest(this.id)
+      return this.getManifest(this._id)
     },
     content () {
       const size = this.manifest && this.manifest.history && this.manifest.history.length
@@ -99,7 +108,7 @@ export default {
     }
   },
   beforeMount () {
-    this.retrieveManifest(this.id)
+    this.retrieveManifest(this._id)
   },
   methods: {
     ...mapActions('manifest', ['retrieveManifest'])
@@ -108,6 +117,19 @@ export default {
 </script>
 
 <style scoped>
+.loading {
+  color: blue;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.build-error {
+  text-align: center;
+  margin-bottom: 25px;
+  color: var(--accent);
+}
+
 .list-table-cell {
   color: black;
 }

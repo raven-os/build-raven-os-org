@@ -8,45 +8,38 @@
         <!-- Create Build section -->
         <h1>Create build</h1>
         <!-- Error handling -->
-        <p v-if="errorCreation" class="build-error">{{ errorCreation }}</p>
-        <p v-if="successCreation" class="build-error">The build has been successfully added!</p>
+        <div v-if="getBuildLoadings.create" class="loading">
+          adding the build...
+        </div>
+        <div v-if="error || getBuildErrors.create" class="build-error">
+          <p>An error has occured during the creation of the build</p>
+          <p>{{ error || getBuildErrors.create }}</p>
+        </div>
+        <div v-if="buildId" class="success">
+          <p>Build successfully created</p>
+          <a :href="'/builds/details/' + buildId">
+            <u>#{{ buildId }}</u>
+          </a>
+        </div>
 
-        <form id="form-create" @submit.prevent="addBuild()">
+        <div v-if="getManifestLoadings.list" class="loading">
+          loading
+        </div>
+        <div v-else-if="getManifestErrors.list" class="build-error">
+          <p>An error has occured, please refresh or try again later</p>
+          <p>{{ getManifestErrors.list }}</p>
+        </div>
+        <form v-else id="form-create" @submit.prevent="create()">
           <b-container>
-            <b-row class="m-2">
-              <b-col>
-                <!-- A build has no name -->
-                <b-input-group invisible class="search-input-group create-input-group">
-                  <b-input-group-prepend>
-                    <div class="input-prepend">Name</div>
-                  </b-input-group-prepend>
-                  <input id="name" v-model="name" class="form-control create-input" type="text" placeholder="Build name">
-                </b-input-group>
-              </b-col>
-            </b-row>
-            <b-row class="m-2">
-              <b-col>
-                <b-input-group class="search-input-group create-input-group">
-                  <b-input-group-prepend>
-                    <div class="input-prepend" style="background:grey;">ID</div>
-                  </b-input-group-prepend>
-                  <input
-                    id="package_id" v-model="package_id" class="form-control create-input" type="text"
-                    placeholder="ID"
-                    readonly="true">
-                </b-input-group>
-              </b-col>
-            </b-row>
             <b-row class="m-2 mb-4 text-center">
               <b-col>
                 <treeselect
-                  v-model="manifests" :multiple="true" :options="allManifests"
+                  v-model="selectedManifests" :multiple="true" :options="manifestList"
                   placeholder="Select the manifests" class="tree-select text-center" />
               </b-col>
             </b-row>
             <b-row>
-              <button class="create-add" type="submit">Add build</button>
-              <p :if="buildId">#{{ buildId }} created</p>
+              <button class="create-add" type="submit">Create</button>
             </b-row>
           </b-container>
         </form>
@@ -66,40 +59,18 @@ export default {
   },
   data () {
     return {
-      results: {
-        creation: { loading: false, error: null, data: [], success: false },
-        compilation: { loading: false, error: null, success: '' }
-      },
-      name: null,
-      manifests: null, // this one is the manifests selected for the build
-      package_id: null,
-      buildId: null
+      selectedManifests: [],
+      buildId: null,
+      error: null
     }
   },
   computed: {
-    ...mapGetters('manifest', ['getManifests']),
-    allManifests () {
+    ...mapGetters('manifest', ['getManifests', 'getManifestLoadings', 'getManifestErrors']),
+    ...mapGetters('build', ['getBuildLoadings', 'getBuildErrors']),
+    manifestList () {
       return Object.keys(this.getManifests).map((key) => {
         return { id: key, label: '#' + key + ': ' + this.getManifests[key].name }
       })
-    },
-    loadingCreation () {
-      return this.results.creation.loading
-    },
-    errorCreation () {
-      return this.results.creation.error
-    },
-    successCreation () {
-      return this.results.creation.success
-    },
-    loadingCompilation () {
-      return this.results.compilation.loading
-    },
-    errorCompilation () {
-      return this.results.compilation.error || ''
-    },
-    successCompilation () {
-      return this.results.compilation.success
     }
   },
   beforeMount () {
@@ -108,18 +79,18 @@ export default {
   methods: {
     ...mapActions('manifest', ['listManifests']),
     ...mapActions('build', ['createBuild']),
-    getPackageId () {
-      const idRegex = /@package\s*\(\s*id\s*=\s*"(.*)"/g
+    create () {
+      this.error = null
+      this.buildId = null
 
-      const match = idRegex.exec(this.manifest)
-      this.package_id = (match && match[1]) || null
-    },
-    addCompileOutput (txt) {
-      this.results.compilation.success += txt
-    },
-    addBuild () {
-      this.createBuild(this.manifests).then(build => {
+      if (!this.selectedManifests.length) {
+        this.error = 'You must select at least one manifest'
+        return
+      }
+
+      this.createBuild(this.selectedManifests).then(build => {
         this.buildId = build && build.id
+        this.selectedManifests = []
       })
     }
   }
@@ -130,6 +101,20 @@ export default {
 
 /* CREATE-BUILD
 ----------------------------------- */
+.loading {
+  color: blue;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.success {
+  color: green;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
 h2 {
   text-align: center;
   margin: 25px 0px;

@@ -9,6 +9,15 @@
     </b-container>
     <b-container class="mid-container">
 
+      <!-- error handling -->
+      <div v-if="getBuildLoadings.get" class="loading">
+        retrieving build...
+      </div>
+      <div v-if="getBuildErrors.get" class="build-error">
+        <p>An error has occured during the retrieving of build #{{ id }}</p>
+        <p>{{ getBuildErrors.get }}</p>
+      </div>
+
       <table id="date-table" class="table b-table table-striped">
         <thead class="list-thead">
           <tr>
@@ -55,17 +64,6 @@
         <div class="manifest-thead">Error</div>
         <prism language="python">{{ build && build.stderr }}</prism>
       </div>
-      <!--
-      <div>
-        <h3>Output</h3>
-
-        <code>{{ build && build.stdout }}</code>
-      </div>
-      <div>
-        <h4>Error</h4>
-        <code>{{ build && build.stderr }}</code>
-      </div>
-    -->
     </b-container>
   </div>
 </template>
@@ -80,19 +78,12 @@ export default {
   },
   props: {
     id: {
-      type: String,
+      type: [Number, String],
       required: true
     }
   },
   data () {
     return {
-      successCompilation: null,
-      queue: null,
-      name: '',
-      created_at: '',
-      started_at: '',
-      ended_at: '',
-      state: 0,
       dateFields: [
         { key: 'created_at',
           label: 'Creation date',
@@ -157,19 +148,19 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('build', ['getBuild']),
+    ...mapGetters('build', ['getBuild', 'getBuildLoadings', 'getBuildErrors']),
+    _id () {
+      return Number(this.id) || this.id
+    },
     build () {
-      return this.getBuild(this.id)
+      return this.getBuild(this._id)
     },
     packages () {
       return (this.build && this.build.packages && this.build.packages.length && this.build.packages) || []
-    },
-    output () {
-      return (this.build && this.build.output) || (this.queue && this.queue.running.includes(this.id + '') && this.queue.output) || null
     }
   },
   beforeMount () {
-    this.retrieveBuild(this.id)
+    this.retrieveBuild(this._id)
     this.update()
   },
   methods: {
@@ -179,8 +170,8 @@ export default {
         return
       }
       setTimeout(() => {
-        console.log('retrieve')
-        this.retrieveBuild(this.id)
+        // console.log('retrieve')
+        this.retrieveBuild(this._id)
         this.update()
       }, 1000)
     }
@@ -189,6 +180,20 @@ export default {
 </script>
 
 <style scoped>
+
+.loading {
+  color: blue;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.build-error {
+  text-align: center;
+  margin-bottom: 25px;
+  color: var(--accent);
+}
+
 .list-table-cell {
   color: black;
 }

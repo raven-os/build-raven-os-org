@@ -8,10 +8,21 @@
         <!-- Create Build section -->
         <h1>Create manifest</h1>
         <!-- Error handling -->
-        <p v-if="errorCreation" class="build-error">{{ errorCreation }}</p>
-        <p v-if="successCreation" class="build-error">The manifest has been successfully added!</p>
+        <div v-if="getManifestLoadings.create" class="loading">
+          adding the manifest...
+        </div>
+        <div v-if="error || getManifestErrors.create" class="build-error">
+          <p>An error has occured during the creation of the manifest</p>
+          <p>{{ error || getManifestErrors.create }}</p>
+        </div>
+        <div v-if="manifestId" class="success">
+          <p>Manifest successfully created</p>
+          <a :href="'/manifests/details/' + manifestId">
+            <u>#{{ manifestId }}</u>
+          </a>
+        </div>
 
-        <form id="form-create" @submit.prevent="addManifest()">
+        <form id="form-create" @submit.prevent="create()">
           <b-container>
             <b-row class="m-2">
               <b-col>
@@ -31,29 +42,13 @@
             </b-row>
             <b-row class="m-2">
               <b-col>
-                <b-input-group class="search-input-group create-input-group">
-                  <b-input-group-prepend>
-                    <div class="input-prepend" style="background:grey;">ID</div>
-                  </b-input-group-prepend>
-                  <input
-                    id="package_id"
-                    v-model="package_id"
-                    class="form-control create-input"
-                    type="text"
-                    placeholder="ID"
-                    readonly="true"
-                  >
-                </b-input-group>
-              </b-col>
-            </b-row>
-            <b-row class="m-2">
-              <b-col>
                 <div class="manifest-explain">Select a file or write the manifest</div>
               </b-col>
             </b-row>
             <b-row class="m-2">
               <b-col>
                 <b-file
+                  ref="file-upload"
                   :state="isValidImport"
                   class="file-import"
                   placeholder="Browse or drag and drop a manifest"
@@ -77,7 +72,7 @@
               </b-col>
             </b-row>
             <b-row>
-              <button class="create-add" type="submit">Add manifest</button>
+              <button class="create-add" type="submit">Create</button>
             </b-row>
           </b-container>
         </form>
@@ -88,7 +83,7 @@
 
 <script>
 import Monaco from 'monaco-editor-forvue'
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -96,39 +91,19 @@ export default {
   },
   data () {
     return {
-      results: {
-        creation: { loading: false, error: null, data: [], success: false },
-        compilation: { loading: false, error: null, success: '' }
-      },
       code: '# Write your own manifest\n',
       options: {},
       file: null,
       name: null,
       manifest: null,
-      package_id: null
+      manifestId: null,
+      error: null
     }
   },
   computed: {
+    ...mapGetters('manifest', ['getManifestLoadings', 'getManifestErrors']),
     isValidImport () {
       return this.file ? this.file.type === 'text/x-python' : null
-    },
-    loadingCreation () {
-      return this.results.creation.loading
-    },
-    errorCreation () {
-      return this.results.creation.error
-    },
-    successCreation () {
-      return this.results.creation.success
-    },
-    loadingCompilation () {
-      return this.results.compilation.loading
-    },
-    errorCompilation () {
-      return this.results.compilation.error || ''
-    },
-    successCompilation () {
-      return this.results.compilation.success
     }
   },
   methods: {
@@ -137,7 +112,6 @@ export default {
       this.file = event.target.files[0]
 
       if (!this.isValidImport) {
-        this.file = null
         return
       }
       const reader = new FileReader()
@@ -146,22 +120,15 @@ export default {
       reader.onload = function (fileLoadedEvent) {
         this.manifest = fileLoadedEvent.target.result
         this.editor.setValue(this.manifest)
-        this.getPackageId()
       }.bind(this)
       reader.readAsText(this.file, 'UTF-8')
     },
-    getPackageId () {
-      const idRegex = /@package\s*\(\s*id\s*=\s*"(.*)"/g
+    create () {
+      this.error = null
+      this.manifestId = null
 
-      const match = idRegex.exec(this.manifest)
-      this.package_id = (match && match[1]) || null
-    },
-    addCompileOutput (txt) {
-      this.results.compilation.success += txt
-    },
-    addManifest () {
       if (!this.name || !this.manifest) {
-        this.results.creation.error = 'You must complete all fields.'
+        this.error = 'You must complete all fields.'
         return
       }
       const data = {
@@ -169,7 +136,13 @@ export default {
         name: this.name
       }
 
-      this.createManifest(data)
+      this.createManifest(data).then(manifest => {
+        this.manifestId = manifest && manifest.id
+        this.name = null
+        this.file = null
+        this.$refs['file-upload'].reset()
+        this.editor.setValue(this.code)
+      })
     },
     onMounted (editor) {
       this.editor = editor
@@ -184,6 +157,20 @@ export default {
 <style scoped>
 /* CREATE-BUILD
 ----------------------------------- */
+.loading {
+  color: blue;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.success {
+  color: green;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
 h2 {
   text-align: center;
   margin: 25px 0px;

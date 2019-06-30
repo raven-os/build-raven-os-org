@@ -24,10 +24,8 @@
                   slot="prepend"
                   v-model="field"
                   class="search-select">
-                  <option value="running">Running</option>
-                  <option value="queuing">Queuing</option>
+                  <option value="manifest_id">Manifest Id</option>
                   <option value="exit_status">Exit Status</option>
-                  <option value="created_at">Creation date</option>
                 </select>
               </b-input-group>
             </b-col>
@@ -36,6 +34,15 @@
         </div>
       </b-container>
     </section>
+
+    <!-- error handling -->
+    <div v-if="getBuildLoadings.list" class="loading">
+      listing builds...
+    </div>
+    <div v-if="getBuildErrors.list" class="build-error">
+      <p>An error has occured during the retrieving of builds</p>
+      <p>{{ getBuildErrors.list }}</p>
+    </div>
 
     <!--==========================
     App - List
@@ -115,32 +122,24 @@ export default {
   data () {
     return {
       query: '',
-      field: 'created_at',
-      sort: '',
-      results: {
-        builds: { loading: false, error: null, data: [] }
-      },
-      queue: null,
-      sortBy: 'created_at',
-      sortDesc: true,
-      selected: { by: 'created_at', desc: true },
+      field: 'manifest_id',
+      selected: { by: 'creation', desc: true },
       optionSort: [
-        { text: 'From newest to oldest', value: { by: 'created_at', desc: true } },
-        { text: 'From oldest to newest', value: { by: 'created_at', desc: false } },
-        { text: 'From A to Z', value: { by: 'name', desc: false } },
-        { text: 'From Z to A', value: { by: 'name', desc: true } }
+        { text: 'From newest to oldest', value: { by: 'creation', desc: true } },
+        { text: 'From oldest to newest', value: { by: 'creation', desc: false } }
       ]
     }
   },
   computed: {
-    ...mapGetters('build', ['getBuilds']),
+    ...mapGetters('build', ['getBuilds', 'getBuildLoadings', 'getBuildErrors']),
     builds () {
       return this.getBuilds
     }
   },
   watch: {
     query: 'search',
-    field: 'search'
+    field: 'search',
+    selected: 'search'
   },
   beforeMount () {
     this.listBuilds()
@@ -148,25 +147,36 @@ export default {
   methods: {
     ...mapActions('build', ['listBuilds']),
     search () {
-      this.listBuilds()
-    },
-    onRowClick (item) {
-      // this.$router.push({name: 'DetailsBuild',
-      //   params: {
-      //     id: item.id.toString(),
-      //     name: item.name,
-      //     created_at: item.created_at,
-      //     state: item.state,
-      //     started_at: item.started_at,
-      //     ended_at: item.ended_at,
-      //     packages: item.packages
-      //   }})
+      const params = {
+        sort: this.selected.by,
+        dir: this.selected.desc ? 'desc' : 'asc'
+      }
+
+      if (this.field && this.query) {
+        params[this.field] = this.query
+      }
+
+      this.listBuilds(params)
     }
   }
 }
 </script>
 
 <style scoped>
+
+.loading {
+  color: blue;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.build-error {
+  text-align: center;
+  margin-bottom: 25px;
+  color: var(--accent);
+}
+
 /* BUILDS-SEARCH
 ----------------------------------- */
 #builds-search {

@@ -15,14 +15,14 @@ const state = {
     list: null,
     get: null
   },
-  manifests: {}
+  manifests: []
 }
 
 const getters = {
   getManifestLoadings: state => state.loading,
   getManifestErrors: state => state.error,
   getManifests: state => state.manifests,
-  getManifest: state => id => state.manifests[id] || null
+  getManifest: state => id => state.manifests.find(x => x.id === id) || null
 }
 
 const actions = {
@@ -36,6 +36,7 @@ const actions = {
       store.commit(types.MANIFEST_CREATE_REQUEST)
       const res = await manifestApi.create(manifest)
       store.commit(types.MANIFEST_CREATE_SUCCESS, res.body)
+      return res.body
     } catch (err) {
       store.commit(types.MANIFEST_CREATE_ERROR, err.body)
     }
@@ -46,15 +47,16 @@ const actions = {
       store.commit(types.MANIFEST_UPDATE_REQUEST)
       const res = await manifestApi.update(id, content)
       store.commit(types.MANIFEST_UPDATE_SUCCESS, res.body)
+      return res.body
     } catch (err) {
       store.commit(types.MANIFEST_UPDATE_ERROR, err.body)
     }
   },
 
-  async listManifests (store) {
+  async listManifests (store, params) {
     try {
       store.commit(types.MANIFEST_LIST_REQUEST)
-      const res = await manifestApi.list()
+      const res = await manifestApi.list(params)
       store.commit(types.MANIFEST_LIST_SUCCESS, res.body.data)
     } catch (err) {
       store.commit(types.MANIFEST_LIST_ERROR, err.body)
@@ -80,7 +82,6 @@ const mutations = {
 
   [types.MANIFEST_CREATE_SUCCESS] (state, manifest) {
     Vue.set(state.loading, 'create', false)
-    Vue.set(state.manifests, manifest.id, manifest)
   },
 
   [types.MANIFEST_CREATE_ERROR] (state, error) {
@@ -95,7 +96,6 @@ const mutations = {
 
   [types.MANIFEST_UPDATE_SUCCESS] (state, manifest) {
     Vue.set(state.loading, 'update', false)
-    Vue.set(state.manifests, manifest.id, manifest)
   },
 
   [types.MANIFEST_UPDATE_ERROR] (state, error) {
@@ -110,9 +110,7 @@ const mutations = {
 
   [types.MANIFEST_LIST_SUCCESS] (state, manifests) {
     Vue.set(state.loading, 'list', false)
-    for (let manifest of manifests) {
-      Vue.set(state.manifests, manifest.id, manifest)
-    }
+    Vue.set(state, 'manifests', manifests)
   },
 
   [types.MANIFEST_LIST_ERROR] (state, error) {
@@ -127,7 +125,7 @@ const mutations = {
 
   [types.MANIFEST_GET_SUCCESS] (state, manifest) {
     Vue.set(state.loading, 'get', false)
-    Vue.set(state.manifests, manifest.id, manifest)
+    Vue.set(state, 'manifests', [manifest])
   },
 
   [types.MANIFEST_GET_ERROR] (state, error) {

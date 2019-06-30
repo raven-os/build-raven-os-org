@@ -13,14 +13,14 @@ const state = {
     list: null,
     get: null
   },
-  builds: {}
+  builds: []
 }
 
 const getters = {
   getBuildLoadings: state => state.loading,
   getBuildErrors: state => state.error,
   getBuilds: state => state.builds,
-  getBuild: state => id => state.builds[id] || null
+  getBuild: state => id => state.builds.find(x => x.id === id) || null
 }
 
 const actions = {
@@ -35,10 +35,10 @@ const actions = {
     }
   },
 
-  async listBuilds (store) {
+  async listBuilds (store, params) {
     try {
       store.commit(types.BUILD_LIST_REQUEST)
-      const res = await buildApi.list()
+      const res = await buildApi.list(params)
       store.commit(types.BUILD_LIST_SUCCESS, res.body.data)
     } catch (err) {
       store.commit(types.BUILD_LIST_ERROR, err.body)
@@ -64,7 +64,6 @@ const mutations = {
 
   [types.BUILD_CREATE_SUCCESS] (state, build) {
     Vue.set(state.loading, 'create', false)
-    Vue.set(state.builds, build.id, build)
   },
 
   [types.BUILD_CREATE_ERROR] (state, error) {
@@ -79,9 +78,7 @@ const mutations = {
 
   [types.BUILD_LIST_SUCCESS] (state, builds) {
     Vue.set(state.loading, 'list', false)
-    for (let build of builds) {
-      Vue.set(state.builds, build.id, build)
-    }
+    Vue.set(state, 'builds', builds)
   },
 
   [types.BUILD_LIST_ERROR] (state, error) {
@@ -96,7 +93,7 @@ const mutations = {
 
   [types.BUILD_GET_SUCCESS] (state, build) {
     Vue.set(state.loading, 'get', false)
-    Vue.set(state.builds, build.id, build)
+    Vue.set(state, 'builds', [build])
   },
 
   [types.BUILD_GET_ERROR] (state, error) {

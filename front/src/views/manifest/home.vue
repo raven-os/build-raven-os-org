@@ -18,7 +18,7 @@
                   type="text"
                   placeholder="Search">
                 <select slot="prepend" v-model="field" class="search-select">
-                  <option value="created_at">Creation date</option>
+                  <option value="name">Name</option>
                 </select>
               </b-input-group>
             </b-col>
@@ -27,6 +27,15 @@
         </div>
       </b-container>
     </section>
+
+    <!-- error handling -->
+    <div v-if="getManifestLoadings.list" class="loading">
+      listing manifests...
+    </div>
+    <div v-if="getManifestErrors.list" class="build-error">
+      <p>An error has occured during the retrieving of manifests</p>
+      <p>{{ getManifestErrors.list }}</p>
+    </div>
 
     <!--==========================
     App - List
@@ -38,7 +47,6 @@
             v-model="selected"
             :options="optionSort"
             class="sort-select"
-            @change="true"
           />
         </div>
         <div
@@ -85,24 +93,23 @@ export default {
   data () {
     return {
       query: '',
-      field: 'created_at',
-      sortBy: 'created_at',
-      sortDesc: true,
-      selected: { by: 'created_at', desc: true },
+      field: 'name',
+      selected: { by: 'creation', desc: true },
       optionSort: [
-        { text: 'From newest to oldest', value: { by: 'created_at', desc: true } },
-        { text: 'From oldest to newest', value: { by: 'created_at', desc: false } },
+        { text: 'From newest to oldest', value: { by: 'creation', desc: true } },
+        { text: 'From oldest to newest', value: { by: 'creation', desc: false } },
         { text: 'From A to Z', value: { by: 'name', desc: false } },
         { text: 'From Z to A', value: { by: 'name', desc: true } }
       ]
     }
   },
   computed: {
-    ...mapGetters('manifest', ['getManifests'])
+    ...mapGetters('manifest', ['getManifests', 'getManifestLoadings', 'getManifestErrors'])
   },
   watch: {
     query: 'search',
-    field: 'search'
+    field: 'search',
+    selected: 'search'
   },
   beforeMount () {
     this.listManifests()
@@ -110,24 +117,33 @@ export default {
   methods: {
     ...mapActions('manifest', ['listManifests']),
     search () {
-      this.getManifests()
-    },
-    onRowClick (item) {
-      // this.$router.push({
-      //   name: "DetailsManifest",
-      //   params: {
-      //     id: item.id.toString(),
-      //     name: item.name,
-      //     created_at: item.created_at,
-      //     updated_at: item.updated_at
-      //   }
-      // });
+      const params = {
+        ...(this.query && { name: this.query }),
+        sort: this.selected.by,
+        dir: this.selected.desc ? 'desc' : 'asc'
+      }
+
+      this.listManifests(params)
     }
   }
 }
 </script>
 
 <style scoped>
+
+.loading {
+  color: blue;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.build-error {
+  text-align: center;
+  margin-bottom: 25px;
+  color: var(--accent);
+}
+
 /* BUILDS-SEARCH
 ----------------------------------- */
 #builds-search {

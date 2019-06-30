@@ -12,8 +12,8 @@ export default {
     return http.put(manifestUrl + id, { content })
   },
 
-  async list () {
-    return http.get(manifestUrl)
+  async list (params) {
+    return http.get(manifestUrl, { params })
   },
 
   async get (id) {
