@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import HomeBuilds from './views/homeBuilds.vue'
-import CreateBuild from './views/createBuild.vue'
-import DetailsBuild from './views/detailsBuild.vue'
-import HomeManifests from './views/homeManifests.vue'
-import CreateManifest from './views/createManifest.vue'
-import DetailsManifest from './views/detailsManifest.vue'
+import HomeBuilds from './views/build/home.vue'
+import CreateBuild from './views/build/create.vue'
+import DetailsBuild from './views/build/details.vue'
+import HomeManifests from './views/manifest/home.vue'
+import CreateManifest from './views/manifest/create.vue'
+import DetailsManifest from './views/manifest/details.vue'
 
 Vue.use(VueRouter)
 
