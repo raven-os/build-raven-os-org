@@ -29,15 +29,26 @@
         <tbody>
           <tr class="table-row-nohover">
             <td class="list-table-cell">{{ manifest && manifest.id }}</td>
-            <td class="list-table-cell">{{ manifest && manifest.creation_date }}</td>
-            <td class="list-table-cell">{{ manifest && manifest.last_update }}</td>
+            <td class="list-table-cell">{{ manifest && _date(manifest.creation_date) }}</td>
+            <td class="list-table-cell">{{ manifest && _date(manifest.last_update) }}</td>
           </tr>
         </tbody>
       </table>
 
       <div class="manifest-space">
-        <div class="manifest-thead">Manifest</div>
-        <prism language="python">{{ content }}</prism>
+        <div class="manifest-thead">Manifest History</div>
+        <div :if="historySize">
+          <div
+            v-for="(item, index) in historyReversed"
+            :key="item.id">
+            <a :class="index === historyIndex ? 'historySelected' : ''" @click="historyIndex = index">
+              {{ _date(item.edition_date) }}
+            </a>
+          </div>
+
+          <div class="manifest-thead">Manifest</div>
+          <prism language="python">{{ content }}</prism>
+        </div>
       </div>
     </b-container>
   </div>
@@ -59,6 +70,7 @@ export default {
   },
   data () {
     return {
+      historyIndex: 0,
       dateFields: [
         {
           key: 'created_at',
@@ -97,26 +109,34 @@ export default {
     manifest () {
       return this.getManifest(this._id)
     },
+    historySize () {
+      return (this.manifest && this.manifest.history && this.manifest.history.length) || null
+    },
+    historyReversed () {
+      return (this.historySize && this.manifest.history.slice().reverse()) || null
+    },
     content () {
-      const size = this.manifest && this.manifest.history && this.manifest.history.length
-
-      if (Number(size)) {
-        return this.manifest.history[size - 1].content
-      }
-
-      return null
+      return this.historySize && this.historyReversed[this.historyIndex].content
     }
   },
   beforeMount () {
     this.retrieveManifest(this._id)
   },
   methods: {
-    ...mapActions('manifest', ['retrieveManifest'])
+    ...mapActions('manifest', ['retrieveManifest']),
+    _date (value) {
+      return (value && moment(value).format('MMMM Do YYYY, HH:mm:ss')) || null
+    }
   }
 }
 </script>
 
 <style scoped>
+.historySelected {
+  font-weight: bold;
+  padding: 1em;
+}
+
 .loading {
   color: blue;
   font-weight: bold;
