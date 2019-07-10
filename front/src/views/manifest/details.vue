@@ -24,6 +24,7 @@
             <th>Id</th>
             <th>creation date</th>
             <th>last update</th>
+            <th>action</th>
           </tr>
         </thead>
         <tbody>
@@ -31,6 +32,11 @@
             <td class="list-table-cell">{{ manifest && manifest.id }}</td>
             <td class="list-table-cell">{{ manifest && _date(manifest.creation_date) }}</td>
             <td class="list-table-cell">{{ manifest && _date(manifest.last_update) }}</td>
+            <td class="list-table-cell">
+              <a :href="'/manifests/update/' + manifest.id" class="item-desc">
+                edit
+              </a>
+            </td>
           </tr>
         </tbody>
       </table>
