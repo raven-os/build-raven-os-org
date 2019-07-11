@@ -30,6 +30,7 @@ class Routing {
           .put('/stdout', this.app.action.build.stdout.routes)
           .put('/stderr', this.app.action.build.stderr.routes)
           .put('/end', this.app.action.build.end.routes)
+          .put('/packages', this.app.action.build.packages.routes)
         )
         .get('/', this.app.action.build.list.routes)
       )

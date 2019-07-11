@@ -3,6 +3,7 @@ const execFile = require('child_process').execFile
 const rp = require('request-promise')
 const fs = require('fs')
 const Communication = require('./communication')
+const Upload = require('./upload')
 
 class Receiver {
   constructor (config) {
@@ -10,6 +11,7 @@ class Receiver {
     this.queueName = 'build-raven-os-org'
     this.queue = new Queue(this.queueName)
     this.communication = new Communication(this.config)
+    this.upload = new Upload(this.config)
   }
 
   async run () {
@@ -63,7 +65,8 @@ class Receiver {
 
       fs.writeFileSync(manifest.name, manifest.content)
 
-      const child = execFile(this.config.nbuild_path, [manifest.name])
+      const outputDir = this.config.output_dir + (new Date()).getTime() + '/'
+      const child = execFile(this.config.nbuild_path, ['-vvv', '-o' + outputDir, manifest.name])
 
       child.stdout.on('data', async (data) => {
         await this.communication.updateStdout(buildId, data)
@@ -72,6 +75,9 @@ class Receiver {
         await this.communication.updateStderr(buildId, data)
       })
       child.on('exit', async (code) => {
+        const res = await this.upload.toNestServer(outputDir)
+
+        await this.communication.updatePackage(buildId, { data: res })
         await this.buildManifests(buildId, manifests, exitCode || code)
       })
     } catch (err) {

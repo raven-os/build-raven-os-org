@@ -9,6 +9,7 @@ class Communication {
     this.stdoutEndpoint = '/stdout'
     this.stderrEndpoint = '/stderr'
     this.endEndpoint = '/end'
+    this.packageEndpoint = '/packages'
     this.stdoutBuffer = new Buffer()
     this.stderrBuffer = new Buffer()
   }
@@ -17,10 +18,10 @@ class Communication {
     const options = {
       method: 'PUT',
       uri,
-      json: body !== null,
+      json: !!body,
       body: body || null,
       headers: {
-        Authorization: this.config.apikey
+        Authorization: this.config.apikeys.build
       }
     }
 
@@ -37,7 +38,7 @@ class Communication {
       method: 'PUT',
       uri: url,
       headers: {
-        Authorization: this.config.apikey
+        Authorization: this.config.apikeys.build
       }
     }
 
@@ -87,6 +88,12 @@ class Communication {
     if (stderr) {
       await this._req(urlStderr, { data: stderr })
     }
+  }
+
+  async updatePackage (id, data) {
+    const url = this.resource + id + this.packageEndpoint
+
+    await this._req(url, data)
   }
 }
 

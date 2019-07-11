@@ -82,6 +82,19 @@ class BuildController {
     return build.toJSON()
   }
 
+  async packages (id, packages) {
+    let build = await this._get(id)
+
+    await build
+      .save({
+        packages: this.app.database.utils.raw('array_cat(packages, ?::text[])', [packages])
+      })
+
+    build = await build.refresh()
+
+    return build.toJSON()
+  }
+
   async start (id) {
     let build = await this._get(id)
     const date = new Date()
