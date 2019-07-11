@@ -133,7 +133,7 @@ class BuildController {
   }
 
   async list (sort, direction, filters, pagination) {
-    const builds = await this.app.database.model.build
+    const cursor = this.app.database.model.build
       .query(queryBuilder => {
         if (filters.queuing !== null) {
           queryBuilder.where('queuing', filters.queuing)
@@ -148,12 +148,16 @@ class BuildController {
           queryBuilder.where('exit_status', filters.exitStatus)
         }
       })
+
+    const count = await cursor.count()
+    const builds = await cursor
       .orderBy(sort, direction)
       .simplePaginate({
         limit: pagination.perPage,
         page: pagination.page
       })
 
+    builds.meta.pagination.total = count
     return builds
   }
 }
