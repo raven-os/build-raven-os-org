@@ -102,6 +102,13 @@
             </b-container>
           </a>
         </div>
+
+        <!-- Pagination -->
+        <div class="pagination">
+          <span v-for="n in pageNumber" :key="n">
+            <a :class="n === currentPage ? 'current' : ''" @click="page = n" >{{ n }}</a>
+          </span>
+        </div>
       </b-container>
     </section>
   </div>
@@ -122,6 +129,7 @@ export default {
   data () {
     return {
       query: '',
+      page: 1,
       field: 'manifest_id',
       selected: { by: 'creation', desc: true },
       optionSort: [
@@ -131,15 +139,32 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('build', ['getBuilds', 'getBuildLoadings', 'getBuildErrors']),
+    ...mapGetters('build', [
+      'getBuilds',
+      'getBuildPagination',
+      'getBuildLoadings',
+      'getBuildErrors'
+    ]),
     builds () {
       return this.getBuilds
+    },
+    pageNumber () {
+      const pagination = this.getBuildPagination
+      let total = (pagination && Math.floor(pagination.total / pagination.per_page)) || null
+      if (total && (pagination.total % pagination.per_page) > 0) {
+        ++total
+      }
+      return total
+    },
+    currentPage () {
+      return (this.getBuildPagination && this.getBuildPagination.current_page) || null
     }
   },
   watch: {
     query: 'search',
     field: 'search',
-    selected: 'search'
+    selected: 'search',
+    page: 'search'
   },
   beforeMount () {
     this.listBuilds()
@@ -149,7 +174,8 @@ export default {
     search () {
       const params = {
         sort: this.selected.by,
-        dir: this.selected.desc ? 'desc' : 'asc'
+        dir: this.selected.desc ? 'desc' : 'asc',
+        page: this.page
       }
 
       if (this.field && this.query) {
@@ -163,6 +189,19 @@ export default {
 </script>
 
 <style scoped>
+
+.current {
+  font-weight: bold;
+}
+
+.pagination  {
+  margin-top: 1em;
+  font-size: 1.2em;
+}
+
+.pagination a {
+  padding: 1em;
+}
 
 .loading {
   color: blue;

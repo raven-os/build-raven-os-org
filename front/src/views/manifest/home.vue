@@ -71,6 +71,12 @@
             </b-container>
           </a>
         </div>
+        <!-- Pagination -->
+        <div class="pagination">
+          <span v-for="n in pageNumber" :key="n">
+            <a :class="n === currentPage ? 'current' : ''" @click="page = n" >{{ n }}</a>
+          </span>
+        </div>
       </b-container>
     </section>
   </div>
@@ -94,6 +100,7 @@ export default {
     return {
       query: '',
       field: 'name',
+      page: 1,
       selected: { by: 'creation', desc: true },
       optionSort: [
         { text: 'From newest to oldest', value: { by: 'creation', desc: true } },
@@ -104,12 +111,29 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('manifest', ['getManifests', 'getManifestLoadings', 'getManifestErrors'])
+    ...mapGetters('manifest', [
+      'getManifests',
+      'getManifestPagination',
+      'getManifestLoadings',
+      'getManifestErrors'
+    ]),
+    pageNumber () {
+      const pagination = this.getManifestPagination
+      let total = (pagination && Math.floor(pagination.total / pagination.per_page)) || null
+      if (total && (pagination.total % pagination.per_page) > 0) {
+        ++total
+      }
+      return total
+    },
+    currentPage () {
+      return (this.getManifestPagination && this.getManifestPagination.current_page) || null
+    }
   },
   watch: {
     query: 'search',
     field: 'search',
-    selected: 'search'
+    selected: 'search',
+    page: 'search'
   },
   beforeMount () {
     this.listManifests()
@@ -120,7 +144,8 @@ export default {
       const params = {
         ...(this.query && { name: this.query }),
         sort: this.selected.by,
-        dir: this.selected.desc ? 'desc' : 'asc'
+        dir: this.selected.desc ? 'desc' : 'asc',
+        page: this.page
       }
 
       this.listManifests(params)
@@ -130,6 +155,18 @@ export default {
 </script>
 
 <style scoped>
+.current {
+  font-weight: bold;
+}
+
+.pagination  {
+  margin-top: 1em;
+  font-size: 1.2em;
+}
+
+.pagination a {
+  padding: 1em;
+}
 
 .loading {
   color: blue;

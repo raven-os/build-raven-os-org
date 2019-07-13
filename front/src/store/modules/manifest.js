@@ -15,14 +15,20 @@ const state = {
     list: null,
     get: null
   },
-  manifests: []
+  manifests: [],
+  pagination: {
+    total: 0,
+    per_page: 0,
+    current_page: 0
+  }
 }
 
 const getters = {
   getManifestLoadings: state => state.loading,
   getManifestErrors: state => state.error,
   getManifests: state => state.manifests,
-  getManifest: state => id => state.manifests.find(x => x.id === id) || null
+  getManifest: state => id => state.manifests.find(x => x.id === id) || null,
+  getManifestPagination: state => state.pagination
 }
 
 const actions = {
@@ -57,7 +63,7 @@ const actions = {
     try {
       store.commit(types.MANIFEST_LIST_REQUEST)
       const res = await manifestApi.list(params)
-      store.commit(types.MANIFEST_LIST_SUCCESS, res.body.data)
+      store.commit(types.MANIFEST_LIST_SUCCESS, res.body)
     } catch (err) {
       store.commit(types.MANIFEST_LIST_ERROR, err.body)
     }
@@ -108,9 +114,10 @@ const mutations = {
     Vue.set(state.error, 'list', null)
   },
 
-  [types.MANIFEST_LIST_SUCCESS] (state, manifests) {
+  [types.MANIFEST_LIST_SUCCESS] (state, res) {
     Vue.set(state.loading, 'list', false)
-    Vue.set(state, 'manifests', manifests)
+    Vue.set(state, 'manifests', res.data)
+    Vue.set(state, 'pagination', res.meta.pagination)
   },
 
   [types.MANIFEST_LIST_ERROR] (state, error) {

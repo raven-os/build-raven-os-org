@@ -13,14 +13,20 @@ const state = {
     list: null,
     get: null
   },
-  builds: []
+  builds: [],
+  pagination: {
+    total: 0,
+    per_page: 0,
+    current_page: 0
+  }
 }
 
 const getters = {
   getBuildLoadings: state => state.loading,
   getBuildErrors: state => state.error,
   getBuilds: state => state.builds,
-  getBuild: state => id => state.builds.find(x => x.id === id) || null
+  getBuild: state => id => state.builds.find(x => x.id === id) || null,
+  getBuildPagination: state => state.pagination
 }
 
 const actions = {
@@ -39,7 +45,7 @@ const actions = {
     try {
       store.commit(types.BUILD_LIST_REQUEST)
       const res = await buildApi.list(params)
-      store.commit(types.BUILD_LIST_SUCCESS, res.body.data)
+      store.commit(types.BUILD_LIST_SUCCESS, res.body)
     } catch (err) {
       store.commit(types.BUILD_LIST_ERROR, err.body)
     }
@@ -76,9 +82,10 @@ const mutations = {
     Vue.set(state.error, 'list', null)
   },
 
-  [types.BUILD_LIST_SUCCESS] (state, builds) {
+  [types.BUILD_LIST_SUCCESS] (state, res) {
     Vue.set(state.loading, 'list', false)
-    Vue.set(state, 'builds', builds)
+    Vue.set(state, 'builds', res.data)
+    Vue.set(state, 'pagination', res.meta.pagination)
   },
 
   [types.BUILD_LIST_ERROR] (state, error) {
