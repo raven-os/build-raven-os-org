@@ -1,3 +1,4 @@
+const http = require('http')
 const config = require('./config')
 const Database = require('./database')
 const Controller = require('./controller')
@@ -6,6 +7,7 @@ const Queue = require('./queue')
 const express = require('express')
 const Routing = require('./routing')
 const Errors = require('./errors')
+const Websocket = require('./websocket')
 
 class Application {
   constructor () {
@@ -15,16 +17,20 @@ class Application {
     this.controller = new Controller(this)
     this.queue = new Queue('build-raven-os-org')
     this.errors = new Errors(this)
+    this.websocket = new Websocket(this)
   }
 
   run () {
-    this.server = express()
-    this.server.use(this.logger)
+    this.express = express()
+    this.express.use(this.logger)
 
     const routing = new Routing(this)
     routing.routing()
 
+    this.server = http.createServer(this.express)
+
     this.server.listen(this.config.port, () => {
+      this.websocket.run(this.server)
       console.info('[server] running on port', this.config.port)
     })
   }

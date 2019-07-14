@@ -29,7 +29,8 @@
     "pg": "^7.8.0",
     "pg-native": "^3.0.0",
     "request": "^2.88.0",
-    "request-promise": "^4.2.4"
+    "request-promise": "^4.2.4",
+    "ws": "^7.1.0"
   },
   "devDependencies": {
     "eslint": "^5.12.1",

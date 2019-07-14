@@ -7,10 +7,10 @@ class Routing {
   }
 
   routing () {
-    this.app.server.use(bodyParser.json())
-    this.app.server.use(bodyParser.urlencoded({ extended: true }))
+    this.app.express.use(bodyParser.json())
+    this.app.express.use(bodyParser.urlencoded({ extended: true }))
 
-    this.app.server.use('/api', express.Router()
+    this.app.express.use('/api', express.Router()
       .use('/manifest', express.Router()
         .post('/', this.app.action.manifest.create.routes)
         .put('/:id', this.app.action.manifest.update.routes)
@@ -36,7 +36,7 @@ class Routing {
       )
     )
 
-    this.app.server.use(this.errorHandler.bind(this))
+    this.app.express.use(this.errorHandler.bind(this))
   }
 
   errorHandler (err, req, res, next) {
