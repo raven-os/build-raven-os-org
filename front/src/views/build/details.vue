@@ -17,6 +17,11 @@
         <p>An error occurred during while retrieving build #{{ id }}</p>
         <p>{{ getBuildErrors.get }}</p>
       </div>
+      <div v-else-if="!getSocket.isConnected" class="build-error">
+        <p v-if="getSocket.error">{{ getSocket.error }}</p>
+        <p v-if="getSocket.reconnectCount">Trying to reconnect... {{ getSocket.reconnectCount }}</p>
+        <button v-if="getSocket.reconnectCount === 6" @click="$router.go()">Refresh</button>
+      </div>
 
       <table id="date-table" class="table b-table table-striped">
         <thead class="list-thead">
@@ -88,6 +93,7 @@ export default {
   },
   computed: {
     ...mapGetters('build', ['getBuild', 'getBuildLoadings', 'getBuildErrors']),
+    ...mapGetters(['getSocket']),
     _id () {
       return Number(this.id) || this.id
     },
@@ -100,20 +106,15 @@ export default {
   },
   beforeMount () {
     this.retrieveBuild(this._id)
-    this.update()
+    // Connect WebSocket
+    this.$connect()
+  },
+  beforeDestroy () {
+    // Disconnect WebSocket
+    this.$disconnect()
   },
   methods: {
-    ...mapActions('build', ['retrieveBuild']),
-    update () {
-      if (this.$route.name !== 'DetailsBuild') {
-        return
-      }
-      setTimeout(() => {
-        // console.log('retrieve')
-        this.retrieveBuild(this._id)
-        this.update()
-      }, 1000)
-    }
+    ...mapActions('build', ['retrieveBuild'])
   }
 }
 </script>

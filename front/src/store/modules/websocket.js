@@ -4,43 +4,62 @@ import Vue from 'vue'
 const state = {
   socket: {
     isConnected: false,
-    message: '',
-    reconnectError: false
+    error: null,
+    reconnectCount: 0
   }
 }
 
 const getters = {
+  getSocket: state => state.socket || null
 }
 
 const actions = {
 }
 
+const wsAction = {
+  BUILD_START: 'BUILD_START',
+  BUILD_STDOUT: 'BUILD_STDOUT',
+  BUILD_STDERR: 'BUILD_STDERR',
+  BUILD_END: 'BUILD_END',
+  BUILD_PACKAGES: 'BUILD_PACKAGES'
+}
+
 const mutations = {
   [types.SOCKET_ONOPEN] (state, event) {
     Vue.set(state.socket, 'isConnected', true)
-    console.log('[SOCKET_ONOPEN]', event)
+    Vue.set(state.socket, 'error', null)
+    Vue.set(state.socket, 'reconnectCount', 0)
   },
 
   [types.SOCKET_ONCLOSE] (state, event) {
-    console.log('[SOCKET_ONCLOSE]', event)
+    Vue.set(state.socket, 'isConnected', false)
   },
 
   [types.SOCKET_ONERROR] (state, event) {
-    console.log('[SOCKET_ONERROR]', event)
+    Vue.set(state.socket, 'isConnected', false)
+    Vue.set(state.socket, 'error', 'The WebSocket lost connection')
   },
 
-  // default handler called for all methods
   [types.SOCKET_ONMESSAGE] (state, message) {
-    console.log('[SOCKET_ONMESSAGE]', message)
+    switch (message.type) {
+      case wsAction.BUILD_START:
+      case wsAction.BUILD_STDOUT:
+      case wsAction.BUILD_STDERR:
+      case wsAction.BUILD_END:
+      case wsAction.BUILD_PACKAGES:
+        this.commit('build/' + types.BUILD_GET_SUCCESS, message.data)
+        break
+      default:
+        console.info('[SOCKET_ONMESSAGE unknown wsAction]', message.type)
+    }
   },
 
-  // mutations for reconnect methods
   [types.SOCKET_RECONNECT] (state, count) {
-    console.info('[SOCKET_RECONNECT]', state, count)
+    Vue.set(state.socket, 'reconnectCount', count)
   },
 
   [types.SOCKET_RECONNECT_ERROR] (state) {
-    console.log('[SOCKET_RECONNECT_ERROR]')
+    Vue.set(state.socket, 'error', 'Error while reconnecting to WebSocket')
   }
 }
 

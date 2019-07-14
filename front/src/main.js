@@ -26,8 +26,10 @@ const options = {
   format: 'json',
   reconnection: true,
   reconnectionAttempts: 5,
-  reconnectionDelay: 2000
+  reconnectionDelay: 2000,
+  connectManually: true
 }
+
 Vue.use(VueNativeSock, process.env.VUE_APP_WEBSOCKET_URL, options)
 
 new Vue({
