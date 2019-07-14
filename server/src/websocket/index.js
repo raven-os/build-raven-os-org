@@ -1,25 +1,19 @@
 const ws = require('ws')
-const _ = require('lodash')
+const WsConnection = require('./ws-connection')
 
-// Contains methods related to a single connection
-class WsConnection {
-  static connection (connection) {
-    this.connections.push(connection)
-    connection.on('close', WsConnection.close.bind(this, connection))
-    connection.on('error', WsConnection.error.bind(this, connection))
-  }
-
-  static close (connection) {
-    _.remove(this.connections, (x) => x === connection)
-  }
-
-  static error (connection, err) {
-    const from = connection._socket._peername
-    console.log('[WsConnection.error] from', from.address + ':' + from.port, err)
-  }
+const actions = {
+  BUILD_START: 'BUILD_START',
+  BUILD_STDOUT: 'BUILD_STDOUT',
+  BUILD_STDERR: 'BUILD_STDERR',
+  BUILD_END: 'BUILD_END',
+  BUILD_PACKAGES: 'BUILD_PACKAGES'
 }
 
 class WebsocketServer {
+  get actions () {
+    return actions
+  }
+
   constructor (app) {
     this.app = app
     this.connections = []
@@ -39,9 +33,9 @@ class WebsocketServer {
     console.log('[WebsocketServer.error]', err)
   }
 
-  broadcast (message) {
+  broadcast (type, data) {
     for (let connection of this.connections) {
-      connection.send(message)
+      connection.send(JSON.stringify({ type, data }))
     }
   }
 }
