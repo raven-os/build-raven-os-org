@@ -1,7 +1,7 @@
 const _ = require('lodash')
 
 // Contains methods related to a single connection
-// Binded to WebsocketServer to access this
+// Binded to WebsocketServer to access 'this'
 class WsConnection {
   static connection (connection) {
     this.connections.push(connection)
