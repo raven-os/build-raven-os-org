@@ -4,3 +4,5 @@ package-lock.json
 *.local.js
 manifests/*
 !manifests/.empty
+.nyc_output/
+coverage/
