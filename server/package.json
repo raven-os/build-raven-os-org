@@ -11,7 +11,7 @@
   "license": "ISC",
   "scripts": {
     "start": "eslint . && node src/index.js",
-    "test": "echo \"no test specified yet\" && exit 0",
+    "test": "mocha test/mock-database.js test/setup.js test/ --recursive",
     "migrate:make": "knex migrate:make",
     "migrate:latest": "knex migrate:latest",
     "migrate:rollback": "knex migrate:rollback",
