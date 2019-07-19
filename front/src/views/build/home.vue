@@ -105,7 +105,7 @@
 
         <!-- Pagination -->
         <div class="pagination">
-          <span v-for="n in pageNumber" :key="n">
+          <span v-for="n in pageCount" :key="n">
             <a :class="n === currentPage ? 'current' : ''" @click="page = n" >{{ n }}</a>
           </span>
         </div>
@@ -155,16 +155,11 @@ export default {
     builds () {
       return this.getBuilds
     },
-    pageNumber () {
-      const pagination = this.getBuildPagination
-      let total = (pagination && Math.floor(pagination.total / pagination.per_page)) || null
-      if (total && (pagination.total % pagination.per_page) > 0) {
-        ++total
-      }
-      return total
+    pageCount () {
+      return (this.getBuildPagination && this.getBuildPagination.pageCount) || null
     },
     currentPage () {
-      return (this.getBuildPagination && this.getBuildPagination.current_page) || null
+      return (this.getBuildPagination && this.getBuildPagination.currentPage) || null
     }
   },
   watch: {
