@@ -65,8 +65,11 @@ class BuildController {
       })
 
     build = await build.refresh()
+    build = build.toJSON()
 
-    return build.toJSON()
+    this.app.websocket.broadcast(this.app.websocket.actions.BUILD_STDOUT, build)
+
+    return build
   }
 
   async stderr (id, stderr) {
@@ -78,8 +81,11 @@ class BuildController {
       })
 
     build = await build.refresh()
+    build = build.toJSON()
 
-    return build.toJSON()
+    this.app.websocket.broadcast(this.app.websocket.actions.BUILD_STDERR, build)
+
+    return build
   }
 
   async packages (id, packages) {
@@ -91,8 +97,11 @@ class BuildController {
       })
 
     build = await build.refresh()
+    build = build.toJSON()
 
-    return build.toJSON()
+    this.app.websocket.broadcast(this.app.websocket.actions.BUILD_PACKAGES, build)
+
+    return build
   }
 
   async start (id) {
@@ -106,8 +115,11 @@ class BuildController {
       })
 
     build = await build.refresh()
+    build = build.toJSON()
 
-    return build.toJSON()
+    this.app.websocket.broadcast(this.app.websocket.actions.BUILD_START, build)
+
+    return build
   }
 
   async end (id, exitStatus) {
@@ -122,8 +134,11 @@ class BuildController {
       })
 
     build = await build.refresh()
+    build = build.toJSON()
 
-    return build.toJSON()
+    this.app.websocket.broadcast(this.app.websocket.actions.BUILD_END, build)
+
+    return build
   }
 
   async get (id) {
