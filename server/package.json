@@ -11,7 +11,8 @@
   "license": "ISC",
   "scripts": {
     "start": "eslint . && node src/index.js",
-    "test": "echo \"no test specified yet\" && exit 0",
+    "test": "eslint . && nyc -s true mocha test/mock-database.js test/setup.js test/ --recursive",
+    "coverage": "nyc report",
     "migrate:make": "knex migrate:make",
     "migrate:latest": "knex migrate:latest",
     "migrate:rollback": "knex migrate:rollback",
@@ -38,6 +39,11 @@
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-node": "^8.0.1",
     "eslint-plugin-promise": "^4.0.1",
-    "eslint-plugin-standard": "^4.0.0"
+    "eslint-plugin-standard": "^4.0.0",
+    "mocha": "^6.1.4",
+    "mock-knex": "^0.4.6",
+    "mock-require": "^3.0.3",
+    "nyc": "^14.1.1",
+    "sinon": "^7.3.2"
   }
 }
