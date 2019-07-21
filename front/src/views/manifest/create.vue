@@ -9,10 +9,10 @@
         <h1>Create manifest</h1>
         <!-- Error handling -->
         <div v-if="getManifestLoadings.create" class="loading">
-          adding the manifest...
+          Creating the manifest...
         </div>
         <div v-if="error || getManifestErrors.create" class="build-error">
-          <p>An error has occured during the creation of the manifest</p>
+          <p>An error occurred while creating the manifest</p>
           <p>{{ error || getManifestErrors.create }}</p>
         </div>
         <div v-if="manifestId" class="success">

@@ -9,7 +9,7 @@ import UpdateManifest from './views/manifest/update.vue'
 import DetailsManifest from './views/manifest/details.vue'
 
 Vue.use(VueRouter)
-
+// TODO: improve URLs
 const router = new VueRouter({
   mode: 'history',
   routes: [

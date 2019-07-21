@@ -37,10 +37,10 @@
 
     <!-- error handling -->
     <div v-if="getBuildLoadings.list" class="loading">
-      listing builds...
+      Looking for builds...
     </div>
     <div v-if="getBuildErrors.list" class="build-error">
-      <p>An error has occured during the retrieving of builds</p>
+      <p>An error occurred while retrieving the list of builds</p>
       <p>{{ getBuildErrors.list }}</p>
     </div>
 
@@ -58,7 +58,7 @@
         </div>
         <div
           v-for="item in getBuilds"
-          :class="{ queued: item.state == 'queuing', running: item.state == 'running', failed: item.exit_status != 0, success: item.exit_status == 0 }"
+          :class="{ queued: item.state == STATE.QUEUING, running: item.state == STATE.RUNNING, failed: item.exit_status != 0, success: item.exit_status == 0 }"
           :key="item.id"
           class="build-item">
           <a :href="'/builds/details/' + item.id" class="item-desc">
@@ -66,16 +66,16 @@
               <b-row>
                 <b-col>
                   <div class="item-info">
-                    <div v-if="item.state === 3">
+                    <div v-if="item.state === STATE.FINISHED">
                       <i class="fas fa-check text-success"/> <span class="item-name">#{{ item.id }}</span>
                     </div>
-                    <div v-else-if="item.state === 2">
+                    <div v-else-if="item.exit_status !== 0">
                       <i class="fas fa-times text-failed"/> <span class="item-name">#{{ item.id }}</span>
                     </div>
-                    <div v-else-if="item.state === 1">
+                    <div v-else-if="item.state === STATE.RUNNING">
                       <i class="fas fa-bolt text-running"/> <span class="item-name">#{{ item.id }}</span>
                     </div>
-                    <div v-else>
+                    <div v-else-if="item.state === STATE.QUEUING">
                       <i class="fas fa-history text-queued"/> <span class="item-name">#{{ item.id }}</span>
                     </div>
                     <div v-if="item.packages && item.packages.length" class="item-pkg">
@@ -145,6 +145,13 @@ export default {
       'getBuildLoadings',
       'getBuildErrors'
     ]),
+    STATE () {
+      return {
+        QUEUING: 'queuing',
+        RUNNING: 'running',
+        FINISHED: 'finished'
+      }
+    },
     builds () {
       return this.getBuilds
     },

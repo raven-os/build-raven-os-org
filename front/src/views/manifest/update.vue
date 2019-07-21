@@ -9,10 +9,10 @@
         <h1>Update manifest</h1>
         <!-- Error handling -->
         <div v-if="getManifestLoadings.update" class="loading">
-          updating the manifest...
+          Updating the manifest...
         </div>
         <div v-if="error || getManifestErrors.update" class="build-error">
-          <p>An error has occured during the update of the manifest</p>
+          <p>An error occurred while updating the manifest</p>
           <p>{{ error || getManifestErrors.update }}</p>
         </div>
         <div v-if="manifestId" class="success">
@@ -23,10 +23,10 @@
         </div>
 
         <div v-if="getManifestLoadings.get" class="loading">
-          loading
+          Loading...
         </div>
         <div v-else-if="getManifestErrors.get" class="build-error">
-          <p>An error has occured, please refresh or try again later</p>
+          <p>An error occurred, please try again later</p>
           <p>{{ getManifestErrors.get }}</p>
         </div>
 

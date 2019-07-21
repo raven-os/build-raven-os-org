@@ -30,10 +30,10 @@
 
     <!-- error handling -->
     <div v-if="getManifestLoadings.list" class="loading">
-      listing manifests...
+      Retrieving the list of manifests...
     </div>
     <div v-if="getManifestErrors.list" class="build-error">
-      <p>An error has occured during the retrieving of manifests</p>
+      <p>An error occurred while retrieving the list of manifests</p>
       <p>{{ getManifestErrors.list }}</p>
     </div>
 

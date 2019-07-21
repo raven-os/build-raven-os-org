@@ -9,10 +9,10 @@
         <h1>Create build</h1>
         <!-- Error handling -->
         <div v-if="getBuildLoadings.create" class="loading">
-          adding the build...
+          Adding the build...
         </div>
         <div v-if="error || getBuildErrors.create" class="build-error">
-          <p>An error has occured during the creation of the build</p>
+          <p>An error occurred preventing the creation of the build</p>
           <p>{{ error || getBuildErrors.create }}</p>
         </div>
         <div v-if="buildId" class="success">
@@ -23,10 +23,10 @@
         </div>
 
         <div v-if="getManifestLoadings.list" class="loading">
-          loading
+          Loading
         </div>
         <div v-else-if="getManifestErrors.list" class="build-error">
-          <p>An error has occured, please refresh or try again later</p>
+          <p>An error occurred, please try again later</p>
           <p>{{ getManifestErrors.list }}</p>
         </div>
         <form v-else id="form-create" @submit.prevent="create()">

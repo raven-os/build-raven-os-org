@@ -11,22 +11,23 @@
 
       <!-- error handling -->
       <div v-if="getBuildLoadings.get" class="loading">
-        retrieving build...
+        Retrieving the build's data...
       </div>
       <div v-if="getBuildErrors.get" class="build-error">
-        <p>An error has occured during the retrieving of build #{{ id }}</p>
+        <p>An error occurred during while retrieving build #{{ id }}</p>
         <p>{{ getBuildErrors.get }}</p>
       </div>
 
       <table id="date-table" class="table b-table table-striped">
         <thead class="list-thead">
           <tr>
+            <!-- TODO: indicate duration -->
             <th>Id</th>
             <th>State</th>
-            <th>exit_status</th>
-            <th>creation date</th>
-            <th>start date</th>
-            <th>end at</th>
+            <th>Exit Status</th>
+            <th>Creation Date</th>
+            <th>Starting Date</th>
+            <th>Finish date</th>
           </tr>
         </thead>
         <tbody>
@@ -83,69 +84,7 @@ export default {
     }
   },
   data () {
-    return {
-      dateFields: [
-        { key: 'created_at',
-          label: 'Creation date',
-          class: 'td-date',
-          tdClass: 'list-table-cell',
-          formatter: (value) => {
-            if (value) {
-              return moment((value)).format('MMMM Do YYYY, HH:mm:ss')
-            } else {
-              return ''
-            }
-          }
-        },
-        { key: 'state',
-          label: 'Build state',
-          class: 'td-state',
-          tdClass: 'list-table-cell',
-          formatter: (value) => {
-            switch (value) {
-              case 0:
-                return 'In queue'
-              case 1:
-                return 'Building'
-              case 2:
-                return 'Failed'
-              case 3:
-                return 'Successful'
-            }
-          }
-        },
-        { key: 'started_at',
-          label: 'Start date',
-          class: 'td-date',
-          tdClass: 'list-table-cell',
-          formatter: (value) => {
-            if (value) {
-              return moment((value)).format('MMMM Do YYYY, HH:mm:ss')
-            } else {
-              return ''
-            }
-          }
-        },
-        { key: 'ended_at',
-          label: 'End date',
-          class: 'td-date',
-          tdClass: 'list-table-cell',
-          formatter: (value) => {
-            if (value) {
-              return moment((value)).format('MMMM Do YYYY, HH:mm:ss')
-            } else {
-              return ''
-            }
-          }
-        }
-      ],
-      pkgFields: [
-        { key: 'name',
-          label: 'Package(s)',
-          tdClass: 'list-table-cell'
-        }
-      ]
-    }
+    return {}
   },
   computed: {
     ...mapGetters('build', ['getBuild', 'getBuildLoadings', 'getBuildErrors']),
@@ -156,7 +95,7 @@ export default {
       return this.getBuild(this._id)
     },
     packages () {
-      return (this.build && this.build.packages && this.build.packages.length && this.build.packages) || []
+      return (this.build && this.build.packages && this.build.packages.length) || []
     }
   },
   beforeMount () {

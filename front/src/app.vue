@@ -12,6 +12,7 @@
           </b-navbar-brand>
           <b-collapse id="nav_collapse" is-nav>
             <b-navbar-nav class="ml-auto">
+              <!-- TODO: move this out of the navbar -->
               <b-nav-item to="/" exact class="nav-item" active-class="nav-item-active">Builds</b-nav-item>
               <b-nav-item to="/builds/create" exact class="nav-item" active-class="nav-item-active">Create build</b-nav-item>
               <b-nav-item to="/manifests" exact class="nav-item" active-class="nav-item-active">Manifests</b-nav-item>

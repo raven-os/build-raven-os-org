@@ -11,10 +11,10 @@
 
       <!-- error handling -->
       <div v-if="getManifestLoadings.get" class="loading">
-        retrieving manifest...
+        Retrieving manifest...
       </div>
       <div v-if="getManifestErrors.get" class="build-error">
-        <p>An error has occured during the retrieving of manifest #{{ id }}</p>
+        <p>An error occurred while retrieving manifest #{{ id }}</p>
         <p>{{ getManifestErrors.get }}</p>
       </div>
 
