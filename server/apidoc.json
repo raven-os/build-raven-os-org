@@ -1,0 +1,7 @@
+{
+  "name": "build-raven-os-org-server",
+  "version": "1.0.0",
+  "title": "Build Server API documentation",
+  "description": "Upload manifests and schedule manifest's compilation",
+  "url": "https://build.raven-os.org"
+}
