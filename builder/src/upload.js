@@ -33,7 +33,7 @@ class Upload {
   }
 
   async sendRequest (packagePath) {
-    const uploadUrl = this.config.nest_server_api_url + 'upload/'
+    const uploadUrl = this.config.nest_server_api_url + 'api/upload/'
 
     try {
       const content = fs.readFileSync(packagePath)

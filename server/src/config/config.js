@@ -9,6 +9,9 @@ module.exports = {
       password: 'postgres'
     }
   },
+  cors: {
+    origin: ['http://localhost:8080']
+  },
   builder_apikey: 'DEFINE_BUILDER_APIKEY',
   pagination: {
     default_item_per_page: 15
