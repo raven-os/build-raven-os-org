@@ -7,7 +7,7 @@ const { param } = require('express-validator/check')
  * @apiGroup Manifest
  * @apiName ManifestGet
  *
- * @apiDescription Récupere un manifest
+ * @apiDescription Retrieve a manifest
  *
  * @apiParam  (Params) {Integer}  id  Id of the manifest
  *
