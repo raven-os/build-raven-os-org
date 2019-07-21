@@ -72,20 +72,26 @@ class ManifestController {
   }
 
   async list (name, sort, direction, pagination) {
-    const cursor = this.app.database.model.manifest
+    const manifests = await this.app.database.model.manifest
       .where('name', 'LIKE', name + '%')
-
-    const count = await cursor.count()
-    const manifests = await cursor
       .orderBy(sort, direction)
-      .simplePaginate({
-        limit: pagination.perPage,
+      .fetchPage({
+        pageSize: pagination.perPage,
         page: pagination.page,
         withRelated: ['history']
       })
 
-    manifests.meta.pagination.total = count
-    return manifests
+    return {
+      data: manifests.toJSON(),
+      meta: {
+        pagination: {
+          total: manifests.pagination.rowCount,
+          perPage: manifests.pagination.pageSize,
+          currentPage: manifests.pagination.page,
+          pageCount: manifests.pagination.pageCount
+        }
+      }
+    }
   }
 }
 

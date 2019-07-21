@@ -148,7 +148,7 @@ class BuildController {
   }
 
   async list (sort, direction, filters, pagination) {
-    const cursor = this.app.database.model.build
+    const builds = await this.app.database.model.build
       .query(queryBuilder => {
         if (filters.queuing !== null) {
           queryBuilder.where('queuing', filters.queuing)
@@ -163,17 +163,23 @@ class BuildController {
           queryBuilder.where('exit_status', filters.exitStatus)
         }
       })
-
-    const count = await cursor.count()
-    const builds = await cursor
       .orderBy(sort, direction)
-      .simplePaginate({
-        limit: pagination.perPage,
+      .fetchPage({
+        pageSize: pagination.perPage,
         page: pagination.page
       })
 
-    builds.meta.pagination.total = count
-    return builds
+    return {
+      data: builds.toJSON(),
+      meta: {
+        pagination: {
+          total: builds.pagination.rowCount,
+          perPage: builds.pagination.pageSize,
+          currentPage: builds.pagination.page,
+          pageCount: builds.pagination.pageCount
+        }
+      }
+    }
   }
 }
 
