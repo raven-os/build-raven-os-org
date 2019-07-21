@@ -73,7 +73,7 @@
         </div>
         <!-- Pagination -->
         <div class="pagination">
-          <span v-for="n in pageNumber" :key="n">
+          <span v-for="n in pageCount" :key="n">
             <a :class="n === currentPage ? 'current' : ''" @click="page = n" >{{ n }}</a>
           </span>
         </div>
@@ -117,16 +117,11 @@ export default {
       'getManifestLoadings',
       'getManifestErrors'
     ]),
-    pageNumber () {
-      const pagination = this.getManifestPagination
-      let total = (pagination && Math.floor(pagination.total / pagination.per_page)) || null
-      if (total && (pagination.total % pagination.per_page) > 0) {
-        ++total
-      }
-      return total
+    pageCount () {
+      return (this.getManifestPagination && this.getManifestPagination.pageCount) || null
     },
     currentPage () {
-      return (this.getManifestPagination && this.getManifestPagination.current_page) || null
+      return (this.getManifestPagination && this.getManifestPagination.currentPage) || null
     }
   },
   watch: {
