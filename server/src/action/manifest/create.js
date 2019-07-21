@@ -10,8 +10,8 @@ const { sanitizeBody } = require('express-validator/filter')
  *
  * @apiDescription Create a manifest to compile
  *
- * @apiParam  (Body) {String}  name    Name of the manifest (length must be between 1 and 255)
- * @apiParam  (Body) {String}  content Content of the manifest (length must be greater than 1)
+ * @apiParam  (Body) {String{1..255}}  name    Name of the manifest
+ * @apiParam  (Body) {String{1..}}  content Content of the manifest
  *
  * @apiParamExample {json} Request Body
  * {
