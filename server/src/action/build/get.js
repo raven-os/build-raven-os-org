@@ -1,7 +1,6 @@
 const AbstractAction = require('../abstract')
 const { param } = require('express-validator/check')
 
-
 /**
  * @api {get} /api/build/:id Get
  * @apiVersion 1.0.0
@@ -21,7 +20,7 @@ const { param } = require('express-validator/check')
  * @apiSuccess  {String}                                [start_date]  Date when the build was started
  * @apiSuccess  {String}                                [end_date]    Date when the build ended
  * @apiSuccess  {String="queuing","running","finished"} state         State of the build
- * *
+ *
  * @apiSuccessExample {json} Response
  * {
  *    "id": 18,
