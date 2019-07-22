@@ -30,7 +30,7 @@ const { param } = require('express-validator/check')
  *    "stdout": "",
  *    "stderr": "",
  *    "creation_date": "2019-07-19T22:25:10.370Z",
- *    "start_date": ""2019-07-19T22:30:10.370Z",
+ *    "start_date": "2019-07-19T22:30:10.370Z",
  *    "end_date": null,
  *    "state": "running",
  *    "packages": []
