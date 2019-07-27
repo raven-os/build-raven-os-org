@@ -11,11 +11,11 @@ const { sanitizeBody } = require('express-validator/filter')
  * @apiDescription Create a new manifest that can be used to compile a package
  *
  * @apiParam  (Body) {String{1..255}}  name    Name of the manifest
- * @apiParam  (Body) {String{1..}}  content Content of the manifest
+ * @apiParam  (Body) {String{1..}}     content Content of the manifest
  *
  * @apiParamExample {json} Request Body
  * {
- *    "name": "bonjour",
+ *    "name": "gcc",
  *    "content": "{{content of a build manifest (python)}}"
  * }
  *
@@ -23,23 +23,23 @@ const { sanitizeBody } = require('express-validator/filter')
  * @apiSuccess  {String}    name                  Name of the manifest
  * @apiSuccess  {String}    creation_date         Date of creation
  * @apiSuccess  {String}    last_update           Date of last update
- * @apiSuccess  {Object[]}  history               List of content (last updated first)
- * @apiSuccess  {Integer}   history.id            Id of the content
- * @apiSuccess  {Integer}   history.manifest_id   Id of the manifest
+ * @apiSuccess  {Object[]}  history               List of content (ordered by last_update)
+ * @apiSuccess  {Integer}   history.id            ID of the content
+ * @apiSuccess  {Integer}   history.manifest_id   ID of the manifest
  * @apiSuccess  {String}    history.content       The content of the manifest
  * @apiSuccess  {String}    history.edition_date  Date of content edition
  *
  * @apiSuccessExample {json} Response
  * {
  *    "id": 56,
- *    "name": "to_compile",
+ *    "name": "gcc",
  *    "creation_date": "2019-07-19T22:25:10.370Z",
  *    "last_update": "2019-07-19T22:25:10.370Z",
  *    "history": [
  *      {
  *          "id": 75,
  *          "manifest_id": 56,
- *          "content": "{{content of a python file manifest}}"
+ *          "content": "{{content of a build manifest (python)}}"
  *          "edition_date": "2019-07-19T22:25:10.370Z"
  *      }
  *    ]

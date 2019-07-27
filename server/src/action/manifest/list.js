@@ -18,13 +18,13 @@ const lowercase = require('../sanitizer/lowercase')
  * @apiParam  (Query String) {Integer}                            [page=1]            Page number
  *
  * @apiSuccess  {Object[]}  data                        List of manifests
- * @apiSuccess  {Integer}   data.id                     Id of the manifest
+ * @apiSuccess  {Integer}   data.id                     ID of the manifest
  * @apiSuccess  {String}    data.name                   Name of the manifest
  * @apiSuccess  {String}    data.creation_date          Date of creation
  * @apiSuccess  {String}    data.last_update            Date of last update
- * @apiSuccess  {Object[]}  data.history                List of content (last updated first)
- * @apiSuccess  {Integer}   data.history.id             Id of the content
- * @apiSuccess  {Integer}   data.history.manifest_id    Id of the manifest
+ * @apiSuccess  {Object[]}  data.history                List of content (ordered by last_update)
+ * @apiSuccess  {Integer}   data.history.id             ID of the content
+ * @apiSuccess  {Integer}   data.history.manifest_id    ID of the manifest
  * @apiSuccess  {String}    data.history.content        The content of the manifest
  * @apiSuccess  {String}    data.history.edition_date   Date of content edition
  * @apiSuccess  {Object}    meta                        Metadata of the paginated result
@@ -39,14 +39,14 @@ const lowercase = require('../sanitizer/lowercase')
  *    "data": [
  *      {
  *         "id": 56,
- *         "name": "to_compile",
+ *         "name": "gcc",
  *         "creation_date": "2019-07-19T22:25:10.370Z",
  *         "last_update": "2019-07-19T22:25:10.370Z",
  *         "history": [
  *           {
  *              "id": 75,
  *              "manifest_id": 56,
- *              "content": "{{content of a python file manifest}}"
+ *              "content": "{{content of a build manifest (python)}}"
  *              "edition_date": "2019-07-19T22:25:10.370Z"
  *           },
  *           { ... }

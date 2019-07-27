@@ -9,29 +9,29 @@ const { param } = require('express-validator/check')
  *
  * @apiDescription Fetch a manifest's content and metadata
  *
- * @apiParam  (Params) {Integer}  id  Id of the manifest
+ * @apiParam  (Params) {Integer}  id  ID of the manifest
  *
- * @apiSuccess  {Integer}   id                    Id of the manifest
+ * @apiSuccess  {Integer}   id                    ID of the manifest
  * @apiSuccess  {String}    name                  Name of the manifest
  * @apiSuccess  {String}    creation_date         Date of creation
  * @apiSuccess  {String}    last_update           Date of last update
  * @apiSuccess  {Object[]}  history               List of content (ordered by last_update)
- * @apiSuccess  {Integer}   history.id            Id of the content
- * @apiSuccess  {Integer}   history.manifest_id   Id of the manifest
- * @apiSuccess  {String}    history.content       Content of an edition of the manifest 
+ * @apiSuccess  {Integer}   history.id            ID of the content
+ * @apiSuccess  {Integer}   history.manifest_id   ID of the manifest
+ * @apiSuccess  {String}    history.content       Content of an edition of the manifest
  * @apiSuccess  {String}    history.edition_date  Date when the manifest was edited
  *
  * @apiSuccessExample {json} Response
  * {
  *    "id": 56,
- *    "name": "to_compile",
+ *    "name": "gcc",
  *    "creation_date": "2019-07-19T22:25:10.370Z",
  *    "last_update": "2019-07-19T22:25:10.370Z",
  *    "history": [
  *      {
  *          "id": 75,
  *          "manifest_id": 56,
- *          "content": "{{content of a python file manifest}}"
+ *          "content": "{{content of a build manifest (python)}}"
  *          "edition_date": "2019-07-19T22:25:10.370Z"
  *      }
  *    ]

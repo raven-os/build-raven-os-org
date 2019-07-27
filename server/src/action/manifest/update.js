@@ -10,7 +10,7 @@ const { sanitizeBody } = require('express-validator/filter')
  *
  * @apiDescription Update a manifest
  *
- * @apiParam  (Params) {Integer} id      Id of the manifest
+ * @apiParam  (Params) {Integer}      id      ID of the manifest
  * @apiParam  (Body)   {String{1..}}  content New content of the manifest
  *
  * @apiParamExample {json} Request Body
@@ -18,8 +18,8 @@ const { sanitizeBody } = require('express-validator/filter')
  *    "content": "{{content of a python file manifest}}"
  * }
  *
- * @apiSuccess  {Integer}   id            Id of the content
- * @apiSuccess  {Integer}   manifest_id   Id of the manifest
+ * @apiSuccess  {Integer}   id            ID of the content
+ * @apiSuccess  {Integer}   manifest_id   ID of the manifest
  * @apiSuccess  {String}    content       The content of the manifest
  * @apiSuccess  {String}    edition_date  Date of content edition
  *
@@ -27,7 +27,7 @@ const { sanitizeBody } = require('express-validator/filter')
  * {
  *    "id": 75,
  *    "manifest_id": 56,
- *    "content": "{{content of a python file manifest}}"
+ *    "content": "{{content of a build manifest (python)}}"
  *    "edition_date": "2019-07-19T22:25:10.370Z"
  * }
  *
