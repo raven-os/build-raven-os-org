@@ -15,9 +15,11 @@ async function handleError (request) {
 
 export default {
   getApiUrl () {
-    const apiUrl = process.env.VUE_APP_BASE_URL
+    const protocol = process.env.VUE_APP_API_PROTOCOL
+    const host = process.env.VUE_APP_API_HOST
+    const port = process.env.VUE_APP_API_PORT
 
-    return apiUrl + (apiUrl.endsWith('/') ? '' : '/')
+    return `${protocol}://${host}:${port}/api/`
   },
 
   get (url, options) {

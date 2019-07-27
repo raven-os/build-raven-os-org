@@ -30,7 +30,15 @@ const options = {
   connectManually: true
 }
 
-Vue.use(VueNativeSock, process.env.VUE_APP_WEBSOCKET_URL, options)
+const wsUrl = () => {
+  const protocol = process.env.VUE_APP_API_PROTOCOL.endsWith('s') ? 'wss' : 'ws'
+  const host = process.env.VUE_APP_API_HOST
+  const port = process.env.VUE_APP_API_PORT
+
+  return `${protocol}://${host}:${port}/ws`
+}
+
+Vue.use(VueNativeSock, wsUrl(), options)
 
 new Vue({
   router,
