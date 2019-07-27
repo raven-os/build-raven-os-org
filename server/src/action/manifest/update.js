@@ -11,7 +11,7 @@ const { sanitizeBody } = require('express-validator/filter')
  * @apiDescription Update a manifest
  *
  * @apiParam  (Params) {Integer} id      Id of the manifest
- * @apiParam  (Body)   {String{1..}}  content Content of the manifest
+ * @apiParam  (Body)   {String{1..}}  content New content of the manifest
  *
  * @apiParamExample {json} Request Body
  * {

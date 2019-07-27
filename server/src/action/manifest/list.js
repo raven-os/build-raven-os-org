@@ -11,9 +11,9 @@ const lowercase = require('../sanitizer/lowercase')
  *
  * @apiDescription List all manifests
  *
- * @apiParam  (Query String) {String}                             [name]              Search results starting by provided name
- * @apiParam  (Query String) {String='creation','update','name'}  [sort='creation']   Sort by provided column
- * @apiParam  (Query String) {String='asc','desc'}                [dir='desc']        Direction of the sorting
+ * @apiParam  (Query String) {String}                             [name]              Search for manifests with a name starting with `name`
+ * @apiParam  (Query String) {String='creation','update','name'}  [sort='creation']   Sort the results by the provided criteria
+ * @apiParam  (Query String) {String='asc','desc'}                [dir='desc']        Sort direction
  * @apiParam  (Query String) {Integer}                            [per_page=15]       Number of items returned per page
  * @apiParam  (Query String) {Integer}                            [page=1]            Page number
  *
@@ -32,7 +32,7 @@ const lowercase = require('../sanitizer/lowercase')
  * @apiSuccess  {Integer}   meta.pagination.total       Total number of item found
  * @apiSuccess  {Integer}   meta.pagination.perPage     Number of item per page
  * @apiSuccess  {Integer}   meta.pagination.currentPage Current page
- * @apiSuccess  {Integer}   meta.pagination.pageCount   Number of pages containing results
+ * @apiSuccess  {Integer}   meta.pagination.pageCount   Total number of pages
  *
  * @apiSuccessExample {json} Response
  * {

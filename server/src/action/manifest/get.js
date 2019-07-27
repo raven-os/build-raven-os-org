@@ -7,7 +7,7 @@ const { param } = require('express-validator/check')
  * @apiGroup Manifest
  * @apiName ManifestGet
  *
- * @apiDescription Retrieve a manifest
+ * @apiDescription Fetch a manifest's content and metadata
  *
  * @apiParam  (Params) {Integer}  id  Id of the manifest
  *
@@ -15,11 +15,11 @@ const { param } = require('express-validator/check')
  * @apiSuccess  {String}    name                  Name of the manifest
  * @apiSuccess  {String}    creation_date         Date of creation
  * @apiSuccess  {String}    last_update           Date of last update
- * @apiSuccess  {Object[]}  history               List of content (last updated first)
+ * @apiSuccess  {Object[]}  history               List of content (ordered by last_update)
  * @apiSuccess  {Integer}   history.id            Id of the content
  * @apiSuccess  {Integer}   history.manifest_id   Id of the manifest
- * @apiSuccess  {String}    history.content       The content of the manifest
- * @apiSuccess  {String}    history.edition_date  Date of content edition
+ * @apiSuccess  {String}    history.content       Content of an edition of the manifest 
+ * @apiSuccess  {String}    history.edition_date  Date when the manifest was edited
  *
  * @apiSuccessExample {json} Response
  * {

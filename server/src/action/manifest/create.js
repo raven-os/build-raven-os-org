@@ -8,7 +8,7 @@ const { sanitizeBody } = require('express-validator/filter')
  * @apiGroup Manifest
  * @apiName ManifestCreate
  *
- * @apiDescription Create a manifest to compile
+ * @apiDescription Create a new manifest that can be used to compile a package
  *
  * @apiParam  (Body) {String{1..255}}  name    Name of the manifest
  * @apiParam  (Body) {String{1..}}  content Content of the manifest
@@ -16,10 +16,10 @@ const { sanitizeBody } = require('express-validator/filter')
  * @apiParamExample {json} Request Body
  * {
  *    "name": "bonjour",
- *    "content": "{{content of a python file manifest}}"
+ *    "content": "{{content of a build manifest (python)}}"
  * }
  *
- * @apiSuccess  {Integer}   id                    Id of the manifest
+ * @apiSuccess  {Integer}   id                    ID of the manifest
  * @apiSuccess  {String}    name                  Name of the manifest
  * @apiSuccess  {String}    creation_date         Date of creation
  * @apiSuccess  {String}    last_update           Date of last update
@@ -47,9 +47,9 @@ const { sanitizeBody } = require('express-validator/filter')
  *
  * @apiError  {String}    message        Error message
  * @apiError  {Object[]}  errors         List of error details
- * @apiError  {String}    errors.param   Request parameter in error
- * @apiError  {string}    errors.detail  Detail about the parameter in error
- * @apiError  {string}    errors.value   Value of the parameter provided
+ * @apiError  {String}    errors.param   The request parameter that caused the error
+ * @apiError  {string}    errors.detail  Details about the parameter that caused the error
+ * @apiError  {string}    errors.value   Value provided for the invalid parameter
  *
  * @apiErrorExample {json} Bad Request 400
  * {
