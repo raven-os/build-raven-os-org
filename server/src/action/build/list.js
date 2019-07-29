@@ -11,21 +11,21 @@ const lowercase = require('../sanitizer/lowercase')
  *
  * @apiDescription List all builds
  *
- * @apiParam  (Query String) {Boolean}                          [queuing]           Search only builds in queuing state
- * @apiParam  (Query String) {Boolean}                          [running]           Search only builds in running state
- * @apiParam  (Query String) {Boolean}                          [exit_status]       Search only builds with the provided exit status
- * @apiParam  (Query String) {Boolean}                          [manifest_id]       Search only builds containing the list of provided manifest ids
- * @apiParam  (Query String) {String='creation','start','end'}  [sort='creation']   Sort by provided column
- * @apiParam  (Query String) {String='asc','desc'}              [dir='desc']        Direction of the sorting
+ * @apiParam  (Query String) {Boolean}                          [queuing]           Search for builds in queuing state
+ * @apiParam  (Query String) {Boolean}                          [running]           Search for builds in running state
+ * @apiParam  (Query String) {Boolean}                          [exit_status]       Search for builds with an exit status equal to `exit_status`
+ * @apiParam  (Query String) {Boolean}                          [manifest_id]       Search for builds which contains the list of manifest ids
+ * @apiParam  (Query String) {String='creation','start','end'}  [sort='creation']   Sort the results by the provided criteria
+ * @apiParam  (Query String) {String='asc','desc'}              [dir='desc']        Sort direction
  * @apiParam  (Query String) {Integer}                          [per_page=15]       Number of items returned per page
  * @apiParam  (Query String) {Integer}                          [page=1]            Page number
  *
  * @apiSuccess  {Object[]}                              data                        List of builds
- * @apiSuccess  {Integer}                               data.id                     Id of the build
- * @apiSuccess  {Integer[]}                             data.manifest_id            Ids of manifests to build
+ * @apiSuccess  {Integer}                               data.id                     ID of the build
+ * @apiSuccess  {Integer[]}                             data.manifest_id            IDs of manifests to build
  * @apiSuccess  {Integer}                               [data.exit_status]          Exit status code
- * @apiSuccess  {String}                                data.stdout                 Logs from stdout
- * @apiSuccess  {String}                                data.stderr                 Errors logged on stderr
+ * @apiSuccess  {String}                                data.stdout                 Content of the standard output
+ * @apiSuccess  {String}                                data.stderr                 Content of the standard error
  * @apiSuccess  {String}                                data.creation_date          Date of creation
  * @apiSuccess  {String}                                [data.start_date]           Date when the build was started
  * @apiSuccess  {String}                                [data.end_date]             Date when the build ended
@@ -35,13 +35,13 @@ const lowercase = require('../sanitizer/lowercase')
  * @apiSuccess  {Integer}                               meta.pagination.total       Total number of item found
  * @apiSuccess  {Integer}                               meta.pagination.perPage     Number of item per page
  * @apiSuccess  {Integer}                               meta.pagination.currentPage Current page
- * @apiSuccess  {Integer}                               meta.pagination.pageCount   Number of pages containing results
+ * @apiSuccess  {Integer}                               meta.pagination.pageCount   Total number of pages
  *
  * @apiSuccessExample {json} Response
  * {
  *    "data": [
  *      {
- *         "id": 56,
+ *         "id": 210,
  *         "manifest_id": [42, 101],
  *         "exit_status": 83,
  *         "stdout": "npm install\nnpm test",

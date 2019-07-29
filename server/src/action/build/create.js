@@ -7,7 +7,7 @@ const { body } = require('express-validator/check')
  * @apiGroup Build
  * @apiName BuildCreate
  *
- * @apiDescription Create and schedule a build
+ * @apiDescription Create a new build and schedule it to compile some manifests
  *
  * @apiParam  (Body) {Integer[]}  ids    IDs of the manifests to build
  *
@@ -16,8 +16,8 @@ const { body } = require('express-validator/check')
  *    "ids": [42, 101]
  * }
  *
- * @apiSuccess  {Integer}                               id            Id of the build
- * @apiSuccess  {Integer[]}                             manifest_id   Ids of manifests to build
+ * @apiSuccess  {Integer}                               id            ID of the build
+ * @apiSuccess  {Integer[]}                             manifest_id   IDs of manifests to build
  * @apiSuccess  {Integer}                               [exit_status] Exit status code
  * @apiSuccess  {String}                                stdout        Content of the standard output
  * @apiSuccess  {String}                                stderr        Content of the standard error
@@ -41,9 +41,9 @@ const { body } = require('express-validator/check')
  *
  * @apiError  {String}    message        Error message
  * @apiError  {Object[]}  errors         List of error details
- * @apiError  {String}    errors.param   Request parameter in error
- * @apiError  {string}    errors.detail  Detail about the parameter in error
- * @apiError  {string}    errors.value   Value of the parameter provided
+ * @apiError  {String}    errors.param   The request parameter that caused the error
+ * @apiError  {string}    errors.detail  Details about the parameter that caused the error
+ * @apiError  {string}    errors.value   Value provided for the invalid parameter
  *
  * @apiErrorExample {json} Bad Request 400
  * {

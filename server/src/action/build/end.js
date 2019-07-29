@@ -7,16 +7,21 @@ const { param, body } = require('express-validator/check')
  * @apiGroup Build
  * @apiName BuildEnd
  *
- * @apiDescription End the build
+ * @apiDescription End a build
  *
- * @apiParam  (Params) {Integer}  id           Id of the build
+ * @apiParam  (Params) {Integer}  id           ID of the build
  * @apiParam  (Body)   {Integer}  exit_status  Exit status code
  *
- * @apiSuccess  {Integer}                               id            Id of the build
- * @apiSuccess  {Integer[]}                             manifest_id   Ids of manifests to build
+ * @apiParamExample {json} Request Body
+ * {
+ *    "exit_status": 0
+ * }
+ *
+ * @apiSuccess  {Integer}                               id            ID of the build
+ * @apiSuccess  {Integer[]}                             manifest_id   IDs of manifests to build
  * @apiSuccess  {Integer}                               [exit_status] Exit status code
- * @apiSuccess  {String}                                stdout        Logs from stdout
- * @apiSuccess  {String}                                stderr        Errors logged on stderr
+ * @apiSuccess  {String}                                stdout        Content of the standard output
+ * @apiSuccess  {String}                                stderr        Content of the standard error
  * @apiSuccess  {String}                                creation_date Date of creation
  * @apiSuccess  {String}                                [start_date]  Date when the build was started
  * @apiSuccess  {String}                                [end_date]    Date when the build ended
@@ -39,9 +44,9 @@ const { param, body } = require('express-validator/check')
  *
  * @apiError  {String}    message        Error message
  * @apiError  {Object[]}  errors         List of error details
- * @apiError  {String}    errors.param   Request parameter in error
- * @apiError  {string}    errors.detail  Detail about the parameter in error
- * @apiError  {string}    errors.value   Value of the parameter provided
+ * @apiError  {String}    errors.param   The request parameter that caused the error
+ * @apiError  {string}    errors.detail  Details about the parameter that caused the error
+ * @apiError  {string}    errors.value   Value provided for the invalid parameter
  *
  * @apiErrorExample {json} Bad Request 400
  * {

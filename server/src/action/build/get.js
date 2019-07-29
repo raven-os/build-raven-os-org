@@ -7,15 +7,15 @@ const { param } = require('express-validator/check')
  * @apiGroup Build
  * @apiName BuildGet
  *
- * @apiDescription Retrieve a build
+ * @apiDescription Fetch a build
  *
- * @apiParam  (Params) {Integer}  ids    ID of the build
+ * @apiParam  (Params) {Integer}  id    ID of the build
  *
- * @apiSuccess  {Integer}                               id            Id of the build
- * @apiSuccess  {Integer[]}                             manifest_id   Ids of manifests to build
+ * @apiSuccess  {Integer}                               id            ID of the build
+ * @apiSuccess  {Integer[]}                             manifest_id   IDs of manifests to build
  * @apiSuccess  {Integer}                               [exit_status] Exit status code
- * @apiSuccess  {String}                                stdout        Logs from stdout
- * @apiSuccess  {String}                                stderr        Errors logged on stderr
+ * @apiSuccess  {String}                                stdout        Content of the standard output
+ * @apiSuccess  {String}                                stderr        Content of the standard error
  * @apiSuccess  {String}                                creation_date Date of creation
  * @apiSuccess  {String}                                [start_date]  Date when the build was started
  * @apiSuccess  {String}                                [end_date]    Date when the build ended
@@ -23,8 +23,8 @@ const { param } = require('express-validator/check')
  *
  * @apiSuccessExample {json} Response
  * {
- *    "id": 18,
- *    "manifest_id": [6],
+ *    "id": 210,
+ *    "manifest_id": [42, 101],
  *    "exit_status": 42,
  *    "stdout": "checking build system type...\nchecking host system type...",
  *    "stderr": "mv: cannot stat /path: No such file or directory...\n...",
@@ -36,9 +36,9 @@ const { param } = require('express-validator/check')
  *
  * @apiError  {String}    message        Error message
  * @apiError  {Object[]}  errors         List of error details
- * @apiError  {String}    errors.param   Request parameter in error
- * @apiError  {string}    errors.detail  Detail about the parameter in error
- * @apiError  {string}    errors.value   Value of the parameter provided
+ * @apiError  {String}    errors.param   The request parameter that caused the error
+ * @apiError  {string}    errors.detail  Details about the parameter that caused the error
+ * @apiError  {string}    errors.value   Value provided for the invalid parameter
  *
  * @apiErrorExample {json} Bad Request 400
  * {
