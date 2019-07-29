@@ -9,7 +9,7 @@ const { param } = require('express-validator/check')
  *
  * @apiDescription Retrieve a build
  *
- * @apiParam  (Params) {Integer}  ids    Ids of the build
+ * @apiParam  (Params) {Integer}  ids    ID of the build
  *
  * @apiSuccess  {Integer}                               id            Id of the build
  * @apiSuccess  {Integer[]}                             manifest_id   Ids of manifests to build

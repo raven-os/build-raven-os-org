@@ -7,10 +7,10 @@ const { param, body } = require('express-validator/check')
  * @apiGroup Build
  * @apiName BuildEnd
  *
- * @apiDescription Set link to packages built
+ * @apiDescription Set the list of packages built
  *
  * @apiParam  (Params) {Integer}  id     Id of the build
- * @apiParam  (Body)   {String[]} data   List of link to packages
+ * @apiParam  (Body)   {String[]} data   List of links pointing to the built packages
  *
  * @apiSuccess  {Integer}                               id            Id of the build
  * @apiSuccess  {Integer[]}                             manifest_id   Ids of manifests to build
@@ -34,7 +34,7 @@ const { param, body } = require('express-validator/check')
  *    "start_date": "2019-07-19T22:30:10.370Z",
  *    "end_date": "2019-07-19T22:50:10.370Z",
  *    "state": "finished",
- *    "packages": ["https://nest.raven-os.org/packages/readline"]
+ *    "packages": ["https://stable.raven-os.org/p/sys-libs/readline"]
  * }
  *
  * @apiError  {String}    message        Error message

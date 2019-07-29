@@ -9,7 +9,7 @@ const { body } = require('express-validator/check')
  *
  * @apiDescription Create and schedule a build
  *
- * @apiParam  (Body) {Integer[]}  ids    Ids of manifests to build
+ * @apiParam  (Body) {Integer[]}  ids    IDs of the manifests to build
  *
  * @apiParamExample {json} Request Body
  * {
@@ -19,8 +19,8 @@ const { body } = require('express-validator/check')
  * @apiSuccess  {Integer}                               id            Id of the build
  * @apiSuccess  {Integer[]}                             manifest_id   Ids of manifests to build
  * @apiSuccess  {Integer}                               [exit_status] Exit status code
- * @apiSuccess  {String}                                stdout        Logs from stdout
- * @apiSuccess  {String}                                stderr        Errors logged on stderr
+ * @apiSuccess  {String}                                stdout        Content of the standard output
+ * @apiSuccess  {String}                                stderr        Content of the standard error
  * @apiSuccess  {String}                                creation_date Date of creation
  * @apiSuccess  {String}                                [start_date]  Date when the build was started
  * @apiSuccess  {String}                                [end_date]    Date when the build ended

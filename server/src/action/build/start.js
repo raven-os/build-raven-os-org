@@ -7,7 +7,7 @@ const { param } = require('express-validator/check')
  * @apiGroup Build
  * @apiName BuildStart
  *
- * @apiDescription Start the build
+ * @apiDescription Start a build
  *
  * @apiParam  (Params) {Integer}  id  Id of the build
  *

@@ -2,15 +2,15 @@ const AbstractAction = require('../abstract')
 const { param, body } = require('express-validator/check')
 
 /**
- * @api {put} /api/build/:id/stderr [BUILDER ONLY] Write stderr
+ * @api {put} /api/build/:id/stderr [BUILDER ONLY] Write to the standard error
  * @apiVersion 1.0.0
  * @apiGroup Build
  * @apiName BuildStderr
  *
- * @apiDescription Append error logs from stderr
+ * @apiDescription Append data to the standard error
  *
  * @apiParam  (Params) {Integer}  id    Id of the build
- * @apiParam  (Body)   {String}   data  Error logs to append
+ * @apiParam  (Body)   {String}   data  Content to append at the end of the standard error
  *
  * @apiSuccess  {Integer}                               id            Id of the build
  * @apiSuccess  {Integer[]}                             manifest_id   Ids of manifests to build
