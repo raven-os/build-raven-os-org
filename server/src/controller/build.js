@@ -47,7 +47,8 @@ class BuildController {
       creation_date: date,
       start_date: null,
       end_date: null,
-      state: this.state.QUEUING
+      state: this.state.QUEUING,
+      packages: []
     })
       .save()
 
