@@ -57,6 +57,12 @@ const { body } = require('express-validator/check')
  *    ]
  * }
  *
+ * @apiErrorExample {json} Bad Request 400
+ * {
+ *    "message": "A build needs at least one manifest",
+ *    "errors": []
+ * }
+ *
  * @apiErrorExample {json} Not Found 404
  * {
  *    "message": "Manifest #4400 not found",

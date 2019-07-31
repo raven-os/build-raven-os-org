@@ -27,6 +27,10 @@ class BuildController {
   }
 
   async create (ids) {
+    if (!ids.length) {
+      throw new this.app.errors.BadRequest('A build needs at least one manifest')
+    }
+
     for (let id of ids) {
       if (!await this.app.controller.manifest.exists(id)) {
         throw new this.app.errors.NotFound(`Manifest #${id} not found`)
