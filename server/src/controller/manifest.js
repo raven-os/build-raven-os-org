@@ -48,7 +48,7 @@ class ManifestController {
    * Create a manifests and a manifestContent
    *
    * @public
-   * @param  {String}  name    Name of the manifest
+   * @param  {String}  name    Name of the namfest
    * @param  {String}  content Content of the manifest
    * @return {Object}          Manifest with its content
    */
@@ -95,9 +95,9 @@ class ManifestController {
    *
    * @public
    * @param  {Integer}  id      Id of the manifest
-   * @param  {String}   content Content of the manifest
-   * @return {Object}           Content of the manfiest
-   * @throws {NotFound}         If the manifest doesn't exist
+   * @param  {String}   content New content of the manifest
+   * @return {Object}           New Content and metadata of the manifest's new content
+   * @throws {NotFound}         If the manifest doesn't exists
    */
   async updateContent (id, content) {
     const date = new Date()
@@ -118,7 +118,7 @@ class ManifestController {
    * @public
    * @param   {Integer}  id Id of the manifest
    * @return  {Object}      The manifest
-   * @throws  {NotFound}    If the manifest doesn't exist
+   * @throws  {NotFound}    If the manifest doesn't exists
    */
   async get (id) {
     const manifest = await this._get(id)
