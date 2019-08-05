@@ -3,6 +3,7 @@ import App from './app.vue'
 import router from './router'
 import store from './store'
 import VueResource from 'vue-resource'
+import VueNativeSock from 'vue-native-websocket'
 import BootstrapVue from 'bootstrap-vue'
 
 import 'bootstrap/dist/css/bootstrap.css'
@@ -18,6 +19,26 @@ Vue.use(BootstrapVue)
 
 // HTTP plugin
 Vue.use(VueResource)
+
+// WebSocket
+const options = {
+  store,
+  format: 'json',
+  reconnection: true,
+  reconnectionAttempts: 5,
+  reconnectionDelay: 2000,
+  connectManually: true
+}
+
+const wsUrl = () => {
+  const protocol = process.env.VUE_APP_API_PROTOCOL.endsWith('s') ? 'wss' : 'ws'
+  const host = process.env.VUE_APP_API_HOST
+  const port = process.env.VUE_APP_API_PORT
+
+  return `${protocol}://${host}:${port}/ws`
+}
+
+Vue.use(VueNativeSock, wsUrl(), options)
 
 new Vue({
   router,
