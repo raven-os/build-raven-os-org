@@ -13,6 +13,7 @@
     "start": "eslint . && node src/index.js",
     "test": "eslint . && nyc -s true mocha test/mock-database.js test/setup.js test/ --recursive",
     "coverage": "nyc report",
+    "apidoc": "apidoc -i src/action -o docs/apidoc/",
     "migrate:make": "knex migrate:make",
     "migrate:latest": "knex migrate:latest",
     "migrate:rollback": "knex migrate:rollback",
@@ -34,6 +35,7 @@
     "ws": "^7.1.0"
   },
   "devDependencies": {
+    "apidoc": "^0.17.7",
     "eslint": "^5.12.1",
     "eslint-config-standard": "^12.0.0",
     "eslint-plugin-import": "^2.14.0",
