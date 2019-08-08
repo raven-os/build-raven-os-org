@@ -25,7 +25,8 @@ const { body } = require('express-validator/check')
  * @apiSuccess  {String}                                [start_date]  Date when the build was started
  * @apiSuccess  {String}                                [end_date]    Date when the build ended
  * @apiSuccess  {String="queuing","running","finished"} state         State of the build
- * *
+ * @apiSuccess  {String[]}                              packages      Link to packages built
+ *
  * @apiSuccessExample {json} Response
  * {
  *    "id": 210,
