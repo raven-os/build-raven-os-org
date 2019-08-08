@@ -3,6 +3,67 @@ const { query } = require('express-validator/check')
 const { sanitizeQuery } = require('express-validator/filter')
 const lowercase = require('../sanitizer/lowercase')
 
+/**
+ * @api {get} /api/build List
+ * @apiVersion 1.0.0
+ * @apiGroup Build
+ * @apiName BuildList
+ *
+ * @apiDescription List all builds
+ *
+ * @apiParam  (Query String) {Boolean}                          [queuing]           Search for builds in queuing state
+ * @apiParam  (Query String) {Boolean}                          [running]           Search for builds in running state
+ * @apiParam  (Query String) {Boolean}                          [exit_status]       Search for builds with an exit status equal to `exit_status`
+ * @apiParam  (Query String) {Boolean}                          [manifest_id]       Search for builds which contains the list of manifest ids
+ * @apiParam  (Query String) {String='creation','start','end'}  [sort='creation']   Sort the results by the provided criteria
+ * @apiParam  (Query String) {String='asc','desc'}              [dir='desc']        Sort direction
+ * @apiParam  (Query String) {Integer}                          [per_page=15]       Number of items returned per page
+ * @apiParam  (Query String) {Integer}                          [page=1]            Page number
+ *
+ * @apiSuccess  {Object[]}                              data                        List of builds
+ * @apiSuccess  {Integer}                               data.id                     ID of the build
+ * @apiSuccess  {Integer[]}                             data.manifest_id            IDs of manifests to build
+ * @apiSuccess  {Integer}                               [data.exit_status]          Exit status code
+ * @apiSuccess  {String}                                data.stdout                 Content of the standard output
+ * @apiSuccess  {String}                                data.stderr                 Content of the standard error
+ * @apiSuccess  {String}                                data.creation_date          Date of creation
+ * @apiSuccess  {String}                                [data.start_date]           Date when the build was started
+ * @apiSuccess  {String}                                [data.end_date]             Date when the build ended
+ * @apiSuccess  {String="queuing","running","finished"} data.state                  State of the build
+ * @apiSuccess  {Object}                                meta                        Metadata of the paginated result
+ * @apiSuccess  {Object}                                meta.pagination             Pagination information
+ * @apiSuccess  {Integer}                               meta.pagination.total       Total number of item found
+ * @apiSuccess  {Integer}                               meta.pagination.perPage     Number of item per page
+ * @apiSuccess  {Integer}                               meta.pagination.currentPage Current page
+ * @apiSuccess  {Integer}                               meta.pagination.pageCount   Total number of pages
+ *
+ * @apiSuccessExample {json} Response
+ * {
+ *    "data": [
+ *      {
+ *         "id": 210,
+ *         "manifest_id": [42, 101],
+ *         "exit_status": 83,
+ *         "stdout": "npm install\nnpm test",
+ *         "stderr": ""
+ *         "creation_date": "2019-07-19T22:25:10.370Z",
+ *         "start_date": "2019-07-19T22:25:10.370Z",
+ *         "end_date": "2019-07-19T23:25:10.370Z",
+ *         "state": "finished"
+ *      },
+ *      { ... }
+ *    ],
+ *    "meta": {
+ *       "pagination": {
+ *          "total": 40,
+ *          "perPage": 15,
+ *          "currentPage": 1,
+ *          "pageCount": 3
+ *       }
+ *    }
+ * }
+ *
+ */
 class ListBuild extends AbstractAction {
   get validate () {
     return [
