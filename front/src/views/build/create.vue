@@ -69,7 +69,9 @@ export default {
     ...mapGetters('build', ['getBuildLoadings', 'getBuildErrors']),
     manifestList () {
       return Object.keys(this.getManifests).map((key) => {
-        return { id: key, label: '#' + key + ': ' + this.getManifests[key].name }
+        const manifest = this.getManifests[key]
+
+        return { id: manifest.id, label: `${manifest.id}: ${manifest.name}` }
       })
     }
   },
