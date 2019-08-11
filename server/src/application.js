@@ -21,7 +21,10 @@ class Application {
     this.websocket = new Websocket(this)
   }
 
-  run () {
+  async run () {
+    await this.database.ensureConnection()
+    await this.database.runMigrations()
+
     this.express = express()
     this.express.use(this.logger)
     this.express.use(cors(this.config.cors))
