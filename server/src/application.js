@@ -23,6 +23,7 @@ class Application {
 
   async run () {
     await this.database.ensureConnection()
+    await this.database.runMigrations()
 
     this.express = express()
     this.express.use(this.logger)

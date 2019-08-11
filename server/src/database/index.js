@@ -1,5 +1,6 @@
 const Model = require('./model')
 const bookshelf = require('./bookshelf')
+const knexMigrate = require('knex-migrate')
 
 class Database {
   constructor (app) {
@@ -28,6 +29,12 @@ class Database {
         await new Promise(resolve => setTimeout(resolve, interval))
       }
     }
+  }
+
+  async runMigrations () {
+    const logger = ({ migration }) => console.info('Running migration', migration)
+
+    return knexMigrate('up', {}, logger)
   }
 }
 
