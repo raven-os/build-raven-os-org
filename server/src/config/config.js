@@ -7,6 +7,10 @@ module.exports = {
       database: 'build-raven-os-org',
       user: 'postgres',
       password: 'postgres'
+    },
+    retry: {
+      count: 10,
+      interval: 3 * 1000 // 3 seconds
     }
   },
   cors: {
