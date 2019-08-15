@@ -50,6 +50,30 @@ const config = convict({
       default: 'DEFINE_NEST_SERVER_APIKEY',
       env: 'APIKEYS_NEST_SERVER'
     }
+  },
+  queue: {
+    rabbitmq: {
+      url: {
+        doc: 'Url of rabbitMQ server',
+        format: String,
+        default: 'amqp://localhost:5672',
+        env: 'RABBIT_MQ_URL'
+      },
+      retry: {
+        count: {
+          doc: 'Number of rabbitMQ connection retry if it fails',
+          format: Number,
+          default: 10,
+          env: 'RABBIT_MQ_RETRY_COUNT'
+        },
+        interval: {
+          doc: 'Interval of time in millisecond between each retry',
+          format: Number,
+          default: 3 * 1000,
+          env: 'RABBIT_MQ_RETRY_INTERVAL'
+        }
+      }
+    }
   }
 })
 
