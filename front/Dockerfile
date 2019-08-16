@@ -1,24 +1,15 @@
-FROM debian:sid
+FROM node:10
 
-RUN apt-get update
+RUN mkdir -p /home/node/front
+WORKDIR /home/node/front
 
-# Install NodeJS 10
-RUN apt-get install -y -q \
-    curl \
-    software-properties-common \
-    build-essential
-
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
-RUN apt-get install -y nodejs
-
-RUN mkdir /app
-WORKDIR /app
-
-# Install server dependencies
-COPY package.json /app/package.json
+# Install front dependencies
+COPY package.json .
 RUN npm install
 
-# Install builder
-COPY . /app
+# Install front
+COPY . .
+
+EXPOSE 8080
 
 CMD ["npm", "run", "serve"]

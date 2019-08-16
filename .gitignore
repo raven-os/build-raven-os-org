@@ -8,3 +8,4 @@ docs/
 builder/manifests/*
 !builder/manifests/.empty
 builder/nbuild/
+builder/out/

@@ -1,36 +1,19 @@
-FROM debian:sid
+FROM node:10
 
-RUN apt-get update
+ENV NODE_ENV=production
 
-# Install NodeJS 10
-RUN apt-get install -y -q \
-    curl \
-    software-properties-common \
-    build-essential
-
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
-RUN apt-get install -y nodejs
-
-# Install postgresql database
-RUN apt-get install -y -q \
-    postgresql \
-    postgresql-contrib \
-    libpq-dev
-
-# Start postgres on boot
-RUN update-rc.d postgresql enable
-
-# Start postgres
-RUN service postgresql start
-
-RUN mkdir /app
-WORKDIR /app
+RUN mkdir -p /home/node/api
+WORKDIR /home/node/api
 
 # Install server dependencies
-COPY package.json /app/package.json
-RUN npm install
+COPY package.json .
+RUN npm install --only=production
 
-# Install builder
-COPY . /app
+# Install server
+COPY . .
 
-CMD ["npm", "start"]
+EXPOSE 8000
+
+USER node
+
+CMD ["node", "src/index.js"]
