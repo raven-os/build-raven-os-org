@@ -1,2 +1,8 @@
-node_modules/
-npm-debug.log
+# Exclude everything
+*
+
+# Allow only necessary files
+!package.json
+!src/
+!public/
+!babel.config.js
