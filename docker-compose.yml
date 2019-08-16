@@ -1,0 +1,95 @@
+version: "3.7"
+services:
+
+  # Frontend
+  front:
+    build: ./front/
+    init: true
+    networks:
+      - frontend
+    ports:
+      - 8080:8080
+    environment:
+      NODE_ENV: development
+      VUE_APP_API_HOST: localhost
+      VUE_APP_API_PORT: 8000
+      VUE_APP_API_PROTOCOL: http
+
+  # API
+  api:
+    build: ./server/
+    init: true
+    depends_on:
+      - db
+      - rabbit_mq
+    networks:
+      - backend
+      - frontend
+    ports:
+      - 8000:8000
+    environment:
+      NODE_ENV: development
+      PORT: 8000
+      DATABASE_HOST: db
+      DATABASE_PORT: 5432
+      POSTGRES_DB: build-raven-os-org
+      POSTGRES_USER: docker
+      POSTGRES_PASSWORD: docker
+      CORS_ORIGIN: 'http://localhost:8080'
+      BUILDER_APIKEY: 'dev-builder-apikey'
+      RABBIT_MQ_URL: 'amqp://rabbit_mq:5672'
+
+  # Builder
+  builder:
+    build: ./builder/
+    init: true
+    depends_on:
+      - rabbit_mq
+      - api
+    networks:
+      - backend
+    environment:
+      NODE_ENV: development
+      NBUILD_PATH: './nbuild/nbuild.py'
+      BUILD_API_URL: 'http://api:8000/api/'
+      MANIFEST_DIR: './manifests/'
+      OUTPUT_DIR: './out/'
+      BUFFER_SIZE: 2048
+      NEST_SERVER_API_URL: 'http://localhost:8001/'
+      APIKEYS_BUILD: 'dev-builder-apikey'
+      APIKEYS_NEST_SERVER: 'dev-nest-server-apikey'
+      RABBIT_MQ_URL: 'amqp://rabbit_mq:5672'
+
+  # Postgresql database service
+  db:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: docker
+      POSTGRES_USER: docker
+      POSTGRES_DB: build-raven-os-org
+    expose:
+      - 5432
+    networks:
+      - backend
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+
+  # RabbitMQ message broker service
+  rabbit_mq:
+    hostname: rabbit_mq
+    image: rabbitmq:3-management
+    networks:
+      - backend
+    expose:
+      - 5672
+      - 15672
+    volumes:
+      - rabbit:/var/lib/rabbitmq/
+
+networks:
+  backend:
+  frontend:
+
+volumes:
+  dbdata:
+  rabbit:
