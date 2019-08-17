@@ -1,6 +1,5 @@
 const AbstractAction = require('../abstract')
-const { body, param } = require('express-validator/check')
-const { sanitizeBody } = require('express-validator/filter')
+const { body, param } = require('express-validator')
 
 /**
  * @api {put} /api/manifest/:id Update
@@ -57,13 +56,14 @@ const { sanitizeBody } = require('express-validator/filter')
 class UpdateManifest extends AbstractAction {
   get validate () {
     return [
-      sanitizeBody('content').trim(),
       param('id')
         .exists({ checkNull: true }).withMessage('required field')
-        .isInt().withMessage('must be an integer'),
+        .isInt().withMessage('must be an integer')
+        .toInt(),
       body('content')
         .exists({ checkNull: true }).withMessage('required field')
         .isString().withMessage('must be a string')
+        .trim()
         .isLength({ min: 1 }).withMessage('length must be greater than 1')
     ]
   }

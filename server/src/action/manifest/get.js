@@ -1,5 +1,5 @@
 const AbstractAction = require('../abstract')
-const { param } = require('express-validator/check')
+const { param } = require('express-validator')
 
 /**
  * @api {get} /api/manifest/:id Get
@@ -67,6 +67,7 @@ class GetManifest extends AbstractAction {
       param('id')
         .exists({ checkNull: true }).withMessage('required field')
         .isInt().withMessage('must be an integer')
+        .toInt()
     ]
   }
 
