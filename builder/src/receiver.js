@@ -4,6 +4,7 @@ const rp = require('request-promise')
 const fs = require('fs')
 const Communication = require('./communication')
 const Upload = require('./upload')
+const path = require('path')
 
 class Receiver {
   constructor (config) {
@@ -65,8 +66,9 @@ class Receiver {
 
       fs.writeFileSync(manifest.name, manifest.content)
 
-      const outputDir = this.config.output_dir + (new Date()).getTime() + '/'
-      const child = execFile(this.config.nbuild_path, ['-vvv', '-o' + outputDir, manifest.name])
+      const outputDir = this.config.output_dir
+      const absolutePath = path.resolve(outputDir)
+      const child = execFile(this.config.nbuild_path, ['-vvv', '-o ' + absolutePath, manifest.name])
 
       child.stdout.on('data', async (data) => {
         await this.communication.updateStdout(buildId, data)
