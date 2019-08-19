@@ -1,7 +1,8 @@
 exports.up = (knex) => {
   return knex.schema
     .createTable('invitation', (table) => {
-      table.uuid('id').primary()
+      table.increments('id').primary()
+      table.uuid('uuid').unique().notNullable()
       table.string('email').notNullable()
       table.specificType('rights', 'text[]').notNullable().default('{}')
       table.integer('expire_after').unsigned().notNullable() // time in minutes
