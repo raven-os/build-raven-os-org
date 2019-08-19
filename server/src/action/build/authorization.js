@@ -1,5 +1,5 @@
 const AbstractAction = require('../abstract')
-const { header } = require('express-validator/check')
+const { header } = require('express-validator')
 
 class AuthorizationBuild extends AbstractAction {
   constructor (app) {

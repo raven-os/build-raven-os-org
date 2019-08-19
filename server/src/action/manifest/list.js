@@ -1,6 +1,5 @@
 const AbstractAction = require('../abstract')
-const { query } = require('express-validator/check')
-const { sanitizeQuery } = require('express-validator/filter')
+const { query } = require('express-validator')
 const lowercase = require('../sanitizer/lowercase')
 
 /**
@@ -66,24 +65,28 @@ const lowercase = require('../sanitizer/lowercase')
 class ListManifest extends AbstractAction {
   get validate () {
     return [
-      sanitizeQuery('sort')
-        .customSanitizer(lowercase),
-      sanitizeQuery('dir')
-        .customSanitizer(lowercase),
+      query('name')
+        .optional()
+        .isString().withMessage('must be a string')
+        .trim(),
       query('sort')
         .optional()
         .isString().withMessage('must be a string')
+        .customSanitizer(lowercase)
         .isIn(['name', 'creation', 'update']).withMessage('sort should either be "name", "creation" or "update"'),
       query('dir')
         .optional()
         .isString().withMessage('must be a string')
+        .customSanitizer(lowercase)
         .isIn(['asc', 'desc']).withMessage('direction should either be "asc" or "desc"'),
       query('page')
         .optional()
-        .isInt({ min: 1 }).withMessage('must be an integer higher or equal to 1'),
+        .isInt({ min: 1 }).withMessage('must be an integer higher or equal to 1')
+        .toInt(),
       query('per_page')
         .optional()
         .isInt({ min: 1 }).withMessage('must be an integer higher or equal to 1')
+        .toInt()
     ]
   }
 

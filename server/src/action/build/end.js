@@ -1,5 +1,5 @@
 const AbstractAction = require('../abstract')
-const { param, body } = require('express-validator/check')
+const { param, body } = require('express-validator')
 
 /**
  * @api {put} /api/build/:id/end [BUILDER ONLY] End
@@ -71,10 +71,12 @@ class EndBuild extends AbstractAction {
     return [
       param('id')
         .exists({ checkNull: true }).withMessage('required field')
-        .isInt().withMessage('must be an integer'),
+        .isInt().withMessage('must be an integer')
+        .toInt(),
       body('exit_status')
         .exists({ checkNull: true }).withMessage('required field')
         .isInt().withMessage('must be an integer')
+        .toInt()
     ]
   }
 

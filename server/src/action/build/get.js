@@ -1,5 +1,5 @@
 const AbstractAction = require('../abstract')
-const { param } = require('express-validator/check')
+const { param } = require('express-validator')
 
 /**
  * @api {get} /api/build/:id Get
@@ -64,6 +64,7 @@ class GetBuild extends AbstractAction {
       param('id')
         .exists({ checkNull: true }).withMessage('required field')
         .isInt().withMessage('must be an integer')
+        .toInt()
     ]
   }
 

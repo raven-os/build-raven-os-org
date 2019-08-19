@@ -1,5 +1,5 @@
 const AbstractAction = require('../abstract')
-const { body } = require('express-validator/check')
+const { body } = require('express-validator')
 
 /**
  * @api {post} /api/build Create
@@ -76,6 +76,7 @@ class CreateBuild extends AbstractAction {
       body('ids')
         .exists({ checkNull: true }).withMessage('required field')
         .isArray().withMessage('must be an array of ids')
+        .toArray()
     ]
   }
 
