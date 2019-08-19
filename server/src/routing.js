@@ -11,6 +11,9 @@ class Routing {
     this.app.express.use(bodyParser.urlencoded({ extended: true }))
 
     this.app.express.use('/api', express.Router()
+      .use('/invitation', express.Router()
+        .post('/', this.app.action.invitation.create.routes)
+      )
       .use('/manifest', express.Router()
         .post('/', this.app.action.manifest.create.routes)
         .put('/:id', this.app.action.manifest.update.routes)
