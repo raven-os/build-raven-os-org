@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "amqplib": "^0.5.3",
+    "bcrypt": "^3.0.6",
     "body-parser": "^1.18.3",
     "bookshelf": "^0.14.2",
     "convict": "^5.1.0",
@@ -35,6 +36,7 @@
     "pg-native": "^3.0.0",
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
+    "uuid": "^3.3.3",
     "ws": "^7.1.0"
   },
   "devDependencies": {
