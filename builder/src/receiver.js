@@ -1,5 +1,5 @@
 const Queue = require('./queue')
-const execFile = require('child_process').execFile
+const { exec, spawn } = require('child_process')
 const rp = require('request-promise')
 const fs = require('fs')
 const Communication = require('./communication')
@@ -16,6 +16,7 @@ class Receiver {
   }
 
   async run () {
+    await this.pullDocker()
     await this.queue.receive(async (msg) => {
       const content = JSON.parse(msg.content.toString())
       const manifests = await this.getManifestList(content.manifests)
@@ -29,6 +30,20 @@ class Receiver {
 
       await this.communication.startBuild(content.build)
       await this.buildManifests(content.build, manifests, 0)
+    })
+  }
+
+  async pullDocker () {
+    return new Promise((resolve, reject) => {
+      exec('docker pull ravenos/nbuild', null, (err, stdout, stderr) => {
+        if (err) {
+          reject(err)
+        }
+
+        console.log('[receiver.pullDocker.stdout]', stdout)
+        console.log('[receiver.pullDocker.stderr]', stderr)
+        resolve()
+      })
     })
   }
 
@@ -73,21 +88,33 @@ class Receiver {
 
       fs.writeFileSync(manifest.name, manifest.content)
 
-      const outputDir = this.config.output_dir
+      const outputDir = this.config.output_dir + (new Date()).getTime() + '/'
       const absolutePath = path.resolve(outputDir)
-      const child = execFile(this.config.nbuild_path, ['-vvv', '-o ' + absolutePath, manifest.name])
+
+      const copy = 'cp config.toml.example config.toml'
+      const nbuild = `./nbuild.py -vvv -o /app/out/ ${manifest.name}`
+      const script = `docker run -v nbuild_manifests:/app/manifests/ -v nbuild_out:/app/out/ -it ravenos/nbuild /bin/bash -c "${copy} && ${nbuild}"`
+      const child = spawn(script, [], { shell: true, stdio: ['inherit'] })
 
       child.stdout.on('data', async (data) => {
+        console.log('[stdout]', data.toString())
         await this.communication.updateStdout(buildId, data)
       })
       child.stderr.on('data', async (data) => {
+        console.log('[stderr]', data.toString())
         await this.communication.updateStderr(buildId, data)
       })
+
       child.on('exit', async (code) => {
-        const res = await this.upload.toNestServer(outputDir)
+        console.log('[exit]', code)
+        const res = await this.upload.toNestServer(absolutePath)
 
         await this.communication.updatePackage(buildId, { data: res })
         await this.buildManifests(buildId, manifests, exitCode || code)
+      })
+
+      child.on('error', () => {
+        console.log('[error]', arguments)
       })
     } catch (err) {
       console.error('[error.receiver.buildOneManifest]', err.message)

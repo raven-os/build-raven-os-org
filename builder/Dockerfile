@@ -1,36 +1,37 @@
-FROM debian:sid
+FROM node:10
 
 ENV NODE_ENV=production
 
-# Install python and dependencies to download NodeJS
+RUN mkdir -p /home/node/builder
+WORKDIR /home/node/builder
+
+# Download docker cli
 RUN apt-get update && apt-get install -y -q \
-    bc \
+    apt-transport-https \
+    ca-certificates \
     curl \
-    libelf-dev \
-    software-properties-common \
-    tree \
-    python3 \
-    python3-pip
+    gnupg2 \
+    software-properties-common
 
-# Download and install NodeJS 10
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
-RUN apt-get install -y nodejs
+RUN curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -
+RUN apt-key fingerprint 0EBFCD88
+RUN add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/debian \
+   $(lsb_release -cs) \
+   stable"
 
-RUN mkdir /app
-WORKDIR /app
-
-# Install nbuild dependencies
-COPY nbuild/requirements.txt /app/nbuild/requirements.txt
-RUN pip3 install -r /app/nbuild/requirements.txt
+RUN apt-get update && apt-get install -y -q \
+    docker-ce-cli
 
 # Install builder dependencies
-COPY package.json /app/package.json
+COPY package.json .
 RUN npm install --only=production
 
-# Install nbuild
-COPY nbuild/ /app/nbuild
-
 # Install builder
-COPY . /app
+COPY . .
+
+EXPOSE 8000
+
+# USER node
 
 CMD ["node", "src/index.js"]

@@ -2,17 +2,6 @@
 
 ### Installing
 
-The builder needs `nbuild` tool, so start by cloning `https://github.com/raven-os/nbuild` install its dependencies first then make a like to it
-
-```bash
-# clone from the builder folder if you don't already have it
-$ git clone https://github.com/raven-os/nbuild
-
-# If you already have nbuild, you can just mount it in another builder folder
-$ mkdir nbuild
-$ sudo mount --bind {path_to_nbuild} nbuild
-```
-
 Install dependencies
 
 ```bash
@@ -24,4 +13,13 @@ $ npm install
 
 ```bash
 $ npm start
+```
+
+#### Docker
+
+Bind a docker daemon to the builder so he can run nbuild container,
+it also needs two volumes, for manifests and packages and needs to be a tty
+
+```sh
+docker run -v /var/run/docker.sock:/var/run/docker.sock -v nbuild_manifests:/home/node/builder/manifests/ -v nbuild_out:/home/node/builder/out/ --net=host -t tmp/builder
 ```

@@ -4,10 +4,3 @@
 # Allow only necessary files
 !package.json
 !src/
-!manifests/.empty
-
-!nbuild/core/
-!nbuild/stdlib/
-!nbuild/nbuild.py
-!nbuild/requirements.txt
-!nbuild/config.toml
