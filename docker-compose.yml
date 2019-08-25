@@ -42,7 +42,7 @@ services:
   # Builder
   builder:
     build: ./builder/
-    init: true
+    tty: true
     depends_on:
       - rabbit_mq
       - api
@@ -59,6 +59,11 @@ services:
       APIKEYS_BUILD: 'dev-builder-apikey'
       APIKEYS_NEST_SERVER: 'dev-nest-server-apikey'
       RABBIT_MQ_URL: 'amqp://rabbit_mq:5672'
+    volumes:
+      - nbuild_manifests:/home/node/builder/manifests
+      - nbuild_out:/home/node/builder/out
+      - /var/run/docker.sock:/var/run/docker.sock
+
 
   # Postgresql database service
   db:
@@ -93,3 +98,5 @@ networks:
 volumes:
   dbdata:
   rabbit:
+  nbuild_manifests:
+  nbuild_out:
