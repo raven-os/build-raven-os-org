@@ -2,6 +2,15 @@ const AbstractAction = require('../abstract')
 const { body } = require('express-validator')
 const capitalize = require('../sanitizer/capitalize')
 const uppercase = require('../sanitizer/uppercase')
+const PasswordValidator = require('password-validator')
+const commonPassword = require('common-password')
+
+const schema = new PasswordValidator()
+
+schema
+  .has().uppercase()
+  .has().lowercase()
+  .has().digits()
 
 class CreateUser extends AbstractAction {
   get validate () {
@@ -22,10 +31,13 @@ class CreateUser extends AbstractAction {
         .trim()
         .isLength({ min: 1 }).withMessage('length must be greater than 1')
         .customSanitizer(uppercase),
-      body('password')
+      body('password', 'must have between 8 and 72 characters, contains at least 1 uppercase, 1 lowercase, 1 digit and not be common')
         .exists({ checkNull: true }).withMessage('required field')
         .isString().withMessage('must be a string')
-        // Further validation here later to ensure strong password
+        .isLength({ min: 8, max: 72 })
+        .custom(value => {
+          return schema.validate(value) && !commonPassword(value)
+        })
     ]
   }
 
