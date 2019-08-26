@@ -22,8 +22,10 @@
   },
   "dependencies": {
     "amqplib": "^0.5.3",
+    "bcrypt": "^3.0.6",
     "body-parser": "^1.18.3",
     "bookshelf": "^0.14.2",
+    "common-password": "^0.1.2",
     "convict": "^5.1.0",
     "cors": "^2.8.5",
     "express": "^4.16.4",
@@ -31,10 +33,12 @@
     "knex": "<0.15.0",
     "knex-migrate": "^1.7.2",
     "lodash": "^4.17.11",
+    "password-validator": "^4.1.2",
     "pg": "^7.8.0",
     "pg-native": "^3.0.0",
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
+    "uuid": "^3.3.3",
     "ws": "^7.1.0"
   },
   "devDependencies": {
