@@ -24,7 +24,7 @@ class InvitationController {
       throw new this.app.errors.BadRequest(`The email ${input.email} is already used`)
     }
 
-    const invitation = await this.app.database.model.invitation.forge({
+    let invitation = await this.app.database.model.invitation.forge({
       uuid: uuidv4(),
       email: input.email,
       expire_after: input.expire_after,
@@ -33,7 +33,14 @@ class InvitationController {
     })
       .save()
 
-    return invitation.toJSON()
+    invitation = invitation.toJSON()
+
+    const subject = 'Invitation build-raven-os-org'
+    const text = `Pour vous inscrire sur build-raven-os-org, utilisez le code suivant: ${invitation.uuid}`
+
+    await this.app.mailer.send(invitation.email, subject, text)
+
+    return invitation
   }
 
   async use (invitation, date) {
