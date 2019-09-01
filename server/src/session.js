@@ -31,6 +31,37 @@ class Session {
 
     next()
   }
+
+  notConnected (req, res, next) {
+    if (req.session.user) {
+      throw new this.app.errors.Unauthorized('You are already connected')
+    }
+
+    next()
+  }
+
+  connected (req, res, next) {
+    if (!req.cookies.user_sid || !req.session.user) {
+      throw new this.app.errors.Unauthorized('You must be connected')
+    }
+
+    next()
+  }
+
+  connectedOrBuilder (req, res, next) {
+    if (!req.cookies.user_sid || !req.session.user) {
+      if (!req.headers.authorization) {
+        throw new this.app.errors.Unauthorized('You must be connected')
+      }
+      try {
+        this.app.controller.build.authorization(req.headers.authorization)
+      } catch (err) {
+        throw new this.app.errors.Unauthorized('You must be connected')
+      }
+    }
+
+    next()
+  }
 }
 
 module.exports = Session
