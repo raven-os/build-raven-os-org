@@ -54,7 +54,7 @@ class Application {
   }
 
   logger (req, res, next) {
-    console.log(req.method, req.originalUrl)
+    console.log(req.method, req.originalUrl, req.session, req.sessionID, req.cookies)
     next()
   }
 }
