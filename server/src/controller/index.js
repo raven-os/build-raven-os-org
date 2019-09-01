@@ -2,6 +2,7 @@ const ManifestController = require('./manifest')
 const BuildController = require('./build')
 const UserController = require('./user')
 const InvitationController = require('./invitation')
+const AuthController = require('./auth')
 
 class Controller {
   constructor (app) {
@@ -9,6 +10,7 @@ class Controller {
     this.build = new BuildController(app)
     this.user = new UserController(app)
     this.invitation = new InvitationController(app)
+    this.auth = new AuthController(app)
   }
 }
 

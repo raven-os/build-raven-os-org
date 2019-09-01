@@ -7,6 +7,10 @@ class Routing {
 
   routing () {
     this.app.express.use('/api', express.Router()
+      .post('/auth/login', this.app.action.auth.login.routes)
+
+      .delete('/auth/logout', this.app.action.auth.logout.routes)
+
       .use('/invite', express.Router()
         .post('/', this.app.action.invitation.create.routes)
       )
