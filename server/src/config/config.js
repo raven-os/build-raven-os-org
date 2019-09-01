@@ -105,7 +105,7 @@ const config = convict({
     from: {
       doc: 'Source email address',
       format: String,
-      default: 'Raven-Build <build@raven-os.fr>',
+      default: 'Raven-Build <build@raven-os.org>',
       env: 'MAILER_FROM'
     },
     transporter: {
@@ -126,13 +126,13 @@ const config = convict({
       },
       auth: {
         user: {
-          doc: 'smtp user',
+          doc: 'SMTP user authentication',
           format: String,
           default: undefined,
           env: 'MAILER_AUTH_USER'
         },
         pass: {
-          doc: 'smtp password',
+          doc: 'SMTP password authentication',
           format: String,
           default: undefined,
           env: 'MAILER_AUTH_PASS'
