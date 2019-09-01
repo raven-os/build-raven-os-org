@@ -118,7 +118,7 @@ const config = convict({
       port: {
         doc: 'Port of the smtp server',
         format: 'port',
-        default: undefined,
+        default: 587,
         env: 'MAILER_PORT'
       },
       secure: {
