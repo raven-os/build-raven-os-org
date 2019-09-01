@@ -1,6 +1,7 @@
 const bookshelf = require('./database/bookshelf')
 const session = require('express-session')
 const KnexSessionStore = require('connect-session-knex')(session)
+const RIGHTS = require('./controller/user').rights
 
 class Session {
   constructor (app) {
@@ -58,6 +59,14 @@ class Session {
       } catch (err) {
         throw new this.app.errors.Unauthorized('You must be connected')
       }
+    }
+
+    next()
+  }
+
+  admin (req, res, next) {
+    if (!req.session.user.rights || !req.session.user.rights.includes(RIGHTS.ADMIN)) {
+      throw new this.app.errors.Forbidden('You don\'t have admin rights')
     }
 
     next()
