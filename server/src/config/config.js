@@ -112,7 +112,7 @@ const config = convict({
       host: {
         doc: 'Host of the smtp server',
         format: String,
-        default: undefined,
+        default: 'localhost',
         env: 'MAILER_HOST'
       },
       port: {
