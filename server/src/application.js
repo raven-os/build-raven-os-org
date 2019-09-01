@@ -9,7 +9,10 @@ const Routing = require('./routing')
 const Errors = require('./errors')
 const Websocket = require('./websocket')
 const Mailer = require('./mailer')
+const Session = require('./session')
 const cors = require('cors')
+const bodyParser = require('body-parser')
+const cookieParser = require('cookie-parser')
 
 class Application {
   constructor () {
@@ -21,6 +24,7 @@ class Application {
     this.errors = new Errors(this)
     this.websocket = new Websocket(this)
     this.mailer = new Mailer(this)
+    this.session = new Session(this)
   }
 
   async run () {
@@ -32,6 +36,11 @@ class Application {
     this.express = express()
     this.express.use(this.logger)
     this.express.use(cors(this.config.cors))
+    this.express.use(bodyParser.json())
+    this.express.use(bodyParser.urlencoded({ extended: true }))
+    this.express.use(cookieParser())
+    this.express.use(this.session.middleware())
+    this.express.use(this.session.clearCookie)
 
     const routing = new Routing(this)
     routing.routing()
