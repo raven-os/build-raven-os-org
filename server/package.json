@@ -33,6 +33,7 @@
     "knex": "<0.15.0",
     "knex-migrate": "^1.7.2",
     "lodash": "^4.17.11",
+    "nodemailer": "^6.3.0",
     "password-validator": "^4.1.2",
     "pg": "^7.8.0",
     "pg-native": "^3.0.0",

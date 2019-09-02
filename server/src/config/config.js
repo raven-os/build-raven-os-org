@@ -94,6 +94,51 @@ const config = convict({
         }
       }
     }
+  },
+  mailer: {
+    fake: {
+      doc: 'True to use a fake smtp',
+      format: Boolean,
+      default: true,
+      env: 'MAILER_FAKE'
+    },
+    from: {
+      doc: 'Source email address',
+      format: String,
+      default: 'Raven-Build <build@raven-os.org>',
+      env: 'MAILER_FROM'
+    },
+    transporter: {
+      host: {
+        doc: 'Host of the smtp server',
+        format: String,
+        default: 'localhost',
+        env: 'MAILER_HOST'
+      },
+      port: {
+        doc: 'Port of the smtp server',
+        format: 'port',
+        default: 587,
+        env: 'MAILER_PORT'
+      },
+      secure: {
+        doc: ''
+      },
+      auth: {
+        user: {
+          doc: 'SMTP user authentication',
+          format: String,
+          default: undefined,
+          env: 'MAILER_AUTH_USER'
+        },
+        pass: {
+          doc: 'SMTP password authentication',
+          format: String,
+          default: undefined,
+          env: 'MAILER_AUTH_PASS'
+        }
+      }
+    }
   }
 })
 

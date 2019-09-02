@@ -8,6 +8,7 @@ const express = require('express')
 const Routing = require('./routing')
 const Errors = require('./errors')
 const Websocket = require('./websocket')
+const Mailer = require('./mailer')
 const cors = require('cors')
 
 class Application {
@@ -19,9 +20,11 @@ class Application {
     this.queue = new Queue('build-raven-os-org')
     this.errors = new Errors(this)
     this.websocket = new Websocket(this)
+    this.mailer = new Mailer(this)
   }
 
   async run () {
+    await this.mailer.init()
     await this.database.ensureConnection()
     await this.database.runMigrations()
     await this.queue._getInstance()
