@@ -1,5 +1,4 @@
 const express = require('express')
-const bodyParser = require('body-parser')
 
 class Routing {
   constructor (app) {
@@ -7,9 +6,6 @@ class Routing {
   }
 
   routing () {
-    this.app.express.use(bodyParser.json())
-    this.app.express.use(bodyParser.urlencoded({ extended: true }))
-
     this.app.express.use('/api', express.Router()
       .use('/invite', express.Router()
         .post('/', this.app.action.invitation.create.routes)

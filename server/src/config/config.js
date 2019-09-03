@@ -139,6 +139,14 @@ const config = convict({
         }
       }
     }
+  },
+  session: {
+    secret: {
+      doc: 'Secret used to sign session ID cookie',
+      format: String,
+      default: 'DEFINE_SESSION_SECRET',
+      env: 'SESSION_SECRET'
+    }
   }
 })
 
