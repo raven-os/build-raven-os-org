@@ -13,6 +13,7 @@ const Session = require('./session')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
+const helmet = require('helmet')
 
 class Application {
   constructor () {
@@ -35,6 +36,7 @@ class Application {
 
     this.express = express()
     this.express.use(this.logger)
+    this.express.use(helmet())
     this.express.use(cors(this.config.cors))
     this.express.use(bodyParser.json())
     this.express.use(bodyParser.urlencoded({ extended: true }))
