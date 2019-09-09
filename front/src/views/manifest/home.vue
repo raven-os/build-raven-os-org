@@ -162,7 +162,7 @@ export default {
 }
 
 .loading {
-  color: blue;
+  color: var(--accent);
   font-weight: bold;
   text-align: center;
   margin-bottom: 25px;
@@ -267,33 +267,5 @@ h1 {
 ----------------------------------- */
 #manifests-list {
   margin-top: 75px;
-}
-
-.build-item {
-  padding: 10px;
-  border: 1px solid var(--primary-dark);
-  margin-bottom: 5px;
-}
-.build-item:hover {
-  background-color: rgba(237, 37, 78, 0.25) !important;
-}
-
-.item-desc,
-.item-desc:hover {
-  color: var(--primary-dark) !important;
-}
-
-.item-info {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.item-name {
-  font-size: 20px;
-}
-
-.item-date {
-  text-align: left;
 }
 </style>
