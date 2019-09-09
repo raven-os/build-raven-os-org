@@ -49,28 +49,26 @@
             class="sort-select"
           />
         </div>
-        <div
-          v-for="item in getManifests"
-          :key="item.id"
-          class="build-item">
-          <a :href="'/manifests/details/' + item.id" class="item-desc">
-            <b-container>
-              <b-row>
-                <b-col>
-                  <div class="item-info">
-                    #{{ item.id }}: {{ item.name }}
-                  </div>
-                </b-col>
-                <b-col cols="12" md="4" lg="2">
-                  <div class="item-date">
-                    <i class="far fa-calendar-alt"/>
+
+        <b-row>
+          <b-col>
+            <table class="table table-sm table-striped table-hover border">
+              <tbody>
+                <tr v-for="item in getManifests" :key="item.id" class="bg-light-accent-hover">
+                  <td class="text-truncate text-white" style="width: 30%;">
+                    <a :href="'/manifests/details/' + item.id" class="text-white">
+                      <kbd><b>#{{ item.id }}: {{ item.name }}</b></kbd>
+                    </a>
+                  </td>
+                  <td class="text-truncate text-right" style="width: 10%;">
+                    <i class="far fa-calendar-alt mr-1"/>
                     {{ item.creation_date | momentFromNow }}
-                  </div>
-                </b-col>
-              </b-row>
-            </b-container>
-          </a>
-        </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </b-col>
+        </b-row>
         <!-- Pagination -->
         <div class="pagination">
           <span v-for="n in pageCount" :key="n">
@@ -195,26 +193,21 @@ h1 {
   margin: 0 auto;
 }
 
-.search-input {
-  font-family: sans-serif;
+.search-input,
+.search-input:focus {
   font-weight: 500;
   font-size: 16px;
   display: inline-block;
   padding: 8px 28px;
-  border-width: 1px 1px 1px 1px;
-  border-style: solid;
-  border-color: var(--primary-dark);
+  border: 1px solid var(--primary-dark);
   color: var(--primary-dark);
-  background: rgba(247, 244, 248, 0.7);
+  background: var(--white);
   border-radius: 0px 5px 5px 0px;
-  height: 50px;
-}
-.search-input:focus {
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(0, 0, 0, 0.6);
+  height: 40px;
+  box-shadow: none;
 }
 
 .search-select {
-  font-family: sans-serif;
   font-size: 16px;
   display: inline-block;
   padding-left: 10px;
@@ -223,7 +216,7 @@ h1 {
   border-color: var(--primary-dark);
   color: var(--white);
   border-radius: 5px 0px 0px 5px;
-  height: 50px;
+  height: 40px;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -252,24 +245,22 @@ h1 {
 
 .sort-select,
 .sort-select:focus {
-  font-family: sans-serif;
   font-size: 16px;
   display: inline-block;
   padding-left: 10px;
-  border-width: 1px 1px 1px 1px;
-  border-style: solid;
-  border-color: var(--primary-dark);
+  border: 1px solid var(--accent);
   color: var(--white);
-  border-radius: 5px 5px 5px 5px;
-  height: 50px;
+  border-radius: 5px;
+  height: 40px;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  background: var(--accent)
+  background: var(--light-accent)
     url("https://cdn3.iconfinder.com/data/icons/google-material-design-icons/48/ic_keyboard_arrow_down_48px-128.png")
     no-repeat;
   background-size: 20px;
   background-position: right 10px center;
+  box-shadow: none;
 }
 
 /* MANIFESTS-LIST
