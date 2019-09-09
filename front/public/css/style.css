@@ -44,6 +44,86 @@ h1, h2, h3, h4, h5, h6 {
   padding: 0;
 }
 
+/* -----------------------------------
+Custom rules
+----------------------------------- */
+
+.text-white {
+  color: var(--white) !important;
+}
+
+.text-dark {
+  color: var(--dark) !important;
+}
+
+.text-accent {
+  color: var(--accent) !important;
+}
+
+.text-light-accent {
+  color: var(--light-accent) !important;
+}
+
+.bg-accent {
+  background-color: var(--accent) !important;
+  color: var(--white);
+}
+
+.bg-accent-hover:hover {
+  background-color: var(--accent) !important;
+  color: var(--white);
+}
+
+.bg-accent-focus:focus {
+  background-color: var(--accent) !important;
+  color: var(--white);
+}
+
+.bg-accent-deepfocus:focus-within {
+  background-color: var(--accent) !important;
+  color: var(--white);
+}
+
+.bg-light-accent {
+  background-color: var(--light-accent) !important;
+  color: var(--white);
+}
+
+.bg-light-accent-hover:hover {
+  background-color: var(--light-accent) !important;
+  color: var(--white) !important;
+}
+
+.bg-light-accent-focus:focus {
+  background-color: var(--light-accent) !important;
+  color: var(--white);
+}
+
+.bg-light-accent-deepfocus:focus-within {
+  background-color: var(--light-accent) !important;
+  color: var(--white);
+}
+
+.bg-mid-grey {
+  background-color: var(--mid-grey) !important;
+  color: var(--dark);
+}
+
+.bg-mid-grey-hover:hover {
+  background-color: var(--mid-grey) !important;
+  color: var(--dark);
+}
+
+.bg-mid-grey-focus:focus {
+  background-color: var(--mid-grey) !important;
+  color: var(--dark);
+}
+
+.bg-mid-grey-deepfocus:focus-within {
+  background-color: var(--mid-grey) !important;
+  color: var(--dark);
+}
+
 /*  Global classes to customize tables
     Don't remove nor move
 */
