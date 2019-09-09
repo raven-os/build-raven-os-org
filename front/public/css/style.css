@@ -133,8 +133,9 @@ table.b-table[aria-busy=false], table.b-table[aria-busy=true] {
 }
 
 .list-thead {
-  background-color: rgba(52, 52, 50, 0.9);
-  color: var(--primary);
+  /* background-color: rgba(52, 52, 50, 0.9); */
+  background-color: var(--primary-dark);
+  color: var(--white) !important;
 }
 
 .list-table-cell {

@@ -86,7 +86,7 @@ Header
 
 .app-navbar {
   background-color: var(--primary-dark);
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
 }
 
 .nav-item {
@@ -94,7 +94,7 @@ Header
 }
 
 .nav-item-active {
-  color: var(--accent) !important;
+  color: var(--white) !important;
 }
 
 /* -----------------------------------
