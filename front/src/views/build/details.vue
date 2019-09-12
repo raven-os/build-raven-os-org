@@ -47,29 +47,46 @@
         </tbody>
       </table>
 
-      <table id="packages-table" class="table b-table table-striped">
+      <div v-if="build.packages && build.packages.length">
+        <table id="packages-table" class="table b-table table-striped">
+          <thead class="list-thead">
+            <tr>
+              <th>Packages</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="table-row-nohover">
+              <div v-for="(pkg, index) in build && build.packages" :key="index">
+                <td>
+                  <a :href="pkg">{{ pkg }}</a>
+                </td>
+              </div>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <table id="output-table" class="table b-table table-striped">
         <thead class="list-thead">
           <tr>
-            <th>Packages</th>
+            <th>Output</th>
           </tr>
         </thead>
         <tbody>
-          <tr class="table-row-nohover">
-            <div v-for="(pkg, index) in build && build.packages" :key="index">
-              <td>
-                <a :href="pkg">{{ pkg }}</a>
-              </td>
-            </div>
-          </tr>
+          <prism language="python">{{ build && build.stdout }}</prism>
         </tbody>
       </table>
 
-      <div class="manifest-space">
-        <div class="manifest-thead">Output</div>
-        <prism language="python">{{ build && build.stdout }}</prism>
-        <div class="manifest-thead">Error</div>
-        <prism language="python">{{ build && build.stderr }}</prism>
-      </div>
+      <table id="error-table" class="table b-table table-striped">
+        <thead class="list-thead">
+          <tr>
+            <th>Error</th>
+          </tr>
+        </thead>
+        <tbody>
+          <prism language="python">{{ build && build.stderr }}</prism>
+        </tbody>
+      </table>
     </b-container>
   </div>
 </template>
@@ -122,7 +139,7 @@ export default {
 <style scoped>
 
 .loading {
-  color: blue;
+  color: var(--accent);
   font-weight: bold;
   text-align: center;
   margin-bottom: 25px;
@@ -138,10 +155,6 @@ export default {
   color: black;
 }
 
-#package-table {
-  background-color: grey;
-  color: red;
-}
 .top-container {
   margin-top: 150px;
   border-bottom: 1px solid var(--accent);
@@ -156,18 +169,6 @@ export default {
   text-align: center;
   font-size: 45px;
   color: var(--accent);
-}
-
-.manifest-space {
-  border-bottom: 1px solid var(--accent);
-}
-
-.manifest-thead {
-  background-color: rgba(52, 52, 50, 0.9);
-  color: var(--white);
-  font-weight: bold;
-  padding: 14px;
-  font-size: 16px;
 }
 
 </style>
