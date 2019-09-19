@@ -171,11 +171,6 @@ export default {
   margin-bottom: 25px;
 }
 
-h2 {
-  text-align: center;
-  margin: 25px 0px;
-}
-
 #create-build {
   margin-top: 200px;
 }
