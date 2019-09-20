@@ -50,6 +50,26 @@ class UserController {
 
     return user.toJSON()
   }
+
+  async _get ({ id, email }) {
+    const filters = id ? ['id', id] : ['email', email]
+
+    const userModel = await this.app.database.model.user
+      .where(...filters)
+      .fetch()
+
+    if (!userModel) {
+      throw new this.app.errors.NotFound(`User ${id ? '#' + id : email} not found`)
+    }
+
+    return userModel
+  }
+
+  async get ({ id, email }) {
+    const user = await this._get({ id, email })
+
+    return user.toJSON()
+  }
 }
 
 module.exports = UserController
