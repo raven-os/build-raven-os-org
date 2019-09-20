@@ -9,6 +9,7 @@ class Routing {
     const notConnected = this.app.session.notConnected.bind(this.app.session)
     const connected = this.app.session.connected.bind(this.app.session)
     const connectedOrBuilder = this.app.session.connectedOrBuilder.bind(this.app.session)
+    const admin = this.app.session.admin.bind(this.app.session)
 
     this.app.express.use('/api', express.Router()
       .post('/auth/login', notConnected, this.app.action.auth.login.routes)
@@ -16,7 +17,7 @@ class Routing {
       .delete('/auth/logout', connected, this.app.action.auth.logout.routes)
 
       .use('/invite', express.Router()
-        .post('/', connected, this.app.action.invitation.create.routes)
+        .post('/', connected, admin, this.app.action.invitation.create.routes)
       )
       .use('/user', express.Router()
         .post('/', notConnected, this.app.action.user.create.routes)
