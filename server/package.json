@@ -33,6 +33,7 @@
     "express": "^4.16.4",
     "express-session": "^1.16.2",
     "express-validator": "^6.1.1",
+    "helmet": "^3.21.0",
     "knex": "<0.15.0",
     "knex-migrate": "^1.7.2",
     "lodash": "^4.17.11",
