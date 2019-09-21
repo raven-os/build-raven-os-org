@@ -35,11 +35,18 @@ class Receiver {
   async getManifestList (ids) {
     const url = this.config.build_api_url + 'manifest/'
     const path = this.config.manifest_dir + 'manifest_'
+    const options = {
+      method: 'GET',
+      headers: {
+        Authorization: this.config.apikeys.build
+      }
+    }
     const manifests = []
     let result
 
     for (let id of ids) {
-      result = await rp(url + id)
+      options.url = url + id
+      result = await rp(options)
       result = JSON.parse(result)
       result = {
         id,
