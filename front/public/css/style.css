@@ -128,6 +128,10 @@ Custom rules
     Don't remove nor move
 */
 
+.table {
+  table-layout:fixed;
+}
+
 table.b-table[aria-busy=false], table.b-table[aria-busy=true] {
   opacity: 1;
 }

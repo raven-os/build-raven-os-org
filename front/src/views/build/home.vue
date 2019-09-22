@@ -65,7 +65,7 @@
                   v-for="item in getBuilds" :key="item.id"
                   :class="{ queued: item.state == STATE.QUEUING, running: item.state == STATE.RUNNING, failed: item.state == STATE.FINISHED && item.exit_status != 0, success: item.state == STATE.FINISHED && item.exit_status == 0 }"
                   class="bg-light-accent-hover build-item">
-                  <td class="text-center" style="width: 1%;">
+                  <td class="text-center" width="5%">
                     <div v-if="item.state === STATE.FINISHED && item.exit_status == 0">
                       <i class="fas fa-check text-success"/>
                     </div>
@@ -79,16 +79,21 @@
                       <i class="fas fa-history text-queued"/>
                     </div>
                   </td>
-                  <td class="text-truncate text-white" style="width: 30%;">
+                  <td class="text-truncate" width="10%">
                     <a :href="'/builds/details/' + item.id">
                       <kbd><b>#{{ item.id }}</b></kbd>
                     </a>
-                    <div v-if="item.packages && item.packages.length" class="item-pkg">
-                      Package(s): <span v-for="(pkgItem, index) in item.packages" :key="index"><span v-if="index > 0">;</span> {{ item.repository }}/{{ pkgItem }}
-                      </span>
-                    </div>
                   </td>
-                  <td class="text-truncate text-left" style="width: 3%;">
+                  <td class="text-truncate item-pkg" width="50%">
+                    Package(s):
+                    <span v-if="item.packages && item.packages.length">
+                      <span v-for="(pkgItem, index) in item.packages" :key="index">
+                        <span v-if="index > 0">;</span> {{ item.repository }}/{{ pkgItem }}
+                      </span>
+                    </span>
+                    <span v-else>None</span>
+                  </td>
+                  <td class="text-truncate text-left" width="10%">
                     <i class="far fa-calendar-alt"/> {{ item.creation_date | momentFromNow }}
                     <div v-if="item.start_date && item.end_date">
                       <i class="far fa-clock"/> {{ item.start_date | momentDuration(item.end_date) }}
@@ -316,8 +321,9 @@ h1 {
   margin-top: 75px;
 }
 
-.build-item:hover i {
-  color: var(--white);
+.build-item:hover i,
+.build-item:hover .item-pkg {
+  color: var(--white) !important;
 }
 
 .running {
@@ -355,6 +361,6 @@ h1 {
 .item-pkg {
   font-style: italic;
   font-size: 15px;
-  margin-top: 5px;
 }
+
 </style>
