@@ -67,6 +67,11 @@ class Routing {
         errorParam.push({ param, detail: details[param].msg, value: details[param].value })
       }
     }
+
+    if (!err.message) {
+      err.message = errorParam.map(x => `${x.param}: ${x.detail}`).join('. ')
+    }
+
     console.error('[error]', err.stack)
     res.status(err.status || 400)
     res.json({ message: err.message, errors: errorParam })
