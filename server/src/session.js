@@ -19,7 +19,10 @@ class Session {
       secret: this.app.config.session.secret,
       resave: false,
       saveUninitialized: false,
-      name: 'user_sid'
+      name: 'user_sid',
+      cookie: {
+        httpOnly: false
+      }
     })
 
     return this.session
