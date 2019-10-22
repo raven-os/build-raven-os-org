@@ -7,19 +7,21 @@ import HomeManifests from './views/manifest/home.vue'
 import CreateManifest from './views/manifest/create.vue'
 import UpdateManifest from './views/manifest/update.vue'
 import DetailsManifest from './views/manifest/details.vue'
+import LoginAuth from './views/auth/login.vue'
 
 Vue.use(VueRouter)
 // TODO: improve URLs
 const router = new VueRouter({
   mode: 'history',
   routes: [
-    { path: '/', component: HomeBuilds },
+    { path: '/builds', component: HomeBuilds },
     { path: '/builds/create', component: CreateBuild },
     { path: '/builds/details/:id', name: 'DetailsBuild', component: DetailsBuild, props: true },
     { path: '/manifests', component: HomeManifests },
     { path: '/manifests/create', component: CreateManifest },
     { path: '/manifests/update/:id', component: UpdateManifest, props: true },
-    { path: '/manifests/details/:id', name: 'DetailsManifest', component: DetailsManifest, props: true }
+    { path: '/manifests/details/:id', name: 'DetailsManifest', component: DetailsManifest, props: true },
+    { path: '/login', name: 'LoginAuth', component: LoginAuth }
   ]
 })
 
