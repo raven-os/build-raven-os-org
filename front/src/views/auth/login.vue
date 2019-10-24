@@ -54,6 +54,11 @@ export default {
       'getAuthErrors'
     ])
   },
+  mounted () {
+    if (document.cookie && document.cookie.indexOf('user_sid=') !== -1) {
+      this.$router.push({ path: '/builds' })
+    }
+  },
   methods: {
     ...mapActions('auth', ['login']),
     loginHandler () {
