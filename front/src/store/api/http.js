@@ -35,5 +35,9 @@ export default {
 
   put (url, options) {
     return handleError(Vue.http.put(url, options))
+  },
+
+  delete (url, options) {
+    return handleError(Vue.http.delete(url, options))
   }
 }

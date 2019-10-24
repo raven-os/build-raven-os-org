@@ -7,10 +7,12 @@ const state = {
     id: null
   },
   loading: {
-    login: false
+    login: false,
+    logout: false
   },
   error: {
-    login: null
+    login: null,
+    logout: null
   }
 }
 
@@ -29,6 +31,16 @@ const actions = {
     } catch (err) {
       store.commit(types.AUTH_LOGIN_ERROR, err.body)
     }
+  },
+
+  async logout (store) {
+    try {
+      store.commit(types.AUTH_LOGOUT_REQUEST)
+      await authApi.logout()
+      store.commit(types.AUTH_LOGOUT_SUCCESS)
+    } catch (err) {
+      store.commit(types.AUTH_LOGOUT_ERROR, err.body)
+    }
   }
 }
 
@@ -46,6 +58,21 @@ const mutations = {
   [types.AUTH_LOGIN_ERROR] (state, error) {
     Vue.set(state.loading, 'login', false)
     Vue.set(state.error, 'login', error)
+  },
+
+  [types.AUTH_LOGOUT_REQUEST] (state) {
+    Vue.set(state.loading, 'logout', true)
+    Vue.set(state.error, 'logout', null)
+  },
+
+  [types.AUTH_LOGOUT_SUCCESS] (state) {
+    Vue.set(state.loading, 'logout', false)
+    Vue.set(state, 'user', {})
+  },
+
+  [types.AUTH_LOGOUT_ERROR] (state, error) {
+    Vue.set(state.loading, 'logout', false)
+    Vue.set(state.error, 'logout', error)
   }
 }
 
