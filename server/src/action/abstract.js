@@ -26,7 +26,7 @@ class AbstractAction {
         errors.throw()
       }
 
-      const result = await this.handler(req)
+      const result = await this.handler(req, res)
       return res.json(result || {})
     } catch (err) {
       next(err)
