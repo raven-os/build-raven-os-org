@@ -17,6 +17,7 @@
               <b-nav-item to="/builds/create" exact class="nav-item" active-class="nav-item-active">Create build</b-nav-item>
               <b-nav-item to="/manifests" exact class="nav-item" active-class="nav-item-active">Manifests</b-nav-item>
               <b-nav-item to="/manifests/create" exact class="nav-item" active-class="nav-item-active">Create manifest</b-nav-item>
+              <b-nav-item exact class="nav-item" active-class="nav-item-active"><a @click.prevent="handleLogout()">Logout</a></b-nav-item>
             </b-navbar-nav>
           </b-collapse>
         </b-navbar>
@@ -26,6 +27,14 @@
     <!-- #header -->
 
     <div class="content">
+      <!-- error handling -->
+      <div v-if="getAuthLoadings.logout" class="loading">
+        Loging out...
+      </div>
+      <div v-if="getAuthErrors.logout" class="build-error">
+        <p>An error occurred while loging out</p>
+        <p>{{ getAuthErrors.logout }}</p>
+      </div>
       <router-view class="view"/>
     </div>
 
@@ -41,22 +50,51 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
+
 export default {
   data () {
     return { activeItem: 'home' }
   },
+  computed: {
+    ...mapGetters('auth', [
+      'getAuthLoadings',
+      'getAuthErrors'
+    ])
+  },
   methods: {
+    ...mapActions('auth', ['logout']),
     isActive: function (menuItem) {
       return this.activeItem === menuItem
     },
     setActive: function (menuItem) {
       this.activeItem = menuItem
+    },
+    handleLogout () {
+      this.logout().then(() => {
+        if (!this.getAuthErrors.logout) {
+          this.$router.push({ path: '/login' })
+        }
+      })
     }
   }
 }
 </script>
 
 <style scoped>
+.loading {
+  color: var(--accent);
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.build-error {
+  text-align: center;
+  margin-bottom: 25px;
+  color: var(--accent);
+}
+
 #full-container {
   display: flex;
   flex-direction: column;
