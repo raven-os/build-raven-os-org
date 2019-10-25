@@ -3,9 +3,7 @@ import authApi from '../api/auth'
 import Vue from 'vue'
 
 const state = {
-  user: {
-    id: null
-  },
+  user: {},
   loading: {
     login: false,
     logout: false
