@@ -54,7 +54,7 @@
     </div>
     <div v-if="error || getInvitationErrors.create" class="build-error">
       <p>An error occurred while sending invitation</p>
-      <p>{{ error || getInvitationErrors.login }}</p>
+      <p>{{ error || getInvitationErrors.create }}</p>
     </div>
     <div v-else-if="sent" class="success">
       <p>Email sent successfully</p>
