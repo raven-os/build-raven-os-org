@@ -19,6 +19,8 @@ Vue.use(BootstrapVue)
 
 // HTTP plugin
 Vue.use(VueResource)
+Vue.http.options.credentials = true
+Vue.http.options.xhr = { withCredentials: true }
 
 // WebSocket
 const options = {

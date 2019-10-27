@@ -56,6 +56,12 @@ const config = convict({
       format: Array,
       default: ['http://localhost:8080'],
       env: 'CORS_ORIGIN'
+    },
+    credentials: {
+      doc: 'Configures the Access-Control-Allow-Credentials CORS header',
+      format: Boolean,
+      default: true,
+      env: 'CORS_CREDENTIALS'
     }
   },
   builder_apikey: {

@@ -7,8 +7,11 @@ async function handleError (request) {
     const body = {}
     if (err.status === 0) {
       body.message = 'Connection refused, server unreachable'
+    } else {
+      body.message = err.body.message
     }
     err.body = body
+
     throw err
   }
 }
@@ -32,5 +35,9 @@ export default {
 
   put (url, options) {
     return handleError(Vue.http.put(url, options))
+  },
+
+  delete (url, options) {
+    return handleError(Vue.http.delete(url, options))
   }
 }

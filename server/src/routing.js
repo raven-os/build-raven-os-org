@@ -7,14 +7,14 @@ class Routing {
 
   routing () {
     const notConnected = this.app.session.notConnected.bind(this.app.session)
-    // const connected = this.app.session.connected.bind(this.app.session)
+    const connected = this.app.session.connected.bind(this.app.session)
     // const connectedOrBuilder = this.app.session.connectedOrBuilder.bind(this.app.session)
     const admin = this.app.session.admin.bind(this.app.session)
 
     this.app.express.use('/api', express.Router()
       .post('/auth/login', notConnected, this.app.action.auth.login.routes)
 
-      // .delete('/auth/logout', connected, this.app.action.auth.logout.routes)
+      .delete('/auth/logout', connected, this.app.action.auth.logout.routes)
       .delete('/auth/logout', this.app.action.auth.logout.routes)
 
       .use('/invite', express.Router()
@@ -67,6 +67,11 @@ class Routing {
         errorParam.push({ param, detail: details[param].msg, value: details[param].value })
       }
     }
+
+    if (!err.message) {
+      err.message = errorParam.map(x => `${x.param}: ${x.detail}`).join('. ')
+    }
+
     console.error('[error]', err.stack)
     res.status(err.status || 400)
     res.json({ message: err.message, errors: errorParam })
