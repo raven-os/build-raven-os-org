@@ -2,90 +2,172 @@
 GENERAL
 ----------------------------------- */
 :root {
-    --accent: #ed254e;
-    --primary: #f7f4f8;
-    --white: #ffffff;
-    --primary-dark: #343432;
+  --accent: #ed254e;
+  --light-accent: #ed4d6e;
+  --primary: #f7f4f8;
+  --white: #ffffff;
+  --light-grey: #eee;
+  --mid-grey: #e2e2e2;
+  --primary-dark: #343a40;
 }
 
 body {
-    background: var(--primary);
-    color: var(--primary-dark);
-    font-family: sans-serif;
-    margin: 0;
-    padding: 0;
+  background: var(--light-grey) !important;
+  color: var(--primary-dark);
+  font-family: "Source sans pro", sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
 html, body {
-    height: 100%;
-    margin: 0;
+  height: 100%;
+  margin: 0;
 }
 
 a {
-    color: var(--accent);
+  color: var(--accent);
 }
 
 a:hover, a:active, a:focus {
-    color: var(--white) !important;
-    outline: none;
-    text-decoration: none !important;
+  color: var(--accent);
 }
 
 p {
-    padding: 0;
-    margin: 0 0 30px 0;
+  padding: 0;
+  margin: 0 0 30px 0;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: sans-serif;
-    font-weight: 400;
-    margin: 0 0 20px 0;
-    padding: 0;
+  font-family: sans-serif;
+  font-weight: 400;
+  margin: 0 0 20px 0;
+  padding: 0;
+}
+
+/* -----------------------------------
+Custom rules
+----------------------------------- */
+
+.text-white {
+  color: var(--white) !important;
+}
+
+.text-dark {
+  color: var(--dark) !important;
+}
+
+.text-accent {
+  color: var(--accent) !important;
+}
+
+.text-light-accent {
+  color: var(--light-accent) !important;
+}
+
+.bg-accent {
+  background-color: var(--accent) !important;
+  color: var(--white);
+}
+
+.bg-accent-hover:hover {
+  background-color: var(--accent) !important;
+  color: var(--white);
+}
+
+.bg-accent-focus:focus {
+  background-color: var(--accent) !important;
+  color: var(--white);
+}
+
+.bg-accent-deepfocus:focus-within {
+  background-color: var(--accent) !important;
+  color: var(--white);
+}
+
+.bg-light-accent {
+  background-color: var(--light-accent) !important;
+  color: var(--white);
+}
+
+.bg-light-accent-hover:hover {
+  background-color: var(--light-accent) !important;
+  color: var(--white) !important;
+}
+
+.bg-light-accent-focus:focus {
+  background-color: var(--light-accent) !important;
+  color: var(--white);
+}
+
+.bg-light-accent-deepfocus:focus-within {
+  background-color: var(--light-accent) !important;
+  color: var(--white);
+}
+
+.bg-mid-grey {
+  background-color: var(--mid-grey) !important;
+  color: var(--dark);
+}
+
+.bg-mid-grey-hover:hover {
+  background-color: var(--mid-grey) !important;
+  color: var(--dark);
+}
+
+.bg-mid-grey-focus:focus {
+  background-color: var(--mid-grey) !important;
+  color: var(--dark);
+}
+
+.bg-mid-grey-deepfocus:focus-within {
+  background-color: var(--mid-grey) !important;
+  color: var(--dark);
 }
 
 /*  Global classes to customize tables
     Don't remove nor move
 */
 
+.table {
+  table-layout:fixed;
+}
+
 table.b-table[aria-busy=false], table.b-table[aria-busy=true] {
-    opacity: 1;
+  opacity: 1;
 }
 
 .list-thead {
-    background-color: rgba(52, 52, 50, 0.9);
-    color: #ffffff;
+  /* background-color: rgba(52, 52, 50, 0.9); */
+  background-color: var(--primary-dark);
+  color: var(--white) !important;
 }
 
 .list-table-cell {
-    max-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    padding: 10px;
-    COLOR: WHITE;
-    color: white;
-    text-color: white;
-    font-coor: white;
-    COLOR: FFFFFFF
+  max-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 10px;
+  color: var(--white);
 }
 
 .metadata-table-cell {
-    padding: 10px;
-    text-align: left !important;
+  padding: 10px;
+  text-align: left !important;
 }
 
 .table-row, .table-row-nohover {
-    border-bottom: 1px solid var(--accent) !important;
+  border-bottom: 1px solid var(--accent) !important;
 }
 
 .table-row:hover {
-    background-color: rgba(237, 37, 78, 0.25) !important;
+  background-color: rgba(237, 37, 78, 0.25) !important;
 }
 
 .td-date {
-    width: 27%;
+  width: 27%;
 }
 
 .td-state {
-    width: 19%;
+  width: 19%;
 }

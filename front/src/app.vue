@@ -33,14 +33,8 @@
     Footer
     ============================-->
     <footer id="footer">
-      <div class="footer-top">
-        <div class="container"/>
-      </div>
-      <div class="container">
-        <div class="copyright">
-          &copy; Copyright
-          <strong>Raven</strong>. All Rights Reserved
-        </div>
+      <div class="container py-4">
+        <div class="text-center">&copy; Copyright <strong>Raven</strong>. All Rights Reserved</div>
       </div>
     </footer>
   </div>
@@ -77,8 +71,9 @@ export default {
 /* -----------------------------------
 Header
 ----------------------------------- */
+
 #header {
-  padding: 10px 0;
+  padding: 0px 0;
   position: fixed;
   left: 0;
   top: 0;
@@ -86,17 +81,12 @@ Header
   transition: all 0.5s;
   z-index: 997;
   background: var(--primary-dark);
+  height: 61px;
 }
 
 .app-navbar {
   background-color: var(--primary-dark);
-  text-transform: uppercase;
-}
-
-.app-footer {
-  background-color: var(--primary-dark);
-  font-size: 12px;
-  text-align: center;
+  /* text-transform: uppercase; */
 }
 
 .nav-item {
@@ -104,23 +94,25 @@ Header
 }
 
 .nav-item-active {
-  color: var(--accent) !important;
+  color: var(--white) !important;
 }
 
 /* -----------------------------------
-Footer
+  Footer
 ----------------------------------- */
+
 #footer {
   background: var(--primary-dark);
-  /*box-shadow: 0px -2px 5px var(--primary-dark);*/
-  padding: 30px 0;
+  padding: 0px 0;
   color: var(--white);
   font-size: 14px;
   width: 100%;
-  height: 80px;
+  height: 72px;
 }
 
-#footer .copyright {
-  text-align: center;
+@media (max-width: 800px) {
+  #footer {
+    margin-top: 50px;
+  }
 }
 </style>

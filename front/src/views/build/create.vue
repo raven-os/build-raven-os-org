@@ -104,7 +104,7 @@ export default {
 /* CREATE-BUILD
 ----------------------------------- */
 .loading {
-  color: blue;
+  color: var(--accent);
   font-weight: bold;
   text-align: center;
   margin-bottom: 25px;
@@ -115,11 +115,6 @@ export default {
   font-weight: bold;
   text-align: center;
   margin-bottom: 25px;
-}
-
-h2 {
-  text-align: center;
-  margin: 25px 0px;
 }
 
 #create-build {
@@ -141,42 +136,6 @@ input[type="file"]:focus {
   width: 100%;
 }
 
-#create-build .create-input-group {
-  margin-bottom: 20px;
-}
-
-#create-build .input-prepend {
-  font-family: sans-serif;
-  font-weight: 500;
-  font-size: 16px;
-  display: inline-block;
-  padding: 12px 28px;
-  border-width: 1px 0px 1px 1px;
-  border-style: solid;
-  border-color: var(--primary-dark);
-  color: var(--white);
-  border-radius: 5px 0px 0px 5px;
-  height: 50px;
-  background: var(--accent);
-  width: 150px;
-  vertical-align: middle !important;
-}
-
-#create-build .create-input {
-  font-family: sans-serif;
-  font-weight: 500;
-  font-size: 16px;
-  display: inline-block;
-  padding: 8px 28px;
-  border-width: 1px 1px 1px 0px;
-  border-style: solid;
-  border-color: var(--primary-dark);
-  color: var(--primary-dark);
-  background: rgba(247, 244, 248, 0.7);
-  border-radius: 0px 5px 5px 0px;
-  height: 50px;
-}
-
 #create-build .create-add {
   font-family: sans-serif;
   font-size: 16px;
@@ -194,30 +153,6 @@ input[type="file"]:focus {
   width: 150px;
   display: block;
   margin: 0 auto;
-}
-
-.form-control:focus {
-  border-color: transparent;
-  box-shadow: none;
-  outline: -webkit-focus-ring-color auto 0px;
-}
-
-.manifest-explain {
-  text-align: center;
-  font-size: 20px;
-  margin-top: 50px;
-}
-
-.file-import {
-  margin-top: 30px;
-}
-
-.code-editor {
-  margin-top: 50px;
-  margin-bottom: 50px;
-}
-
-.tree-select {
 }
 
 /* BUILD-ERROR

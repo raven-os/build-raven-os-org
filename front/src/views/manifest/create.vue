@@ -158,7 +158,7 @@ export default {
 /* CREATE-BUILD
 ----------------------------------- */
 .loading {
-  color: blue;
+  color: var(--accent);
   font-weight: bold;
   text-align: center;
   margin-bottom: 25px;
@@ -169,11 +169,6 @@ export default {
   font-weight: bold;
   text-align: center;
   margin-bottom: 25px;
-}
-
-h2 {
-  text-align: center;
-  margin: 25px 0px;
 }
 
 #create-build {
@@ -200,24 +195,22 @@ input[type="file"]:focus {
 }
 
 #create-build .input-prepend {
-  font-family: sans-serif;
   font-weight: 500;
   font-size: 16px;
   display: inline-block;
-  padding: 12px 28px;
+  padding: 8px 28px;
   border-width: 1px 0px 1px 1px;
   border-style: solid;
   border-color: var(--primary-dark);
   color: var(--white);
   border-radius: 5px 0px 0px 5px;
-  height: 50px;
+  height: 40px;
   background: var(--accent);
   width: 150px;
   vertical-align: middle !important;
 }
 
 #create-build .create-input {
-  font-family: sans-serif;
   font-weight: 500;
   font-size: 16px;
   display: inline-block;
@@ -226,13 +219,12 @@ input[type="file"]:focus {
   border-style: solid;
   border-color: var(--primary-dark);
   color: var(--primary-dark);
-  background: rgba(247, 244, 248, 0.7);
+  background: var(--white);
   border-radius: 0px 5px 5px 0px;
-  height: 50px;
+  height: 40px;
 }
 
 #create-build .create-add {
-  font-family: sans-serif;
   font-size: 16px;
   padding: 8px 18px;
   border-width: 1px;
@@ -240,7 +232,7 @@ input[type="file"]:focus {
   border-color: var(--primary-dark);
   color: var(--white);
   border-radius: 5px;
-  height: 50px;
+  height: 40px;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;

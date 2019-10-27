@@ -56,36 +56,44 @@
             class="sort-select"
             @change="true"/>
         </div>
-        <div
-          v-for="item in getBuilds"
-          :class="{ queued: item.state == STATE.QUEUING, running: item.state == STATE.RUNNING, failed: item.exit_status != 0, success: item.exit_status == 0 }"
-          :key="item.id"
-          class="build-item">
-          <a :href="'/builds/details/' + item.id" class="item-desc">
-            <b-container>
-              <b-row>
-                <b-col>
-                  <div class="item-info">
-                    <div v-if="item.state === STATE.FINISHED">
-                      <i class="fas fa-check text-success"/> <span class="item-name">#{{ item.id }}</span>
+
+        <b-row>
+          <b-col>
+            <table class="table table-sm table-striped table-hover border">
+              <tbody>
+                <tr
+                  v-for="item in getBuilds" :key="item.id"
+                  :class="{ queued: item.state == STATE.QUEUING, running: item.state == STATE.RUNNING, failed: item.state == STATE.FINISHED && item.exit_status != 0, success: item.state == STATE.FINISHED && item.exit_status == 0 }"
+                  class="bg-light-accent-hover build-item">
+                  <td class="text-center" width="5%">
+                    <div v-if="item.state === STATE.FINISHED && item.exit_status == 0">
+                      <i class="fas fa-check text-success"/>
                     </div>
-                    <div v-else-if="item.exit_status !== 0">
-                      <i class="fas fa-times text-failed"/> <span class="item-name">#{{ item.id }}</span>
+                    <div v-else-if="item.state === STATE.FINISHED && item.exit_status != 0">
+                      <i class="fas fa-times text-failed"/>
                     </div>
                     <div v-else-if="item.state === STATE.RUNNING">
-                      <i class="fas fa-bolt text-running"/> <span class="item-name">#{{ item.id }}</span>
+                      <i class="fas fa-bolt text-running"/>
                     </div>
                     <div v-else-if="item.state === STATE.QUEUING">
-                      <i class="fas fa-history text-queued"/> <span class="item-name">#{{ item.id }}</span>
+                      <i class="fas fa-history text-queued"/>
                     </div>
-                    <div v-if="item.packages && item.packages.length" class="item-pkg">
-                      Package(s): <span v-for="(pkgItem, index) in item.packages" :key="index"><span v-if="index > 0">;</span> {{ item.repository }}/{{ pkgItem }}
+                  </td>
+                  <td class="text-truncate" width="10%">
+                    <a :href="'/builds/details/' + item.id">
+                      <kbd><b>#{{ item.id }}</b></kbd>
+                    </a>
+                  </td>
+                  <td class="text-truncate item-pkg" width="50%">
+                    Package(s):
+                    <span v-if="item.packages && item.packages.length">
+                      <span v-for="(pkgItem, index) in item.packages" :key="index">
+                        <span v-if="index > 0">;</span> {{ item.repository }}/{{ pkgItem }}
                       </span>
-                    </div>
-                  </div>
-                </b-col>
-                <b-col cols="12" md="4" lg="2">
-                  <div class="item-date">
+                    </span>
+                    <span v-else>None</span>
+                  </td>
+                  <td class="text-truncate text-left" width="10%">
                     <i class="far fa-calendar-alt"/> {{ item.creation_date | momentFromNow }}
                     <div v-if="item.start_date && item.end_date">
                       <i class="far fa-clock"/> {{ item.start_date | momentDuration(item.end_date) }}
@@ -96,12 +104,12 @@
                     <div v-else>
                       <i class="far fa-clock"/> Queued
                     </div>
-                  </div>
-                </b-col>
-              </b-row>
-            </b-container>
-          </a>
-        </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </b-col>
+        </b-row>
 
         <!-- Pagination -->
         <div class="pagination">
@@ -206,7 +214,7 @@ export default {
 }
 
 .loading {
-  color: blue;
+  color: var(--accent);
   font-weight: bold;
   text-align: center;
   margin-bottom: 25px;
@@ -237,26 +245,21 @@ h1 {
   margin: 0 auto;
 }
 
-.search-input {
-  font-family: sans-serif;
+.search-input,
+.search-input:focus {
   font-weight: 500;
   font-size: 16px;
   display: inline-block;
   padding: 8px 28px;
-  border-width: 1px 1px 1px 1px;
-  border-style: solid;
-  border-color: var(--primary-dark);
+  border: 1px solid var(--primary-dark);
   color: var(--primary-dark);
-  background: rgba(247, 244, 248, 0.7);
+  background: var(--white);
   border-radius: 0px 5px 5px 0px;
-  height: 50px;
-}
-.search-input:focus {
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(0, 0, 0, 0.6);
+  height: 40px;
+  box-shadow: none;
 }
 
 .search-select {
-  font-family: sans-serif;
   font-size: 16px;
   display: inline-block;
   padding-left: 10px;
@@ -265,11 +268,13 @@ h1 {
   border-color: var(--primary-dark);
   color: var(--white);
   border-radius: 5px 0px 0px 5px;
-  height: 50px;
+  height: 40px;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  background: var(--accent) url('https://cdn3.iconfinder.com/data/icons/google-material-design-icons/48/ic_keyboard_arrow_down_48px-128.png') no-repeat;
+  background: var(--accent)
+    url("https://cdn3.iconfinder.com/data/icons/google-material-design-icons/48/ic_keyboard_arrow_down_48px-128.png")
+    no-repeat;
   background-size: 20px;
   background-position: right 10px center;
   width: 175px;
@@ -290,23 +295,24 @@ h1 {
   }
 }
 
-.sort-select, .sort-select:focus {
-  font-family: sans-serif;
+.sort-select,
+.sort-select:focus {
   font-size: 16px;
   display: inline-block;
   padding-left: 10px;
-  border-width: 1px 1px 1px 1px;
-  border-style: solid;
-  border-color: var(--primary-dark);
+  border: 1px solid var(--accent);
   color: var(--white);
-  border-radius: 5px 5px 5px 5px;
-  height: 50px;
+  border-radius: 5px;
+  height: 40px;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  background: var(--accent) url('https://cdn3.iconfinder.com/data/icons/google-material-design-icons/48/ic_keyboard_arrow_down_48px-128.png') no-repeat;
+  background: var(--light-accent)
+    url("https://cdn3.iconfinder.com/data/icons/google-material-design-icons/48/ic_keyboard_arrow_down_48px-128.png")
+    no-repeat;
   background-size: 20px;
   background-position: right 10px center;
+  box-shadow: none;
 }
 
 /* BUILDS-LIST
@@ -315,20 +321,9 @@ h1 {
   margin-top: 75px;
 }
 
-.build-item {
-  padding: 10px;
-  border-bottom: 1px solid var(--primary-dark);
-  border-top: 1px solid var(--primary-dark);
-  border-right: 1px solid var(--primary-dark);
-  margin-bottom: 5px;
-}
-.build-item:hover {
-  background-color: rgba(237, 37, 78, 0.25) !important;
-}
-
-.item-desc,
-.item-desc:hover {
-  color: var(--primary-dark) !important;
+.build-item:hover i,
+.build-item:hover .item-pkg {
+  color: var(--white) !important;
 }
 
 .running {
@@ -336,7 +331,6 @@ h1 {
 }
 .text-running {
   color: #FFC30B;
-  margin-right: 10px;
   width: 20px;
 }
 
@@ -345,7 +339,6 @@ h1 {
 }
 .text-queued {
   color: #2E77BB;
-  margin-right: 10px;
   width: 20px;
 }
 
@@ -354,7 +347,6 @@ h1 {
 }
 .text-failed {
   color: #E74F4E;
-  margin-right: 10px;
   width: 20px;
 }
 
@@ -363,27 +355,12 @@ h1 {
 }
 .text-success {
   color: #85CD3F;
-  margin-right: 10px;
   width: 20px;
-}
-
-.item-info {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.item-name {
-  font-size: 20px;
 }
 
 .item-pkg {
   font-style: italic;
   font-size: 15px;
-  margin-top: 5px;
 }
 
-.item-date {
-  text-align: left;
-}
 </style>

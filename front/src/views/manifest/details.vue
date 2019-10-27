@@ -22,9 +22,9 @@
         <thead class="list-thead">
           <tr>
             <th>Id</th>
-            <th>creation date</th>
-            <th>last update</th>
-            <th>action</th>
+            <th>Creation date</th>
+            <th>Last update</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -33,27 +33,42 @@
             <td class="list-table-cell">{{ manifest && _date(manifest.creation_date) }}</td>
             <td class="list-table-cell">{{ manifest && _date(manifest.last_update) }}</td>
             <td class="list-table-cell">
-              <a :href="'/manifests/update/' + manifest.id" class="item-desc">
-                edit
+              <a :href="'/manifests/update/' + manifest.id" class="text-accent">
+                <i class="fas fa-edit"/>
               </a>
             </td>
           </tr>
         </tbody>
       </table>
 
-      <div class="manifest-space">
-        <div class="manifest-thead">Manifest History</div>
+      <div>
         <div :if="historySize">
-          <div
-            v-for="(item, index) in historyReversed"
-            :key="item.id">
-            <a :class="index === historyIndex ? 'historySelected' : ''" @click="historyIndex = index">
-              {{ _date(item.edition_date) }}
-            </a>
-          </div>
-
-          <div class="manifest-thead">Manifest</div>
-          <prism language="python">{{ content }}</prism>
+          <table id="history-table" class="table table-striped table-hover table-row-nohover">
+            <thead class="list-thead">
+              <tr>
+                <th>Manifest history</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(item, index) in historyReversed" :key="item.id" class="bg-light-accent-hover">
+                <td class="list-table-cell manifest-history-row" @click="historyIndex = index">
+                  <a :class="index === historyIndex ? 'historySelected' : ''">
+                    {{ _date(item.edition_date) }}
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <table id="manifest-table" class="table b-table table-striped">
+            <thead class="list-thead">
+              <tr>
+                <th>Manifest</th>
+              </tr>
+            </thead>
+            <tbody>
+              <prism language="python">{{ content }}</prism>
+            </tbody>
+          </table>
         </div>
       </div>
     </b-container>
@@ -140,11 +155,11 @@ export default {
 <style scoped>
 .historySelected {
   font-weight: bold;
-  padding: 1em;
+  padding-left: 15px;
 }
 
 .loading {
-  color: blue;
+  color: var(--accent);
   font-weight: bold;
   text-align: center;
   margin-bottom: 25px;
@@ -175,15 +190,7 @@ export default {
   color: var(--accent);
 }
 
-.manifest-space {
-  border-bottom: 1px solid var(--accent);
-}
-
-.manifest-thead {
-  background-color: rgba(52, 52, 50, 0.9);
-  color: var(--white) !important;
-  font-weight: bold;
-  padding: 14px;
-  font-size: 16px;
+.manifest-history-row:hover {
+  cursor: pointer;
 }
 </style>
