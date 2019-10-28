@@ -17,6 +17,7 @@
               <b-nav-item to="/builds/create" exact class="nav-item" active-class="nav-item-active">Create build</b-nav-item>
               <b-nav-item to="/manifests" exact class="nav-item" active-class="nav-item-active">Manifests</b-nav-item>
               <b-nav-item to="/manifests/create" exact class="nav-item" active-class="nav-item-active">Create manifest</b-nav-item>
+              <b-nav-item :if="isAdmin" to="/admin" exact class="nav-item" active-class="nav-item-active">Admin</b-nav-item>
               <b-nav-item exact class="nav-item" active-class="nav-item-active"><a @click.prevent="handleLogout()">Logout</a></b-nav-item>
             </b-navbar-nav>
           </b-collapse>
@@ -27,6 +28,7 @@
     <!-- #header -->
 
     <div class="content">
+      <br><br>
       <!-- error handling -->
       <div v-if="getAuthLoadings.logout" class="loading">
         Loging out...
@@ -58,9 +60,13 @@ export default {
   },
   computed: {
     ...mapGetters('auth', [
+      'getAuthUser',
       'getAuthLoadings',
       'getAuthErrors'
-    ])
+    ]),
+    isAdmin () {
+      return (this.getAuthUser && this.getAuthUser.rights && this.getAuthUser.rights.includes('admin')) || false
+    }
   },
   methods: {
     ...mapActions('auth', ['logout']),
