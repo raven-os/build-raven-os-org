@@ -9,6 +9,7 @@ import UpdateManifest from './views/manifest/update.vue'
 import DetailsManifest from './views/manifest/details.vue'
 import LoginAuth from './views/auth/login.vue'
 import AdminInvitation from './views/admin/invitation.vue'
+import UserRegister from './views/user/register.vue'
 
 Vue.use(VueRouter)
 // TODO: improve URLs
@@ -23,7 +24,8 @@ const router = new VueRouter({
     { path: '/manifests/update/:id', component: UpdateManifest, props: true },
     { path: '/manifests/details/:id', name: 'DetailsManifest', component: DetailsManifest, props: true },
     { path: '/login', name: 'LoginAuth', component: LoginAuth },
-    { path: '/admin', name: 'AdminInvitation', component: AdminInvitation }
+    { path: '/admin', name: 'AdminInvitation', component: AdminInvitation },
+    { path: '/register', name: 'UserRegister', component: UserRegister }
   ]
 })
 
