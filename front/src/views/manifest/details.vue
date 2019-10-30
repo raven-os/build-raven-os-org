@@ -24,6 +24,8 @@
             <th>Id</th>
             <th>Creation date</th>
             <th>Last update</th>
+            <th>Author</th>
+            <th>Maintainer</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -32,6 +34,8 @@
             <td class="list-table-cell">{{ manifest && manifest.id }}</td>
             <td class="list-table-cell">{{ manifest && _date(manifest.creation_date) }}</td>
             <td class="list-table-cell">{{ manifest && _date(manifest.last_update) }}</td>
+            <td class="list-table-cell">{{ author }}</td>
+            <td class="list-table-cell">{{ maintainer }}</td>
             <td class="list-table-cell">
               <a :href="'/manifests/update/' + manifest.id" class="text-accent">
                 <i class="fas fa-edit"/>
@@ -138,6 +142,12 @@ export default {
     },
     content () {
       return this.historySize && this.historyReversed[this.historyIndex].content
+    },
+    author () {
+      return this.manifest && this.manifest.author && `${this.manifest.author.firstname} ${this.manifest.author.lastname}`
+    },
+    maintainer () {
+      return this.manifest && this.manifest.maintainer && `${this.manifest.maintainer.firstname} ${this.manifest.maintainer.lastname}`
     }
   },
   beforeMount () {
