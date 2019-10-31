@@ -79,7 +79,7 @@ class CreateManifest extends AbstractAction {
   }
 
   async handler (req, res, next) {
-    return this.app.controller.manifest.create(req.body.name, req.body.content)
+    return this.app.controller.manifest.create(req.body.name, req.body.content, req.session.user.id)
   }
 }
 

@@ -33,9 +33,30 @@ class ManifestController {
    * @throws {NotFound}            If the manifest doesn't exists
    */
   async _get (id) {
+    const userJSON = (field) => {
+      return `CASE
+        WHEN ${field}.id IS NULL THEN NULL
+        ELSE json_build_object('id', ${field}.id, 'firstname', ${field}.firstname, 'lastname', ${field}.lastname)
+      END AS ${field}`
+    }
+
     const manifestModel = await this.app.database.model.manifest
-      .where('id', id)
-      .fetch({ withRelated: ['history'] })
+      .where('manifest.id', id)
+      .query(qb => {
+        qb.leftJoin('user_account AS author', 'manifest.author', 'author.id')
+        qb.leftJoin('user_account AS maintainer', 'manifest.maintainer', 'maintainer.id')
+      })
+      .fetch({
+        columns: [
+          'manifest.id',
+          'manifest.name',
+          'manifest.creation_date',
+          'manifest.last_update',
+          this.app.database.utils.raw(userJSON('author')),
+          this.app.database.utils.raw(userJSON('maintainer'))
+        ],
+        withRelated: ['history']
+      })
 
     if (!manifestModel) {
       throw new this.app.errors.NotFound(`Manifest #${id} not found`)
@@ -52,13 +73,15 @@ class ManifestController {
    * @param  {String}  content Content of the manifest
    * @return {Object}          Manifest with its content
    */
-  async create (name, content) {
+  async create (name, content, authorId) {
     const date = new Date()
 
     const manifest = await this.app.database.model.manifest.forge({
       name,
       creation_date: date,
-      last_update: date
+      last_update: date,
+      author: authorId,
+      maintainer: authorId
     })
       .save()
       .get('attributes')
