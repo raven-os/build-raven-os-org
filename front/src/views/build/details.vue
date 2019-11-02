@@ -47,7 +47,7 @@
         </tbody>
       </table>
 
-      <div v-if="build.packages && build.packages.length">
+      <div v-if="build && build.packages && build.packages.length">
         <table id="packages-table" class="table b-table table-striped">
           <thead class="list-thead">
             <tr>
