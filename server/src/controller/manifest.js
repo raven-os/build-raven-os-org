@@ -25,6 +25,22 @@ class ManifestController {
   }
 
   /**
+   * Verify if a manifest with a maintainer exists
+   *
+   * @param  {Integer}  id     Id of a manifest
+   * @param  {Integer}  userId Id of a user
+   * @return {Boolean}         true if the user is the maintainer of the manifest
+   */
+  async isMaintainer (id, userId) {
+    const count = await this.app.database.model.manifest
+      .where('id', id)
+      .where('maintainer', userId)
+      .count()
+
+    return count === '1'
+  }
+
+  /**
    * Retrieve a manifest by id
    *
    * @private
