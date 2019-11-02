@@ -37,9 +37,10 @@
             <td class="list-table-cell">{{ author }}</td>
             <td class="list-table-cell">{{ maintainer }}</td>
             <td class="list-table-cell">
-              <a :href="'/manifests/update/' + manifest.id" class="text-accent">
+              <a v-if="isMaintainer" :href="'/manifests/update/' + id" class="text-accent">
                 <i class="fas fa-edit"/>
               </a>
+              <span v-else>none</span>
             </td>
           </tr>
         </tbody>
@@ -128,6 +129,7 @@ export default {
   },
   computed: {
     ...mapGetters('manifest', ['getManifest', 'getManifestLoadings', 'getManifestErrors']),
+    ...mapGetters('auth', ['getAuthUser']),
     _id () {
       return Number(this.id) || this.id
     },
@@ -148,6 +150,9 @@ export default {
     },
     maintainer () {
       return this.manifest && this.manifest.maintainer && `${this.manifest.maintainer.firstname} ${this.manifest.maintainer.lastname}`
+    },
+    isMaintainer () {
+      return this.manifest && this.manifest.maintainer && this.manifest.maintainer.id === this.getAuthUser.id
     }
   },
   beforeMount () {
