@@ -122,11 +122,14 @@ describe('controller/manifest', () => {
   describe('updateContent', () => {
     it('should succeed and update the content and the manifest last_udate', async () => {
       const date = new Date('January 10 2010 10:10:10')
+      const maintainer = { id: 9, firstname: 'john', lastname: 'DOE' }
       const manifestToUpdate = {
         id,
         name: 'toUpdate',
         creation_date: date,
-        last_update: date
+        last_update: date,
+        author: maintainer,
+        maintainer
       }
       const content = {
         manifest_id: id,
@@ -161,7 +164,7 @@ describe('controller/manifest', () => {
         ][step - 1]()
       })
 
-      const manifestContent = await controller.updateContent(id, 'new content')
+      const manifestContent = await controller.updateContent(id, 'new content', maintainer.id)
 
       assert.strictEqual(manifestContent.manifest_id, id)
       assert.strictEqual(manifestContent.content, 'new content')
