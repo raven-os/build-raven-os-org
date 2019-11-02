@@ -65,15 +65,18 @@ describe('controller/build', () => {
   describe('create', () => {
     let stubExists
     let stubSend
+    let stubIsMaintainer
 
     beforeEach(() => {
       stubExists = sinon.stub(app.controller.manifest, 'exists')
       stubSend = sinon.stub(app.queue, 'send')
+      stubIsMaintainer = sinon.stub(app.controller.manifest, 'isMaintainer')
     })
 
     afterEach(() => {
       stubExists.restore()
       stubSend.restore()
+      stubIsMaintainer.restore()
     })
 
     it('should throw manifest not found', async () => {
@@ -95,6 +98,10 @@ describe('controller/build', () => {
       stubExists.onCall(1).returns(true)
       stubExists.onCall(2).returns(true)
 
+      stubIsMaintainer.onCall(0).returns(true)
+      stubIsMaintainer.onCall(1).returns(true)
+      stubIsMaintainer.onCall(2).returns(true)
+
       tracker.on('query', (query) => {
         assert.strictEqual(query.method, 'insert')
         assert.strictEqual(query.bindings.includes(ids, controller.state.QUEUING), true)
@@ -103,12 +110,15 @@ describe('controller/build', () => {
 
       stubBuffer.returns(buffer)
 
-      const res = await assertDoesNotThrowAsync(async () => controller.create(ids))
+      const res = await assertDoesNotThrowAsync(async () => controller.create(ids, 9))
 
       assert.strictEqual(stubExists.callCount, 3)
       assert.deepStrictEqual(stubExists.firstCall.args, [4])
       assert.deepStrictEqual(stubExists.secondCall.args, [5])
       assert.deepStrictEqual(stubExists.thirdCall.args, [6])
+      assert.deepStrictEqual(stubIsMaintainer.firstCall.args, [4, 9])
+      assert.deepStrictEqual(stubIsMaintainer.secondCall.args, [5, 9])
+      assert.deepStrictEqual(stubIsMaintainer.thirdCall.args, [6, 9])
       assert.strictEqual(spyJSON.callCount, 1)
       assert.deepStrictEqual(spyJSON.firstCall.args, [{ build: 12, manifests: ids }])
       assert.strictEqual(stubBuffer.callCount, 1)
