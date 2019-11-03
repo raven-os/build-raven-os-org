@@ -17,8 +17,8 @@
               <b-nav-item to="/builds/create" exact class="nav-item" active-class="nav-item-active">Create build</b-nav-item>
               <b-nav-item to="/manifests" exact class="nav-item" active-class="nav-item-active">Manifests</b-nav-item>
               <b-nav-item to="/manifests/create" exact class="nav-item" active-class="nav-item-active">Create manifest</b-nav-item>
-              <b-nav-item :if="isAdmin" to="/admin" exact class="nav-item" active-class="nav-item-active">Admin</b-nav-item>
-              <b-nav-item exact class="nav-item" active-class="nav-item-active"><a @click.prevent="handleLogout()">Logout</a></b-nav-item>
+              <b-nav-item v-if="isAdmin" to="/admin" exact class="nav-item" active-class="nav-item-active">Admin</b-nav-item>
+              <b-nav-item v-if="displayLogout" exact class="nav-item" active-class="nav-item-active"><a @click.prevent="handleLogout()">Logout</a></b-nav-item>
             </b-navbar-nav>
           </b-collapse>
         </b-navbar>
@@ -56,7 +56,10 @@ import { mapActions, mapGetters } from 'vuex'
 
 export default {
   data () {
-    return { activeItem: 'home' }
+    return {
+      displayLogout: false,
+      activeItem: 'home'
+    }
   },
   computed: {
     ...mapGetters('auth', [
@@ -68,6 +71,20 @@ export default {
       return (this.getAuthUser && this.getAuthUser.rights && this.getAuthUser.rights.includes('admin')) || false
     }
   },
+  watch: {
+    $route (to, from) {
+      if (from.path === '/login' || this.isConnected()) {
+        this.displayLogout = true
+      } else if (to.path === '/login' && !this.isConnected()) {
+        this.displayLogout = false
+      }
+    }
+  },
+  mounted: function () {
+    if (this.isConnected()) {
+      this.displayLogout = true
+    }
+  },
   methods: {
     ...mapActions('auth', ['logout']),
     isActive: function (menuItem) {
@@ -75,6 +92,9 @@ export default {
     },
     setActive: function (menuItem) {
       this.activeItem = menuItem
+    },
+    isConnected () {
+      return (document.cookie && document.cookie.indexOf('user_sid=') !== -1) || false
     },
     handleLogout () {
       this.logout().then(() => {
