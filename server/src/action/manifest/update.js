@@ -69,7 +69,7 @@ class UpdateManifest extends AbstractAction {
   }
 
   async handler (req, res, next) {
-    return this.app.controller.manifest.updateContent(req.params.id, req.body.content)
+    return this.app.controller.manifest.updateContent(req.params.id, req.body.content, req.session.user.id)
   }
 }
 
