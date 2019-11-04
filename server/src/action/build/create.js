@@ -81,7 +81,7 @@ class CreateBuild extends AbstractAction {
   }
 
   async handler (req, res, next) {
-    return this.app.controller.build.create(req.body.ids, req.session.user.id)
+    return this.app.controller.build.create(req.body.ids, req.session.user)
   }
 }
 

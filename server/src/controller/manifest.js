@@ -138,14 +138,14 @@ class ManifestController {
    * @return {Object}           New Content and metadata of the manifest's new content
    * @throws {NotFound}         If the manifest doesn't exists
    */
-  async updateContent (id, content, userId) {
+  async updateContent (id, content, user) {
     const date = new Date()
 
     const manifest = await this._get(id)
     const manifestJson = manifest.toJSON()
 
-    if (!manifestJson.maintainer || manifestJson.maintainer.id !== userId) {
-      throw new this.app.errors.Forbidden(`Manifest #${id} can only be updated by its maintainer`)
+    if (!user.rights.includes('admin') && (!manifestJson.maintainer || manifestJson.maintainer.id !== user.id)) {
+      throw new this.app.errors.Forbidden(`Manifest #${user.id} can only be updated by its maintainer`)
     }
 
     const manifestContent = await this._insertContent(id, content, date)
