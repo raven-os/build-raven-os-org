@@ -110,7 +110,7 @@ describe('controller/build', () => {
 
       stubBuffer.returns(buffer)
 
-      const res = await assertDoesNotThrowAsync(async () => controller.create(ids, 9))
+      const res = await assertDoesNotThrowAsync(async () => controller.create(ids, { id: 9, rights: [] }))
 
       assert.strictEqual(stubExists.callCount, 3)
       assert.deepStrictEqual(stubExists.firstCall.args, [4])
