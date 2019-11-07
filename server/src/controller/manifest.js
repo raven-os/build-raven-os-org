@@ -25,6 +25,22 @@ class ManifestController {
   }
 
   /**
+   * Verify if a manifest with a maintainer exists
+   *
+   * @param  {Integer}  id     Id of a manifest
+   * @param  {Integer}  userId Id of a user
+   * @return {Boolean}         true if the user is the maintainer of the manifest
+   */
+  async isMaintainer (id, userId) {
+    const count = await this.app.database.model.manifest
+      .where('id', id)
+      .where('maintainer', userId)
+      .count()
+
+    return count === '1'
+  }
+
+  /**
    * Retrieve a manifest by id
    *
    * @private
@@ -122,15 +138,20 @@ class ManifestController {
    * @return {Object}           New Content and metadata of the manifest's new content
    * @throws {NotFound}         If the manifest doesn't exists
    */
-  async updateContent (id, content) {
+  async updateContent (id, content, user) {
     const date = new Date()
 
     const manifest = await this._get(id)
+    const manifestJson = manifest.toJSON()
+
+    if (!user.rights.includes('admin') && (!manifestJson.maintainer || manifestJson.maintainer.id !== user.id)) {
+      throw new this.app.errors.Forbidden(`Manifest #${user.id} can only be updated by its maintainer`)
+    }
 
     const manifestContent = await this._insertContent(id, content, date)
 
     await manifest
-      .save({ last_update: date })
+      .save({ last_update: date }, { patch: true })
 
     return manifestContent
   }
