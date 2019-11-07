@@ -37,7 +37,7 @@
             <td class="list-table-cell">{{ author }}</td>
             <td class="list-table-cell">{{ maintainer }}</td>
             <td class="list-table-cell">
-              <a v-if="isMaintainer" :href="'/manifests/update/' + id" class="text-accent">
+              <a v-if="isMaintainer || isAdmin" :href="'/manifests/update/' + id" class="text-accent">
                 <i class="fas fa-edit"/>
               </a>
               <span v-else>none</span>
@@ -153,6 +153,9 @@ export default {
     },
     isMaintainer () {
       return this.manifest && this.manifest.maintainer && this.manifest.maintainer.id === this.getAuthUser.id
+    },
+    isAdmin () {
+      return this.getAuthUser.rights && this.getAuthUser.rights.includes('admin')
     }
   },
   beforeMount () {
