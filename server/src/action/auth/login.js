@@ -20,6 +20,8 @@ class Login extends AbstractAction {
 
     req.session.user = user
 
+    delete user.password
+
     return user
   }
 }
