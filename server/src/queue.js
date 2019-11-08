@@ -32,7 +32,7 @@ class Queue {
         this.connection = await amqp.connect(url)
         break
       } catch (err) {
-        console.error(err)
+        console.error('[queue.ensureConnection]', err)
         retries--
         console.info(`retries left: ${retries}, interval: ${interval} ms`)
         if (retries === 0) {

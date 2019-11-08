@@ -20,7 +20,7 @@ class Database {
         await this.utils.raw('SELECT \'ensure connection\';')
         break
       } catch (err) {
-        console.error(err)
+        console.error('[database.ensureConnection]', err)
         retries--
         console.info(`retries left: ${retries}, interval: ${interval} ms`)
         if (retries === 0) {
