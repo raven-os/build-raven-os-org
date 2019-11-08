@@ -4,58 +4,58 @@
       <b-container>
         <h1>Login</h1>
         <div class="login-zone">
-        <form @submit.prevent="loginHandler()">
-          <b-container>
-            <b-row class="m-2">
-              <b-col>
-                <b-input-group class="search-input-group create-input-group">
-                  <b-input-group-prepend>
-                    <div class="input-prepend">Email</div>
-                  </b-input-group-prepend>
-                  <input
-                    v-model="email"
-                    class="form-control search-input"
-                    type="email"
-                    placeholder="Email"
-                    autocomplete="email">
-                </b-input-group>
-              </b-col>
-            </b-row>
-            <b-row class="m-2">
-              <b-col>
-                <b-input-group class="search-input-group create-input-group">
-                  <b-input-group-prepend>
-                    <div class="input-prepend">Password</div>
-                  </b-input-group-prepend>
-                  <input
-                    v-model="password"
-                    class="form-control search-input"
-                    type="password"
-                    placeholder="Password"
-                    autocomplete="current-password">
-                </b-input-group>
-              </b-col>
-            </b-row>
-            <b-row>
-              <button class="create-add" type="submit">Login</button>
-            </b-row>
-            <b-row>
-              <b-col>
-                <div class="text-center my-4" style="text-align: center;">
-                  <a href="#" class="forgotten-pwd">Forgotten password?</a>
-                </div>
-              </b-col>
-            </b-row>
-          </b-container>
-        </form>
+          <form @submit.prevent="loginHandler()">
+            <b-container>
+              <b-row class="m-2">
+                <b-col>
+                  <b-input-group class="search-input-group create-input-group">
+                    <b-input-group-prepend>
+                      <div class="input-prepend">Email</div>
+                    </b-input-group-prepend>
+                    <input
+                      v-model="email"
+                      class="form-control search-input"
+                      type="email"
+                      placeholder="Email"
+                      autocomplete="email"
+                    >
+                  </b-input-group>
+                </b-col>
+              </b-row>
+              <b-row class="m-2">
+                <b-col>
+                  <b-input-group class="search-input-group create-input-group">
+                    <b-input-group-prepend>
+                      <div class="input-prepend">Password</div>
+                    </b-input-group-prepend>
+                    <input
+                      v-model="password"
+                      class="form-control search-input"
+                      type="password"
+                      placeholder="Password"
+                      autocomplete="current-password"
+                    >
+                  </b-input-group>
+                </b-col>
+              </b-row>
+              <b-row>
+                <button class="create-add" type="submit">Login</button>
+              </b-row>
+              <b-row>
+                <b-col>
+                  <div class="text-center my-4" style="text-align: center;">
+                    <a href="#" class="forgotten-pwd">Forgotten password?</a>
+                  </div>
+                </b-col>
+              </b-row>
+            </b-container>
+          </form>
         </div>
       </b-container>
     </section>
 
     <!-- error handling -->
-    <div v-if="getAuthLoadings.login" class="loading">
-      Loging in...
-    </div>
+    <div v-if="getAuthLoadings.login" class="loading">Loging in...</div>
     <div v-if="error || getAuthErrors.login" class="build-error">
       <p>An error occurred while loging in</p>
       <p>{{ error || getAuthErrors.login }}</p>
@@ -75,10 +75,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('auth', [
-      'getAuthLoadings',
-      'getAuthErrors'
-    ])
+    ...mapGetters('auth', ['getAuthLoadings', 'getAuthErrors'])
   },
   mounted () {
     if (document.cookie && document.cookie.indexOf('user_sid=') !== -1) {
@@ -105,7 +102,6 @@ export default {
 </script>
 
 <style scoped>
-
 .login-zone {
   margin-top: 75px;
   margin-bottom: 100px;
@@ -212,5 +208,4 @@ h1 {
   text-align: center;
   display: inline-block;
 }
-
 </style>
