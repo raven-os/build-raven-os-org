@@ -1,0 +1,699 @@
+{
+	"info": {
+		"_postman_id": "b81341f0-b32a-4323-9cd2-3637fcf15584",
+		"name": "raven/build-raven-os-org",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Manifest",
+			"item": [
+				{
+					"name": "Create manifest",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"testing\",\n\t\"content\": \"test\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8000/api/manifest",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"manifest"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update manifest",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "content",
+									"value": "#!/usr/bin/env python3.6\n# -*- coding: utf-8 -*-\n\"\"\"\nBuild manifest for the GNU 'readline' library.\n\"\"\"\n\nimport stdlib\nimport stdlib.fetch\nimport stdlib.split\nimport stdlib.template.autotools\n\n\n@stdlib.manifest(\n    name='readline',\n    category='sys-lib',\n    description='''\n    The GNU Readline library provides a set of functions for use by applications that allow users to edit command lines as they are typed in.\n    ''',\n    maintainer='benjamin.grange@epitech.eu',\n    licenses=[stdlib.License.GPL_V3],\n    upstream_url='https://tiswww.case.edu/php/chet/readline/rltop.html',\n    versions_data=[\n        {\n            'semver': '8.0.0',\n            'fetch_url': {\n                'url': 'https://ftp.gnu.org/gnu/readline/readline-8.0.tar.gz',\n                'sha256': 'e339f51971478d369f8a053a330a190781acb9864cf4c541060f12078948e461',\n            },\n        },\n    ],\n)\ndef build(build):\n    aggregate = stdlib.template.autotools.build_library(\n        configure=lambda: stdlib.template.autotools.configure(\n            '--disable-install-examples',\n            '--with-curses',\n            '--enable-multibyte',\n        ),\n    )\n\n    # Dependencies\n    aggregate['libreadline8'].run_dependencies['stable::sys-lib/libc6'] = '*'\n\n    return aggregate",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8000/api/manifest/55",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"manifest",
+								"55"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get manifest",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8000/api/manifest/8",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"manifest",
+								"8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List manifests",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8000/api/manifest?",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"manifest"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "creation",
+									"disabled": true
+								},
+								{
+									"key": "dir",
+									"value": "asc",
+									"disabled": true
+								},
+								{
+									"key": "name",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "per_page",
+									"value": "1500",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update manifest maintainer",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"maintainer\": 10\n}"
+						},
+						"url": {
+							"raw": "localhost:8000/api/manifest/76/maintainer",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"manifest",
+								"76",
+								"maintainer"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Build",
+			"item": [
+				{
+					"name": "Create build",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"ids\": [19]\n}"
+						},
+						"url": {
+							"raw": "localhost:8000/api/build/",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"build",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Build's Stdout",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{AUTHORIZATION}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"data\": \"test\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8000/api/build/208/stdout",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"build",
+								"208",
+								"stdout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List builds",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8000/api/build?sort=creation",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"build"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "creation"
+								},
+								{
+									"key": "dir",
+									"value": "asc",
+									"disabled": true
+								},
+								{
+									"key": "manifest_id",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "queuing",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "running",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "exit_status",
+									"value": "42",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "per_page",
+									"value": "15",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get build",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8000/api/build/2610",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"build",
+								"2610"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Start build",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{AUTHORIZATION}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8000/api/build/208/start",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"build",
+								"208",
+								"start"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Build's Stderr",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{AUTHORIZATION}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"data\": \"this is stderr azertyuioozazertyuiuyt\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8000/api/build/208/stderr",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"build",
+								"208",
+								"stderr"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "End build",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{AUTHORIZATION}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"exit_status\": 42\n}"
+						},
+						"url": {
+							"raw": "localhost:8000/api/build/208/end",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"build",
+								"208",
+								"end"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify Authorization",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{AUTHORIZATION}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8000/api/build/209/start",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"build",
+								"209",
+								"start"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Build's Packages",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{AUTHORIZATION}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"data\": [\n\t\t\"http://hello.world\"\n\t\t]\n}"
+						},
+						"url": {
+							"raw": "localhost:8000/api/build/207/packages",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"build",
+								"207",
+								"packages"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"invitation\": \"a13f3c78-eca9-440f-8621-123909a83427\",\n\t\"firstname\": \"mickael\",\n\t\"lastname\": \"bourgois\",\n\t\"password\": \"Password1234\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8000/api/user/",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Invitation",
+			"item": [
+				{
+					"name": "Create Invitation",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"toto@toto.com\",\n\t\"rights\": [\"admin\", \"admin\"],\n\t\"expire_after\": 30\n}"
+						},
+						"url": {
+							"raw": "localhost:8000/api/invite/",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"invite",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"mickael.bourgois@epitech.eu\",\n\t\"password\": \"toto42\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8000/api/auth/login/",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"auth",
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8000/api/auth/logout/",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"auth",
+								"logout",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login Copy",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"toto@toto.com\",\n\t\"password\": \"Password1234\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8000/api/auth/login/",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"auth",
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
