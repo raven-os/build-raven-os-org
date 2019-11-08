@@ -2,8 +2,7 @@ FROM node:10
 
 ENV NODE_ENV=production
 
-RUN mkdir -p /home/node/builder
-WORKDIR /home/node/builder
+WORKDIR /app
 
 # Download docker cli
 RUN apt-get update && apt-get install -y -q \
@@ -31,7 +30,5 @@ RUN npm install --only=production
 COPY . .
 
 EXPOSE 8000
-
-# USER node
 
 CMD ["node", "src/index.js"]

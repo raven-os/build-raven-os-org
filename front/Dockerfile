@@ -1,7 +1,6 @@
 FROM node:10
 
-RUN mkdir -p /home/node/front
-WORKDIR /home/node/front
+WORKDIR /app
 
 # Install front dependencies
 COPY package.json .

@@ -2,8 +2,7 @@ FROM node:10
 
 ENV NODE_ENV=production
 
-RUN mkdir -p /home/node/api
-WORKDIR /home/node/api
+WORKDIR /app
 
 # Install server dependencies
 COPY package.json .
@@ -13,7 +12,5 @@ RUN npm install --only=production
 COPY . .
 
 EXPOSE 8000
-
-USER node
 
 CMD ["node", "src/index.js"]
