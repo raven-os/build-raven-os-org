@@ -26,7 +26,7 @@ class BuildController {
     return buildModel
   }
 
-  async create (ids) {
+  async create (ids, user) {
     if (!ids.length) {
       throw new this.app.errors.BadRequest('A build needs at least one manifest')
     }
@@ -34,6 +34,10 @@ class BuildController {
     for (let id of ids) {
       if (!await this.app.controller.manifest.exists(id)) {
         throw new this.app.errors.NotFound(`Manifest #${id} not found`)
+      }
+
+      if (!user.rights.includes('admin') && !await this.app.controller.manifest.isMaintainer(id, user.id)) {
+        throw new this.app.errors.Forbidden(`Manifest #${user.id} can only be built by its maintainer`)
       }
     }
 
