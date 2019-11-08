@@ -3,48 +3,61 @@
     <section id="builds-search">
       <b-container>
         <h1>Invitation</h1>
+        <div class="invit-zone">
         <form @submit.prevent="invitationHandler()">
-          <b-input-group>
-            <b-input-group-prepend>
-              <label for="user_email">New user's email</label>
-            </b-input-group-prepend>
-            <input
-              id="user_email"
-              v-model="email"
-              class="form-control create-input"
-              type="email"
-              placeholder="Email"
-            >
-          </b-input-group>
-
-          <b-input-group>
-            <b-input-group-prepend>
-              <label for="expiration_time">Expire in</label>
-            </b-input-group-prepend>
-            <input
-              id="expiration_time"
-              v-model="expire_after"
-              class="form-control create-input"
-              type="number"
-              placeholder="Expire after x minutes"
-            >
-            <span> minutes</span>
-          </b-input-group>
-
-          <b-input-group>
-            <b-input-group-prepend>
-              <label for="administrator">Administrator</label>
-            </b-input-group-prepend>
-            <input
-              id="administrator"
-              v-model="isAdmin"
-              class="form-control create-input"
-              type="checkbox"
-            >
-          </b-input-group>
-
-          <button type="submit">Send invitation</button>
+          <b-container>
+            <b-row class="m-2">
+              <b-col>
+                <b-input-group class="search-input-group create-input-group">
+                  <b-input-group-prepend>
+                    <div class="input-prepend">Email</div>
+                  </b-input-group-prepend>
+                  <input
+                    id="user_email"
+                    v-model="email"
+                    class="form-control create-input"
+                    type="email"
+                    placeholder="Email">
+                </b-input-group>
+              </b-col>
+            </b-row>
+            <b-row class="m-2">
+              <b-col>
+                <b-input-group class="search-input-group create-input-group">
+                  <b-input-group-prepend>
+                    <div class="input-prepend">Expires in</div>
+                  </b-input-group-prepend>
+                  <input
+                    id="expiration_time"
+                    v-model="expire_after"
+                    class="form-control create-input"
+                    type="number"
+                    placeholder="Expire after x minutes">
+                    <b-input-group-append>
+                      <div class="input-append">minutes</div>
+                    </b-input-group-append>
+                </b-input-group>
+              </b-col>
+            </b-row>
+            <b-row class="m-2">
+              <b-col>
+                <b-input-group class="search-input-group create-input-group">
+                  <b-input-group-prepend>
+                    <div class="input-prepend">Administrator</div>
+                  </b-input-group-prepend>
+                  <div class="custom-control form-control-lg custom-checkbox">
+                    <input id="administrator" type="checkbox" v-model="isAdmin" class="custom-control-input">  
+                    <label class="custom-control-label" for="administrator"></label>  
+                  </div>
+                </b-input-group>
+              </b-col>
+            </b-row>
+            <b-row>
+              <button class="create-add" type="submit">Send invitation</button>
+            </b-row>
+          </b-container>
         </form>
+        </div>
       </b-container>
     </section>
 
@@ -107,17 +120,30 @@ export default {
 
 <style scoped>
 
-.current {
-  font-weight: bold;
+.custom-checkbox {
+  margin-left: 15px;
+  height: 40px;
 }
 
-.pagination  {
-  margin-top: 1em;
-  font-size: 1.2em;
+.custom-control-label:before{
+  background-color:white;
 }
 
-.pagination a {
-  padding: 1em;
+.custom-checkbox .custom-control-input:checked~.custom-control-label::before{
+  background-color: var(--accent);
+  border: 1px solid var(--accent);
+}
+.custom-checkbox .custom-control-input:checked~.custom-control-label::after{
+  background-image:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath fill='white' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3E%3C/svg%3E");
+}
+
+.custom-checkbox .custom-control-input:focus~.custom-control-label::before{
+  box-shadow: none;
+}
+
+.invit-zone {
+  margin-top: 75px;
+  margin-bottom: 100px;
 }
 
 .loading {
@@ -144,11 +170,75 @@ h1 {
   font-size: 45px;
 }
 
-.search-zone {
-  padding: 10px;
+.create-input-group {
+  margin-bottom: 20px;
 }
 
-.search-input-group {
+.input-prepend {
+  font-weight: 500;
+  font-size: 16px;
+  display: inline-block;
+  padding: 8px 28px;
+  border-width: 1px 0px 1px 1px;
+  border-style: solid;
+  border-color: var(--primary-dark);
+  color: var(--white);
+  border-radius: 5px 0px 0px 5px;
+  height: 40px;
+  background: var(--accent);
+  width: 150px;
+  vertical-align: middle !important;
+}
+
+.input-append {
+  font-weight: 500;
+  font-size: 16px;
+  display: inline-block;
+  padding: 8px 28px;
+  border-width: 1px 1px 1px 0px;
+  border-style: solid;
+  border-color: var(--primary-dark);
+  color: var(--white);
+  border-radius: 0px 5px 5px 0px;
+  height: 40px;
+  background: var(--accent);
+  width: 150px;
+  vertical-align: middle !important;
+}
+
+.create-input {
+  font-weight: 500;
+  font-size: 16px;
+  display: inline-block;
+  padding: 8px 28px;
+  border-width: 1px 1px 1px 0px;
+  border-style: solid;
+  border-color: var(--primary-dark);
+  color: var(--primary-dark);
+  background: var(--white);
+  border-radius: 0px 5px 5px 0px;
+  height: 40px;
+}
+
+.create-input:checked~ {
+  background-color: var(--accent)
+}
+
+.create-add {
+  font-size: 16px;
+  padding: 8px 18px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: var(--primary-dark);
+  color: var(--white);
+  border-radius: 5px;
+  height: 40px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: var(--accent);
+  width: 150px;
+  display: block;
   margin: 0 auto;
 }
 
@@ -166,108 +256,10 @@ h1 {
   box-shadow: none;
 }
 
-.search-select {
-  font-size: 16px;
-  display: inline-block;
-  padding-left: 10px;
-  border-width: 1px 0px 1px 1px;
-  border-style: solid;
-  border-color: var(--primary-dark);
-  color: var(--white);
-  border-radius: 5px 0px 0px 5px;
-  height: 40px;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  background: var(--accent)
-    url("https://cdn3.iconfinder.com/data/icons/google-material-design-icons/48/ic_keyboard_arrow_down_48px-128.png")
-    no-repeat;
-  background-size: 20px;
-  background-position: right 10px center;
-  width: 175px;
-}
-
-/* BUILDS-SORT
------------------------------------ */
-.builds-sort {
-  margin-bottom: 25px;
-  width: 25%;
-  margin-right: 0;
-  margin-left: auto;
-}
-
-@media (max-width: 500px) {
-  .builds-sort {
-    width: 100%;
-  }
-}
-
-.sort-select,
-.sort-select:focus {
-  font-size: 16px;
-  display: inline-block;
-  padding-left: 10px;
-  border: 1px solid var(--accent);
-  color: var(--white);
-  border-radius: 5px;
-  height: 40px;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  background: var(--light-accent)
-    url("https://cdn3.iconfinder.com/data/icons/google-material-design-icons/48/ic_keyboard_arrow_down_48px-128.png")
-    no-repeat;
-  background-size: 20px;
-  background-position: right 10px center;
+.form-control:focus {
+  border-color: var(--accent);
   box-shadow: none;
-}
-
-/* BUILDS-LIST
------------------------------------ */
-#builds-list {
-  margin-top: 75px;
-}
-
-.build-item:hover i,
-.build-item:hover .item-pkg {
-  color: var(--white) !important;
-}
-
-.running {
-  border-left: 15px solid #FFC30B;
-}
-.text-running {
-  color: #FFC30B;
-  width: 20px;
-}
-
-.queued {
-  border-left: 15px solid #2E77BB;
-}
-.text-queued {
-  color: #2E77BB;
-  width: 20px;
-}
-
-.failed {
-  border-left: 15px solid #E74F4E;
-}
-.text-failed {
-  color: #E74F4E;
-  width: 20px;
-}
-
-.success {
-  border-left: 15px solid #85CD3F;
-}
-.text-success {
-  color: #85CD3F;
-  width: 20px;
-}
-
-.item-pkg {
-  font-style: italic;
-  font-size: 15px;
+  outline: -webkit-focus-ring-color auto 0px;
 }
 
 </style>

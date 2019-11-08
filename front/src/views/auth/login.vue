@@ -111,10 +111,6 @@ export default {
   margin-bottom: 100px;
 }
 
-.current {
-  font-weight: bold;
-}
-
 .loading {
   color: var(--accent);
   font-weight: bold;
