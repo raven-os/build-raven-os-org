@@ -72,8 +72,8 @@ services:
       RABBIT_MQ_RETRY_COUNT: ${RABBIT_MQ_RETRY_COUNT}
       RABBIT_MQ_RETRY_INTERVAL: ${RABBIT_MQ_RETRY_INTERVAL}
     volumes:
-      - nbuild_manifests:/home/node/builder/manifests
-      - nbuild_out:/home/node/builder/out
+      - nbuild_manifests:/app/manifests
+      - nbuild_out:/app/out
       - /var/run/docker.sock:/var/run/docker.sock
 
   # Postgresql database service
@@ -110,4 +110,6 @@ volumes:
   dbdata:
   rabbit:
   nbuild_manifests:
+    name: "nbuild_manifests"
   nbuild_out:
+    name: "nbuild_out"
