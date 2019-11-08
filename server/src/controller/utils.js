@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt')
 const InternalServerError = require('../errors/internal-server-error')
 const BadRequest = require('../errors/bad-request')
-
+const crypto = require('crypto')
 const saltRounds = 10
 
 async function hashPassword (password) {
@@ -32,4 +32,17 @@ async function comparePassword (plainPassword, hashedPassword) {
   })
 }
 
-module.exports = { hashPassword, comparePassword }
+async function generateToken (size = 20) {
+  const errorMessage = 'Unexpected error when generating token'
+  return new Promise((resolve, reject) => {
+    crypto.randomBytes(size, (err, res) => {
+      if (err) {
+        reject(new InternalServerError(`${errorMessage}: ${err.message}`))
+      } else {
+        resolve(res.toString('hex'))
+      }
+    })
+  })
+}
+
+module.exports = { hashPassword, comparePassword, generateToken }

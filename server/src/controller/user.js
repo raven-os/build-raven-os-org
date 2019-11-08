@@ -52,6 +52,13 @@ class UserController {
     return user.toJSON()
   }
 
+  async resetPassword (email, password) {
+    const user = await this._get({ email })
+
+    await user
+      .save({ password: await hashPassword(password) }, { patch: true })
+  }
+
   async _get ({ id, email }) {
     const filters = id ? ['id', id] : ['email', email]
 
