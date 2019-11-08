@@ -71,6 +71,18 @@ class UserController {
 
     return user.toJSON()
   }
+
+  async list (search) {
+    const users = await this.app.database.model.user
+      .query(qb => {
+        qb.where('firstname', 'LIKE', search + '%')
+          .orWhere('lastname', 'LIKE', search + '%')
+          .orWhere('email', 'LIKE', search + '%')
+      })
+      .fetchAll()
+
+    return users.toJSON()
+  }
 }
 
 module.exports = UserController
