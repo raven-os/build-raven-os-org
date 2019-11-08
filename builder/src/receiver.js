@@ -16,7 +16,9 @@ class Receiver {
   }
 
   async run () {
+    console.log('[receiver.run] pulling nbuild image')
     await this.pullDocker()
+    console.log('[receiver.run] done pulling')
     await this.queue.receive(async (msg) => {
       const content = JSON.parse(msg.content.toString())
       const manifests = await this.getManifestList(content.manifests)
