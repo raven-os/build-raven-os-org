@@ -7,3 +7,9 @@ The project `build-raven-os-org` contains three main parts:
  - [The front](front/README.md)
  - [The server](server/README.md)
  - [The builder](builder/README.md)
+
+## Docker
+
+To configure the project, you can either `cp .env.example .env` and change the variables you want or define environment variables.
+
+Then run `docker-compose up`
