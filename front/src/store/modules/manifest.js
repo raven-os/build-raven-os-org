@@ -6,12 +6,14 @@ const state = {
   loading: {
     create: false,
     update: false,
+    updateMaintainer: false,
     list: false,
     get: false
   },
   error: {
     create: null,
     update: null,
+    updateMaintainer: null,
     list: null,
     get: null
   },
@@ -57,6 +59,17 @@ const actions = {
       return res.body
     } catch (err) {
       store.commit(types.MANIFEST_UPDATE_ERROR, err.body)
+    }
+  },
+
+  async updateManifestMaintainer (store, { id, maintainer }) {
+    try {
+      store.commit(types.MANIFEST_UPDATE_MAINTAINER_REQUEST)
+      const res = await manifestApi.updateMaintainer(id, maintainer)
+      store.commit(types.MANIFEST_UPDATE_MAINTAINER_SUCCESS, res.body)
+      return res.body
+    } catch (err) {
+      store.commit(types.MANIFEST_UPDATE_MAINTAINER_ERROR, err.body)
     }
   },
 
@@ -108,6 +121,21 @@ const mutations = {
   [types.MANIFEST_UPDATE_ERROR] (state, error) {
     Vue.set(state.loading, 'update', false)
     Vue.set(state.error, 'update', error)
+  },
+
+  [types.MANIFEST_UPDATE_MAINTAINER_REQUEST] (state) {
+    Vue.set(state.loading, 'updateMaintainer', true)
+    Vue.set(state.error, 'updateMaintainer', null)
+  },
+
+  [types.MANIFEST_UPDATE_MAINTAINER_SUCCESS] (state, manifest) {
+    Vue.set(state.loading, 'updateMaintainer', false)
+    Vue.set(state, 'manifests', [manifest])
+  },
+
+  [types.MANIFEST_UPDATE_MAINTAINER_ERROR] (state, error) {
+    Vue.set(state.loading, 'updateMaintainer', false)
+    Vue.set(state.error, 'updateMaintainer', error)
   },
 
   [types.MANIFEST_LIST_REQUEST] (state) {

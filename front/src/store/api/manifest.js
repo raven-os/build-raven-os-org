@@ -12,6 +12,10 @@ export default {
     return http.put(manifestUrl + id, { content })
   },
 
+  async updateMaintainer (id, maintainer) {
+    return http.put(`${manifestUrl}${id}/maintainer/`, { maintainer })
+  },
+
   async list (params) {
     return http.get(manifestUrl, { params })
   },
