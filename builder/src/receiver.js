@@ -44,7 +44,7 @@ class Receiver {
     const manifests = []
     let result
 
-    for (let id of ids) {
+    for (const id of ids) {
       options.url = url + id
       result = await rp(options)
       result = JSON.parse(result)

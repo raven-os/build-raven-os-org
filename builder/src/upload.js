@@ -53,7 +53,7 @@ class Upload {
     const packages = this.findPackages(outputDir)
     const pkgUrlList = []
 
-    for (let pkg of packages) {
+    for (const pkg of packages) {
       const res = await this.sendRequest(pkg)
       pkgUrlList.push(res)
     }
