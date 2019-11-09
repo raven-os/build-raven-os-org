@@ -44,7 +44,7 @@
               <b-row>
                 <b-col>
                   <div class="text-center my-4">
-                    <a href="#" class="forgotten-pwd">Forgotten password?</a>
+                    <a href="/recovery" class="forgotten-pwd">Forgotten password?</a>
                   </div>
                 </b-col>
               </b-row>

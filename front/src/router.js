@@ -11,6 +11,7 @@ import DetailsManifest from './views/manifest/details.vue'
 import LoginAuth from './views/auth/login.vue'
 import AdminInvitation from './views/admin/invitation.vue'
 import UserRegister from './views/user/register.vue'
+import RecoveryAuth from './views/auth/recovery.vue'
 
 Vue.use(VueRouter)
 
@@ -60,7 +61,8 @@ const router = new VueRouter({
     { path: '/manifests/details/:id', name: 'DetailsManifest', component: DetailsManifest, props: true, beforeEnter: connectionRequired },
     { path: '/login', name: 'LoginAuth', component: LoginAuth, beforeEnter: noConnectionRequired },
     { path: '/admin', name: 'AdminInvitation', component: AdminInvitation, beforeEnter: adminRequired },
-    { path: '/register', name: 'UserRegister', component: UserRegister, beforeEnter: noConnectionRequired }
+    { path: '/register', name: 'UserRegister', component: UserRegister, beforeEnter: noConnectionRequired },
+    { path: '/recovery', name: 'RecoveryAuth', component: RecoveryAuth, beforeEnter: noConnectionRequired }
   ]
 })
 
