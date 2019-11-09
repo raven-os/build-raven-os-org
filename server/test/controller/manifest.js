@@ -98,11 +98,17 @@ describe('controller/manifest', () => {
             assert.strictEqual(query.bindings.includes('nameTest'), true)
             query.response([id])
           },
-          // insert manifest_content
           function secondQuery () {
+            query.response([id])
+          },
+          // insert manifest_content
+          function thirdQuery () {
             assert.strictEqual(query.method, 'insert')
             assert.strictEqual(query.bindings.includes('contentTest'), true)
             assert.strictEqual(query.bindings.includes(id), true)
+            query.response([49])
+          },
+          function fourthQuery () {
             query.response([49])
           }
         ][step - 1]()
@@ -155,10 +161,16 @@ describe('controller/manifest', () => {
             assert.strictEqual(query.bindings.includes(id), true)
             query.response([73])
           },
+          function fourthQuery () {
+            query.response([73])
+          },
           // save({ last_update })
-          function forthQuery () {
+          function fifthQuery () {
             assert.strictEqual(query.method, 'update')
             assert.strictEqual(query.bindings.includes(id), true)
+            query.response([18])
+          },
+          function sixthQuery () {
             query.response([18])
           }
         ][step - 1]()
