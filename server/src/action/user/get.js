@@ -12,11 +12,7 @@ class GetUser extends AbstractAction {
   }
 
   async handler (req, res, next) {
-    const user = await this.app.controller.user.get({ id: req.params.id })
-
-    delete user.password
-
-    return user
+    return this.app.controller.user.get({ id: req.params.id })
   }
 }
 
