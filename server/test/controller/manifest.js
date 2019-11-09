@@ -25,7 +25,7 @@ describe('controller/manifest', () => {
       { label: 'exists (multiple result)', count: '15', expected: false }
     ]
 
-    for (let test of tests) {
+    for (const test of tests) {
       it(`should return ${test.expected}, ${test.label}`, async () => {
         tracker.on('query', (query) => {
           assert.strictEqual(query.method, 'select')

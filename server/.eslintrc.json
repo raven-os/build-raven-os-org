@@ -2,5 +2,8 @@
   "extends": "standard",
   "env": {
     "mocha": true
+  },
+  "rules": {
+    "quote-props": ["error", "consistent"]
   }
 }

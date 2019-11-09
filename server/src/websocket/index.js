@@ -34,7 +34,7 @@ class WebsocketServer {
   }
 
   broadcast (type, data) {
-    for (let connection of this.connections) {
+    for (const connection of this.connections) {
       connection.send(JSON.stringify({ type, data }))
     }
   }

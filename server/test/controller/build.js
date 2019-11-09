@@ -167,7 +167,7 @@ describe('controller/build', () => {
       return needle.every(i => haystack.includes(i))
     }
 
-    for (let test of tests) {
+    for (const test of tests) {
       describe(test.name, () => {
         it('should successfully updated' + test.name, async () => {
           tracker.on('query', (query, step) => {
