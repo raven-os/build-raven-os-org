@@ -157,6 +157,27 @@ class ManifestController {
   }
 
   /**
+   * Update a manifest's maintainer
+   *
+   * @param  {Integer}  id            Id of the manifest
+   * @param  {Integer}  newMaintainer Usr id of the new maintainer
+   * @return {Object}                 The manifest
+   * @throws {NotFound}               If the manifest or user doesn't exists
+   */
+  async updateMaintainer (id, newMaintainer) {
+    if (!await this.app.controller.user.exists(newMaintainer, 'id')) {
+      throw new this.app.errors.NotFound(`User #${newMaintainer} not found`)
+    }
+
+    const manifest = await this._get(id)
+
+    await manifest
+      .save({ maintainer: newMaintainer }, { patch: true })
+
+    return this.get(id)
+  }
+
+  /**
    * Retrieve a manifest
    *
    * @public

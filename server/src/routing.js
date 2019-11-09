@@ -25,6 +25,7 @@ class Routing {
       .use('/manifest', express.Router()
         .post('/', connected, this.app.action.manifest.create.routes)
         .put('/:id', connected, this.app.action.manifest.update.routes)
+        .put('/:id/maintainer', connected, admin, this.app.action.manifest.updateMaintainer.routes)
         .get('/:id', connectedOrBuilder, this.app.action.manifest.get.routes)
         .get('/', connected, this.app.action.manifest.list.routes)
       )

@@ -11,11 +11,12 @@ class UserController {
     }
   }
 
-  async exists (email) {
+  async exists (value, field = 'email') {
     const count = await this.app.database.model.user
-      .where('email', email)
+      .where(field, value)
       .count()
 
+    console.log(count, field, value)
     return count === '1'
   }
 
