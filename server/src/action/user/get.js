@@ -12,7 +12,17 @@ class GetUser extends AbstractAction {
   }
 
   async handler (req, res, next) {
-    return this.app.controller.user.get({ id: req.params.id })
+    const user = await this.app.controller.user.get({ id: req.params.id })
+
+    return {
+      id: user.id,
+      firstname: user.firstname,
+      lastname: user.lastname,
+      email: user.email,
+      rights: user.rights,
+      creation_date: user.creation_date,
+      last_access: user.last_access
+    }
   }
 }
 
