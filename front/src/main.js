@@ -5,6 +5,7 @@ import store from './store'
 import VueResource from 'vue-resource'
 import VueNativeSock from 'vue-native-websocket'
 import BootstrapVue from 'bootstrap-vue'
+import Paginate from 'vuejs-paginate'
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -16,6 +17,8 @@ Vue.config.productionTip = false
 
 // Bootstrap plugin
 Vue.use(BootstrapVue)
+// Pagination plugin
+Vue.component('paginate', Paginate)
 
 // HTTP plugin
 Vue.use(VueResource)

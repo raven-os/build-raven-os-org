@@ -6,26 +6,26 @@
     <section id="create-build">
       <b-container>
         <!-- Create Build section -->
-        <h1>Create build</h1>
+        <h1 class="my-4">Create build</h1>
         <!-- Error handling -->
-        <div v-if="getBuildLoadings.create" class="loading">
+        <div v-if="getBuildLoadings.create" class="text-loading">
           Adding the build...
         </div>
-        <div v-if="error || getBuildErrors.create" class="build-error">
+        <div v-if="error || getBuildErrors.create" class="text-error">
           <p>An error occurred preventing the creation of the build</p>
           <p>{{ error || getBuildErrors.create }}</p>
         </div>
-        <div v-if="buildId" class="success">
+        <div v-if="buildId" class="text-success">
           <p>Build successfully created</p>
           <a :href="'/builds/details/' + buildId">
             <u>#{{ buildId }}</u>
           </a>
         </div>
 
-        <div v-if="getManifestLoadings.list" class="loading">
+        <div v-if="getManifestLoadings.list" class="text-loading">
           Loading
         </div>
-        <div v-else-if="getManifestErrors.list" class="build-error">
+        <div v-else-if="getManifestErrors.list" class="text-error">
           <p>An error occurred, please try again later</p>
           <p>{{ getManifestErrors.list }}</p>
         </div>
@@ -39,7 +39,7 @@
               </b-col>
             </b-row>
             <b-row>
-              <button class="create-add" type="submit">Create</button>
+              <button class="custom-button" type="submit">Create</button>
             </b-row>
           </b-container>
         </form>
@@ -103,29 +103,8 @@ export default {
 
 /* CREATE-BUILD
 ----------------------------------- */
-.loading {
-  color: var(--accent);
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 25px;
-}
-
-.success {
-  color: green;
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 25px;
-}
-
 #create-build {
   margin-top: 200px;
-}
-
-#create-build h1 {
-  text-align: center;
-  font-size: 45px;
-  margin-top: 50px;
-  margin-bottom: 50px;
 }
 
 input[type="file"]:focus {
@@ -134,32 +113,5 @@ input[type="file"]:focus {
 
 #form-create {
   width: 100%;
-}
-
-#create-build .create-add {
-  font-family: sans-serif;
-  font-size: 16px;
-  padding: 8px 18px;
-  border-width: 1px;
-  border-style: solid;
-  border-color: var(--primary-dark);
-  color: var(--white);
-  border-radius: 5px;
-  height: 50px;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  background: var(--accent);
-  width: 150px;
-  display: block;
-  margin: 0 auto;
-}
-
-/* BUILD-ERROR
------------------------------------ */
-.build-error {
-  text-align: center;
-  margin-bottom: 25px;
-  color: var(--accent);
 }
 </style>

@@ -10,10 +10,10 @@
     <b-container class="mid-container">
 
       <!-- error handling -->
-      <div v-if="getManifestLoadings.get" class="loading">
+      <div v-if="getManifestLoadings.get" class="text-loading">
         Retrieving manifest...
       </div>
-      <div v-if="getManifestErrors.get" class="build-error">
+      <div v-if="getManifestErrors.get" class="text-error">
         <p>An error occurred while retrieving manifest #{{ id }}</p>
         <p>{{ getManifestErrors.get }}</p>
       </div>
@@ -40,7 +40,9 @@
               <a v-if="isMaintainer || isAdmin" :href="'/manifests/update/' + id" class="text-accent">
                 <i class="fas fa-edit"/>
               </a>
-              <span v-else>none</span>
+              <a class="text-accent ml-2">
+                <i class="fas fa-hammer" />
+              </a>
             </td>
           </tr>
         </tbody>
@@ -176,22 +178,10 @@ export default {
   padding-left: 15px;
 }
 
-.loading {
-  color: var(--accent);
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 25px;
-}
-
-.build-error {
-  text-align: center;
-  margin-bottom: 25px;
-  color: var(--accent);
-}
-
 .list-table-cell {
   color: black;
 }
+
 .top-container {
   margin-top: 150px;
   border-bottom: 1px solid var(--accent);
