@@ -21,6 +21,7 @@ class Routing {
       )
       .use('/user', express.Router()
         .post('/', notConnected, this.app.action.user.create.routes)
+        .get('/:id', connected, this.app.action.user.get.routes)
       )
       .use('/manifest', express.Router()
         .post('/', connected, this.app.action.manifest.create.routes)
