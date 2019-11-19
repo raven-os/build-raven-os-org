@@ -10,14 +10,14 @@
     <b-container class="mid-container">
 
       <!-- error handling -->
-      <div v-if="getBuildLoadings.get" class="loading">
+      <div v-if="getBuildLoadings.get" class="text-loading">
         Retrieving the build's data...
       </div>
-      <div v-if="getBuildErrors.get" class="build-error">
+      <div v-if="getBuildErrors.get" class="text-error">
         <p>An error occurred during while retrieving build #{{ id }}</p>
         <p>{{ getBuildErrors.get }}</p>
       </div>
-      <div v-else-if="!getSocket.isConnected" class="build-error">
+      <div v-else-if="!getSocket.isConnected" class="text-error">
         <p v-if="getSocket.error">{{ getSocket.error }}</p>
         <p v-if="getSocket.reconnectCount">Trying to reconnect... {{ getSocket.reconnectCount }}</p>
         <button v-if="getSocket.reconnectCount === 6" @click="$router.go()">Refresh</button>
@@ -137,20 +137,6 @@ export default {
 </script>
 
 <style scoped>
-
-.loading {
-  color: var(--accent);
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 25px;
-}
-
-.build-error {
-  text-align: center;
-  margin-bottom: 25px;
-  color: var(--accent);
-}
-
 .list-table-cell {
   color: black;
 }
@@ -170,5 +156,4 @@ export default {
   font-size: 45px;
   color: var(--accent);
 }
-
 </style>

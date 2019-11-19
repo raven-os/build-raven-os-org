@@ -13,17 +13,17 @@
               cols="12"
               md="10">
               <b-input-group
-                class="search-input-group">
+                class="custom-input-group">
                 <input
                   ref="search"
                   v-model="query"
-                  class="form-control search-input"
+                  class="form-control custom-input"
                   type="text"
                   placeholder="Search">
                 <select
                   slot="prepend"
                   v-model="field"
-                  class="search-select">
+                  class="custom-accent-select">
                   <option value="manifest_id">Manifest Id</option>
                   <option value="exit_status">Exit Status</option>
                 </select>
@@ -36,10 +36,10 @@
     </section>
 
     <!-- error handling -->
-    <div v-if="getBuildLoadings.list" class="loading">
+    <div v-if="getBuildLoadings.list" class="text-loading">
       Looking for builds...
     </div>
-    <div v-if="getBuildErrors.list" class="build-error">
+    <div v-if="getBuildErrors.list" class="text-error">
       <p>An error occurred while retrieving the list of builds</p>
       <p>{{ getBuildErrors.list }}</p>
     </div>
@@ -53,7 +53,7 @@
           <b-form-select
             v-model="selected"
             :options="optionSort"
-            class="sort-select"
+            class="custom-light-accent-select"
             @change="true"/>
         </div>
 
@@ -110,13 +110,27 @@
             </table>
           </b-col>
         </b-row>
-
         <!-- Pagination -->
-        <div class="pagination">
-          <span v-for="n in pageCount" :key="n">
-            <a :class="n === currentPage ? 'current' : ''" @click="page = n" >{{ n }}</a>
-          </span>
-        </div>
+        <b-row>
+          <b-col class="text-center">
+            <div style="display: inline-block">
+              <paginate
+                v-model="currentPage"
+                :page-count="pageCount"
+                :page-range="3"
+                :margin-pages="2"
+                :click-handler="clickCallback"
+                :prev-text="'<'"
+                :next-text="'>'"
+                :first-button-text="'«'"
+                :last-button-text="'»'"
+                :container-class="'pagination'"
+                :page-class="'pagination-item'"
+                :active-class="'current-page'"
+                first-last-button />
+            </div>
+          </b-col>
+        </b-row>
       </b-container>
     </section>
   </div>
@@ -193,6 +207,9 @@ export default {
       }
 
       this.listBuilds(params)
+    },
+    clickCallback (newPage) {
+      this.page = newPage
     }
   }
 }
@@ -200,84 +217,10 @@ export default {
 
 <style scoped>
 
-.current {
-  font-weight: bold;
-}
-
-.pagination  {
-  margin-top: 1em;
-  font-size: 1.2em;
-}
-
-.pagination a {
-  padding: 1em;
-}
-
-.loading {
-  color: var(--accent);
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 25px;
-}
-
-.build-error {
-  text-align: center;
-  margin-bottom: 25px;
-  color: var(--accent);
-}
-
 /* BUILDS-SEARCH
 ----------------------------------- */
 #builds-search {
   margin-top: 200px;
-}
-
-h1 {
-  text-align: center;
-  font-size: 45px;
-}
-
-.search-zone {
-  padding: 10px;
-}
-
-.search-input-group {
-  margin: 0 auto;
-}
-
-.search-input,
-.search-input:focus {
-  font-weight: 500;
-  font-size: 16px;
-  display: inline-block;
-  padding: 8px 28px;
-  border: 1px solid var(--primary-dark);
-  color: var(--primary-dark);
-  background: var(--white);
-  border-radius: 0px 5px 5px 0px;
-  height: 40px;
-  box-shadow: none;
-}
-
-.search-select {
-  font-size: 16px;
-  display: inline-block;
-  padding-left: 10px;
-  border-width: 1px 0px 1px 1px;
-  border-style: solid;
-  border-color: var(--primary-dark);
-  color: var(--white);
-  border-radius: 5px 0px 0px 5px;
-  height: 40px;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  background: var(--accent)
-    url("https://cdn3.iconfinder.com/data/icons/google-material-design-icons/48/ic_keyboard_arrow_down_48px-128.png")
-    no-repeat;
-  background-size: 20px;
-  background-position: right 10px center;
-  width: 175px;
 }
 
 /* BUILDS-SORT
@@ -293,26 +236,6 @@ h1 {
   .builds-sort {
     width: 100%;
   }
-}
-
-.sort-select,
-.sort-select:focus {
-  font-size: 16px;
-  display: inline-block;
-  padding-left: 10px;
-  border: 1px solid var(--accent);
-  color: var(--white);
-  border-radius: 5px;
-  height: 40px;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  background: var(--light-accent)
-    url("https://cdn3.iconfinder.com/data/icons/google-material-design-icons/48/ic_keyboard_arrow_down_48px-128.png")
-    no-repeat;
-  background-size: 20px;
-  background-position: right 10px center;
-  box-shadow: none;
 }
 
 /* BUILDS-LIST

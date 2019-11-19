@@ -6,16 +6,16 @@
     <section id="create-build">
       <b-container>
         <!-- Create Build section -->
-        <h1>Create manifest</h1>
+        <h1 class="my-4">Create manifest</h1>
         <!-- Error handling -->
-        <div v-if="getManifestLoadings.create" class="loading">
+        <div v-if="getManifestLoadings.create" class="text-loading">
           Creating the manifest...
         </div>
-        <div v-if="error || getManifestErrors.create" class="build-error">
+        <div v-if="error || getManifestErrors.create" class="text-error">
           <p>An error occurred while creating the manifest</p>
           <p>{{ error || getManifestErrors.create }}</p>
         </div>
-        <div v-if="manifestId" class="success">
+        <div v-if="manifestId" class="text-success">
           <p>Manifest successfully created</p>
           <a :href="'/manifests/details/' + manifestId">
             <u>#{{ manifestId }}</u>
@@ -26,14 +26,14 @@
           <b-container>
             <b-row class="m-2">
               <b-col>
-                <b-input-group class="search-input-group create-input-group">
-                  <b-input-group-prepend>
-                    <div class="input-prepend">Name</div>
+                <b-input-group class="custom-input-group">
+                  <b-input-group-prepend class="custom-input-group-prepend">
+                    Name
                   </b-input-group-prepend>
                   <input
                     id="name"
                     v-model="name"
-                    class="form-control create-input"
+                    class="form-control custom-input"
                     type="text"
                     placeholder="Manifest name"
                   >
@@ -72,7 +72,7 @@
               </b-col>
             </b-row>
             <b-row>
-              <button class="create-add" type="submit">Create</button>
+              <button class="custom-button" type="submit">Create</button>
             </b-row>
           </b-container>
         </form>
@@ -157,29 +157,8 @@ export default {
 <style scoped>
 /* CREATE-BUILD
 ----------------------------------- */
-.loading {
-  color: var(--accent);
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 25px;
-}
-
-.success {
-  color: green;
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 25px;
-}
-
 #create-build {
   margin-top: 200px;
-}
-
-#create-build h1 {
-  text-align: center;
-  font-size: 45px;
-  margin-top: 50px;
-  margin-bottom: 50px;
 }
 
 input[type="file"]:focus {
@@ -188,64 +167,6 @@ input[type="file"]:focus {
 
 #form-create {
   width: 100%;
-}
-
-#create-build .create-input-group {
-  margin-bottom: 20px;
-}
-
-#create-build .input-prepend {
-  font-weight: 500;
-  font-size: 16px;
-  display: inline-block;
-  padding: 8px 28px;
-  border-width: 1px 0px 1px 1px;
-  border-style: solid;
-  border-color: var(--primary-dark);
-  color: var(--white);
-  border-radius: 5px 0px 0px 5px;
-  height: 40px;
-  background: var(--accent);
-  width: 150px;
-  vertical-align: middle !important;
-}
-
-#create-build .create-input {
-  font-weight: 500;
-  font-size: 16px;
-  display: inline-block;
-  padding: 8px 28px;
-  border-width: 1px 1px 1px 0px;
-  border-style: solid;
-  border-color: var(--primary-dark);
-  color: var(--primary-dark);
-  background: var(--white);
-  border-radius: 0px 5px 5px 0px;
-  height: 40px;
-}
-
-#create-build .create-add {
-  font-size: 16px;
-  padding: 8px 18px;
-  border-width: 1px;
-  border-style: solid;
-  border-color: var(--primary-dark);
-  color: var(--white);
-  border-radius: 5px;
-  height: 40px;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  background: var(--accent);
-  width: 150px;
-  display: block;
-  margin: 0 auto;
-}
-
-.form-control:focus {
-  border-color: transparent;
-  box-shadow: none;
-  outline: -webkit-focus-ring-color auto 0px;
 }
 
 .manifest-explain {
@@ -261,13 +182,5 @@ input[type="file"]:focus {
 .code-editor {
   margin-top: 50px;
   margin-bottom: 50px;
-}
-
-/* BUILD-ERROR
------------------------------------ */
-.build-error {
-  text-align: center;
-  margin-bottom: 25px;
-  color: var(--accent);
 }
 </style>

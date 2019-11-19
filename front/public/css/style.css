@@ -44,6 +44,11 @@ h1, h2, h3, h4, h5, h6 {
   padding: 0;
 }
 
+h1 {
+  font-size: 45px;
+  text-align: center;
+}
+
 /* -----------------------------------
 Custom rules
 ----------------------------------- */
@@ -124,9 +129,30 @@ Custom rules
   color: var(--dark);
 }
 
-/*  Global classes to customize tables
-    Don't remove nor move
-*/
+.text-loading {
+  color: var(--accent);
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.text-error {
+  text-align: center;
+  margin-bottom: 25px;
+  color: var(--accent);
+}
+
+.text-success {
+  color: green;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+/* -----------------------------------
+Table classes
+Don't remove nor move
+----------------------------------- */
 
 .table {
   table-layout:fixed;
@@ -170,4 +196,145 @@ table.b-table[aria-busy=false], table.b-table[aria-busy=true] {
 
 .td-state {
   width: 19%;
+}
+
+/* -----------------------------------
+Inputs
+----------------------------------- */
+.custom-input-group {
+  margin-bottom: 20px;
+}
+
+.custom-input {
+  font-weight: 500;
+  font-size: 16px;
+  display: inline-block;
+  padding: 8px 28px;
+  border-width: 1px 1px 1px 0px;
+  border-style: solid;
+  border-color: var(--primary-dark) !important;
+  color: var(--primary-dark);
+  background: var(--white);
+  border-radius: 0px 5px 5px 0px;
+  height: 40px !important;
+}
+
+.custom-input-group-prepend {
+  font-weight: 500;
+  font-size: 16px;
+  display: inline-block;
+  padding: 8px 28px;
+  border-width: 1px 0px 1px 1px;
+  border-style: solid;
+  border-color: var(--primary-dark);
+  color: var(--white);
+  border-radius: 5px 0px 0px 5px;
+  height: 40px;
+  background: var(--accent);
+  width: 150px;
+  vertical-align: middle !important;
+}
+
+.custom-input-group-append {
+  font-weight: 500;
+  font-size: 16px;
+  display: inline-block;
+  padding: 8px 28px;
+  border-width: 1px 1px 1px 0px;
+  border-style: solid;
+  border-color: var(--primary-dark);
+  color: var(--white);
+  border-radius: 0px 5px 5px 0px;
+  height: 40px;
+  background: var(--accent);
+  width: 150px;
+  vertical-align: middle !important;
+}
+
+.form-control:focus {
+  border-color: var(--accent) !important;
+  box-shadow: none !important;
+  outline: -webkit-focus-ring-color auto 0px;
+}
+
+.custom-button {
+  font-size: 16px;
+  padding: 8px 18px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: var(--primary-dark);
+  color: var(--white);
+  border-radius: 5px;
+  height: 40px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: var(--accent);
+  width: 150px;
+  display: block;
+  margin: 0 auto;
+}
+
+/* -----------------------------------
+Search zones
+----------------------------------- */
+.custom-accent-select {
+  font-size: 16px;
+  display: inline-block;
+  padding-left: 10px;
+  border-width: 1px 0px 1px 1px;
+  border-style: solid;
+  border-color: var(--primary-dark);
+  color: var(--white);
+  border-radius: 5px 0px 0px 5px;
+  height: 40px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: var(--accent)
+    url("https://cdn3.iconfinder.com/data/icons/google-material-design-icons/48/ic_keyboard_arrow_down_48px-128.png")
+    no-repeat;
+  background-size: 20px;
+  background-position: right 10px center;
+  width: 175px;
+}
+
+.custom-light-accent-select {
+  font-size: 16px;
+  display: inline-block;
+  padding-left: 10px;
+  border: 1px solid var(--accent);
+  color: var(--white) !important;
+  border-radius: 5px;
+  height: 40px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("https://cdn3.iconfinder.com/data/icons/google-material-design-icons/48/ic_keyboard_arrow_down_48px-128.png");
+  background-size: 20px;
+  background-color: var(--light-accent) !important;
+  background-position: right 10px center;
+  box-shadow: none;
+}
+
+/* -----------------------------------
+Pagination
+----------------------------------- */
+
+.pagination  {
+  margin-top: 1em;
+  font-size: 1.2em;
+}
+
+.pagination a {
+  padding: 1em;
+  color: var(--accent) !important;
+}
+
+.current-page {
+  font-weight: bold;
+}
+
+
+.pagination-item {
 }

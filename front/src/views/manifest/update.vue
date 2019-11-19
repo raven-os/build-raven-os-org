@@ -6,26 +6,26 @@
     <section id="create-build">
       <b-container>
         <!-- Create Build section -->
-        <h1>Update manifest</h1>
+        <h1 class="my-4">Update manifest</h1>
         <!-- Error handling -->
-        <div v-if="getManifestLoadings.update" class="loading">
+        <div v-if="getManifestLoadings.update" class="text-loading">
           Updating the manifest...
         </div>
-        <div v-if="error || getManifestErrors.update" class="build-error">
+        <div v-if="error || getManifestErrors.update" class="text-error">
           <p>An error occurred while updating the manifest</p>
           <p>{{ error || getManifestErrors.update }}</p>
         </div>
-        <div v-if="manifestId" class="success">
+        <div v-if="manifestId" class="text-success">
           <p>Manifest successfully updated</p>
           <a :href="'/manifests/details/' + manifestId">
             <u>#{{ manifestId }}</u>
           </a>
         </div>
 
-        <div v-if="getManifestLoadings.get" class="loading">
+        <div v-if="getManifestLoadings.get" class="text-loading">
           Loading...
         </div>
-        <div v-else-if="getManifestErrors.get" class="build-error">
+        <div v-else-if="getManifestErrors.get" class="text-error">
           <p>An error occurred, please try again later</p>
           <p>{{ getManifestErrors.get }}</p>
         </div>
@@ -34,16 +34,15 @@
           <b-container>
             <b-row class="m-2">
               <b-col>
-                <b-input-group class="search-input-group create-input-group">
-                  <b-input-group-prepend>
-                    <div class="input-prepend">Name</div>
+                <b-input-group class="custom-input-group">
+                  <b-input-group-prepend class="custom-input-group-prepend">
+                    Name
                   </b-input-group-prepend>
                   <input
                     id="name"
                     v-model="name"
                     disabled
-                    class="form-control create-input"
-                    style="background-color:#dddddd;"
+                    class="form-control custom-input"
                     type="text"
                     placeholder="Manifest name"
                   >
@@ -82,7 +81,7 @@
               </b-col>
             </b-row>
             <b-row>
-              <button class="create-add" type="submit">Update</button>
+              <button class="custom-button" type="submit">Update</button>
             </b-row>
           </b-container>
         </form>
@@ -209,34 +208,13 @@ export default {
 }
 /* CREATE-BUILD
 ----------------------------------- */
-.loading {
-  color: blue;
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 25px;
-}
-
-.success {
-  color: green;
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 25px;
+#create-build {
+  margin-top: 200px;
 }
 
 h2 {
   text-align: center;
   margin: 25px 0px;
-}
-
-#create-build {
-  margin-top: 200px;
-}
-
-#create-build h1 {
-  text-align: center;
-  font-size: 45px;
-  margin-top: 50px;
-  margin-bottom: 50px;
 }
 
 input[type="file"]:focus {
@@ -245,67 +223,6 @@ input[type="file"]:focus {
 
 #form-create {
   width: 100%;
-}
-
-#create-build .create-input-group {
-  margin-bottom: 20px;
-}
-
-#create-build .input-prepend {
-  font-family: sans-serif;
-  font-weight: 500;
-  font-size: 16px;
-  display: inline-block;
-  padding: 12px 28px;
-  border-width: 1px 0px 1px 1px;
-  border-style: solid;
-  border-color: var(--primary-dark);
-  color: var(--white);
-  border-radius: 5px 0px 0px 5px;
-  height: 50px;
-  background: var(--accent);
-  width: 150px;
-  vertical-align: middle !important;
-}
-
-#create-build .create-input {
-  font-family: sans-serif;
-  font-weight: 500;
-  font-size: 16px;
-  display: inline-block;
-  padding: 8px 28px;
-  border-width: 1px 1px 1px 0px;
-  border-style: solid;
-  border-color: var(--primary-dark);
-  color: var(--primary-dark);
-  background: rgba(247, 244, 248, 0.7);
-  border-radius: 0px 5px 5px 0px;
-  height: 50px;
-}
-
-#create-build .create-add {
-  font-family: sans-serif;
-  font-size: 16px;
-  padding: 8px 18px;
-  border-width: 1px;
-  border-style: solid;
-  border-color: var(--primary-dark);
-  color: var(--white);
-  border-radius: 5px;
-  height: 50px;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  background: var(--accent);
-  width: 150px;
-  display: block;
-  margin: 0 auto;
-}
-
-.form-control:focus {
-  border-color: transparent;
-  box-shadow: none;
-  outline: -webkit-focus-ring-color auto 0px;
 }
 
 .manifest-explain {
@@ -321,13 +238,5 @@ input[type="file"]:focus {
 .code-editor {
   margin-top: 50px;
   margin-bottom: 50px;
-}
-
-/* BUILD-ERROR
------------------------------------ */
-.build-error {
-  text-align: center;
-  margin-bottom: 25px;
-  color: var(--accent);
 }
 </style>
