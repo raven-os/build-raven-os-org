@@ -69,7 +69,7 @@
     </section>
 
     <!-- error handling -->
-    <div v-if="getInvitationLoadings.create" class="text-oading">Sending invitation...</div>
+    <div v-if="getInvitationLoadings.create" class="text-loading">Sending invitation...</div>
     <div v-if="error || getInvitationErrors.create" class="text-error">
       <p>An error occurred while sending invitation</p>
       <p>{{ error || getInvitationErrors.create }}</p>
