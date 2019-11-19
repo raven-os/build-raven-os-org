@@ -20,7 +20,15 @@ class Login extends AbstractAction {
 
     req.session.user = user
 
-    return user
+    return {
+      id: user.id,
+      firstname: user.firstname,
+      lastname: user.lastname,
+      email: user.email,
+      rights: user.rights,
+      creation_date: user.creation_date,
+      last_access: user.last_access
+    }
   }
 }
 
