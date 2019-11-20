@@ -12,13 +12,7 @@ class ListUser extends AbstractAction {
   }
 
   async handler (req, res, next) {
-    const users = await this.app.controller.user.list(req.query.search || '')
-
-    for (let user of users) {
-      delete user.password
-    }
-
-    return users
+    return this.app.controller.user.list(req.query.search || '')
   }
 }
 

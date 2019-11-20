@@ -79,7 +79,9 @@ class UserController {
           .orWhere('lastname', 'LIKE', search + '%')
           .orWhere('email', 'LIKE', search + '%')
       })
-      .fetchAll()
+      .fetchAll({
+        columns: ['id', 'firstname', 'lastname', 'email', 'rights', 'creation_date', 'last_access']
+      })
 
     return users.toJSON()
   }
