@@ -13,6 +13,8 @@ class Routing {
 
     this.app.express.use('/api', express.Router()
       .post('/auth/login', notConnected, this.app.action.auth.login.routes)
+      .post('/auth/forgot', notConnected, this.app.action.auth.forgotPassword.routes)
+      .put('/auth/reset', notConnected, this.app.action.auth.resetPassword.routes)
 
       .delete('/auth/logout', connected, this.app.action.auth.logout.routes)
 
