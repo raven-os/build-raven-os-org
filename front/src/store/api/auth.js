@@ -10,5 +10,13 @@ export default {
 
   async logout () {
     return http.delete(`${authUrl}logout`)
+  },
+
+  async forgotPassword (email) {
+    return http.post(`${authUrl}forgot`, { email })
+  },
+
+  async resetPassword (token, password) {
+    return http.put(`${authUrl}reset`, { token, password })
   }
 }
