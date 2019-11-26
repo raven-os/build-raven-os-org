@@ -102,10 +102,17 @@ describe('controller/build', () => {
       stubIsMaintainer.onCall(1).returns(true)
       stubIsMaintainer.onCall(2).returns(true)
 
-      tracker.on('query', (query) => {
-        assert.strictEqual(query.method, 'insert')
-        assert.strictEqual(query.bindings.includes(ids, controller.state.QUEUING), true)
-        query.response([12])
+      tracker.on('query', (query, step) => {
+        [
+          function firstQuery () {
+            assert.strictEqual(query.method, 'insert')
+            assert.strictEqual(query.bindings.includes(ids, controller.state.QUEUING), true)
+            query.response([12])
+          },
+          function secondQuery () {
+            query.response([12])
+          }
+        ][step - 1]()
       })
 
       stubBuffer.returns(buffer)
@@ -167,9 +174,9 @@ describe('controller/build', () => {
       return needle.every(i => haystack.includes(i))
     }
 
-    for (let test of tests) {
+    for (const test of tests) {
       describe(test.name, () => {
-        it('should successfully updated' + test.name, async () => {
+        it('should successfully updated ' + test.name, async () => {
           tracker.on('query', (query, step) => {
             [
               function firstQuery () {

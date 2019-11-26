@@ -56,10 +56,10 @@ class Routing {
   }
 
   errorHandler (err, req, res, next) {
-    let details = err.mapped && err.mapped()
-    let errorParam = []
+    const details = err.mapped && err.mapped()
+    const errorParam = []
     if (details) {
-      for (let param of Object.keys(details)) {
+      for (const param of Object.keys(details)) {
         errorParam.push({ param, detail: details[param].msg, value: details[param].value })
       }
     }

@@ -35,7 +35,7 @@ class InvitationController {
 
     invitation = invitation.toJSON()
 
-    const subject = `Invitation for Raven's Package Builder`
+    const subject = 'Invitation for Raven\'s Package Builder'
     const text = `To subscribe to Raven's Package Builder, use this code: ${invitation.uuid}`
 
     await this.app.mailer.send(invitation.email, subject, text)

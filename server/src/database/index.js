@@ -7,7 +7,7 @@ class Database {
     this.app = app
     this.model = new Model(app)
     this.utils = {
-      raw: bookshelf.knex.raw
+      raw: bookshelf.knex.raw.bind(bookshelf.knex)
     }
   }
 
