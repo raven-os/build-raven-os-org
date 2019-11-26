@@ -48,6 +48,23 @@
         </tbody>
       </table>
 
+      <div v-if="isAdmin">
+        <p>Change maintainer</p>
+        <input
+          v-model="query"
+          type="text"
+          placeholder="Search for a maintainer"
+        >
+        <div v-if="query">
+          <div v-for="user in getUserList" :key="user.id">
+            <span>
+              #{{ user.id }}: {{ user.firstname }} {{ user.lastname }} ({{ user.email }})
+              <button @click.prevent="setMaintainer(user.id)">Define as new maintainer</button>
+            </span>
+          </div>
+        </div>
+      </div>
+
       <div>
         <div :if="historySize">
           <table id="history-table" class="table table-striped table-hover table-row-nohover">
@@ -98,6 +115,7 @@ export default {
   },
   data () {
     return {
+      query: null,
       historyIndex: 0,
       dateFields: [
         {
@@ -132,6 +150,7 @@ export default {
   computed: {
     ...mapGetters('manifest', ['getManifest', 'getManifestLoadings', 'getManifestErrors']),
     ...mapGetters('auth', ['getAuthUser']),
+    ...mapGetters('user', ['getUserLoadings', 'getUserErrors', 'getUserList']),
     _id () {
       return Number(this.id) || this.id
     },
@@ -160,13 +179,27 @@ export default {
       return this.getAuthUser.rights && this.getAuthUser.rights.includes('admin')
     }
   },
+  watch: {
+    query: 'search'
+  },
   beforeMount () {
     this.retrieveManifest(this._id)
   },
   methods: {
-    ...mapActions('manifest', ['retrieveManifest']),
+    ...mapActions('manifest', ['retrieveManifest', 'updateManifestMaintainer']),
+    ...mapActions('user', ['list']),
     _date (value) {
       return (value && moment(value).format('MMMM Do YYYY, HH:mm:ss')) || null
+    },
+    search () {
+      if (!this.isAdmin || !this.query || this.query.length < 1) {
+        return
+      }
+
+      this.list(this.query)
+    },
+    setMaintainer (maintainer) {
+      this.updateManifestMaintainer({ id: this.manifest.id, maintainer })
     }
   }
 }

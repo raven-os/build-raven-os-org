@@ -6,5 +6,9 @@ export default {
 
   async create (user) {
     return http.post(userUrl, user)
+  },
+
+  async list (search) {
+    return http.get(userUrl, { params: { search } })
   }
 }
