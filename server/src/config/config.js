@@ -153,6 +153,20 @@ const config = convict({
       default: 'DEFINE_SESSION_SECRET',
       env: 'SESSION_SECRET'
     }
+  },
+  admin: {
+    email: {
+      doc: 'Admin user email',
+      format: String,
+      default: 'admin@admin.com',
+      env: 'ADMIN_EMAIL'
+    },
+    password: {
+      doc: 'Admin user password',
+      format: String,
+      default: 'toto42',
+      env: 'ADMIN_PASSWORD'
+    }
   }
 })
 
