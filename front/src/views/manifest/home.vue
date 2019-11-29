@@ -8,7 +8,7 @@
         <h1>Manifests</h1>
         <div class="mt-5">
           <b-row>
-            <b-col/>
+            <b-col />
             <b-col cols="12" md="10">
               <b-input-group class="custom-input-group">
                 <input
@@ -16,13 +16,16 @@
                   v-model="query"
                   class="form-control custom-input"
                   type="text"
-                  placeholder="Search">
+                  placeholder="Search"
+                >
                 <select slot="prepend" v-model="field" class="custom-accent-select">
-                  <option value="name">Name</option>
+                  <option value="name">
+                    Name
+                  </option>
                 </select>
               </b-input-group>
             </b-col>
-            <b-col/>
+            <b-col />
           </b-row>
         </div>
       </b-container>
@@ -61,7 +64,7 @@
                     </a>
                   </td>
                   <td class="text-truncate text-right" style="width: 10%;">
-                    <i class="far fa-calendar-alt mr-1"/>
+                    <i class="far fa-calendar-alt mr-1" />
                     {{ item.creation_date | momentFromNow }}
                   </td>
                 </tr>
@@ -86,7 +89,8 @@
                 :container-class="'pagination'"
                 :page-class="'pagination-item'"
                 :active-class="'current-page'"
-                first-last-button />
+                first-last-button
+              />
             </div>
           </b-col>
         </b-row>

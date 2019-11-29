@@ -6,7 +6,9 @@
     <section id="create-build">
       <b-container>
         <!-- Create Build section -->
-        <h1 class="my-4">Update manifest</h1>
+        <h1 class="my-4">
+          Update manifest
+        </h1>
         <!-- Error handling -->
         <div v-if="getManifestLoadings.update" class="text-loading">
           Updating the manifest...
@@ -51,7 +53,9 @@
             </b-row>
             <b-row class="m-2">
               <b-col>
-                <div class="manifest-explain">Select a file or write the manifest</div>
+                <div class="manifest-explain">
+                  Select a file or write the manifest
+                </div>
               </b-col>
             </b-row>
             <b-row class="m-2">
@@ -81,7 +85,9 @@
               </b-col>
             </b-row>
             <b-row>
-              <button class="custom-button" type="submit">Update</button>
+              <button class="custom-button" type="submit">
+                Update
+              </button>
             </b-row>
           </b-container>
         </form>

@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <h1>Recover password</h1>
-    <div v-if="successMessage">{{ successMessage }}</div>
+    <div v-if="successMessage">
+      {{ successMessage }}
+    </div>
     <form @submit.prevent="sendMailHandler()">
       <input
         v-model="email"
@@ -9,7 +11,9 @@
         placeholder="Email"
         autocomplete="email"
       >
-      <button type="submit">Send email</button>
+      <button type="submit">
+        Send email
+      </button>
     </form>
     <form @submit.prevent="resetPasswordHandler()">
       <input
@@ -22,11 +26,15 @@
         type="password"
         placeholder="Password"
       >
-      <button type="submit">Reset password</button>
+      <button type="submit">
+        Reset password
+      </button>
     </form>
 
     <!-- error handling -->
-    <div v-if="loading" class="loading">loading...</div>
+    <div v-if="loading" class="loading">
+      loading...
+    </div>
     <div v-if="error" class="build-error">
       <p>An error occurred</p>
       <p>{{ error }}</p>

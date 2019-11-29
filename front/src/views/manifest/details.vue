@@ -3,12 +3,13 @@
     <b-container class="top-container">
       <b-row>
         <b-col>
-          <div class="manifest-name">{{ manifest && manifest.name }}</div>
+          <div class="manifest-name">
+            {{ manifest && manifest.name }}
+          </div>
         </b-col>
       </b-row>
     </b-container>
     <b-container class="mid-container">
-
       <!-- error handling -->
       <div v-if="getManifestLoadings.get" class="text-loading">
         Retrieving manifest...
@@ -31,14 +32,24 @@
         </thead>
         <tbody>
           <tr class="table-row-nohover">
-            <td class="list-table-cell">{{ manifest && manifest.id }}</td>
-            <td class="list-table-cell">{{ manifest && _date(manifest.creation_date) }}</td>
-            <td class="list-table-cell">{{ manifest && _date(manifest.last_update) }}</td>
-            <td class="list-table-cell">{{ author }}</td>
-            <td class="list-table-cell">{{ maintainer }}</td>
+            <td class="list-table-cell">
+              {{ manifest && manifest.id }}
+            </td>
+            <td class="list-table-cell">
+              {{ manifest && _date(manifest.creation_date) }}
+            </td>
+            <td class="list-table-cell">
+              {{ manifest && _date(manifest.last_update) }}
+            </td>
+            <td class="list-table-cell">
+              {{ author }}
+            </td>
+            <td class="list-table-cell">
+              {{ maintainer }}
+            </td>
             <td class="list-table-cell">
               <a v-if="isMaintainer || isAdmin" :href="'/manifests/update/' + id" class="text-accent">
-                <i class="fas fa-edit"/>
+                <i class="fas fa-edit" />
               </a>
               <a class="text-accent ml-2">
                 <i class="fas fa-hammer" />
@@ -90,7 +101,9 @@
               </tr>
             </thead>
             <tbody>
-              <prism language="python">{{ content }}</prism>
+              <prism language="python">
+                {{ content }}
+              </prism>
             </tbody>
           </table>
         </div>

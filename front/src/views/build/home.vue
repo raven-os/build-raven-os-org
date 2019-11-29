@@ -8,28 +8,36 @@
         <h1>Builds</h1>
         <div class="search-zone">
           <b-row>
-            <b-col/>
+            <b-col />
             <b-col
               cols="12"
-              md="10">
+              md="10"
+            >
               <b-input-group
-                class="custom-input-group">
+                class="custom-input-group"
+              >
                 <input
                   ref="search"
                   v-model="query"
                   class="form-control custom-input"
                   type="text"
-                  placeholder="Search">
+                  placeholder="Search"
+                >
                 <select
                   slot="prepend"
                   v-model="field"
-                  class="custom-accent-select">
-                  <option value="manifest_id">Manifest Id</option>
-                  <option value="exit_status">Exit Status</option>
+                  class="custom-accent-select"
+                >
+                  <option value="manifest_id">
+                    Manifest Id
+                  </option>
+                  <option value="exit_status">
+                    Exit Status
+                  </option>
                 </select>
               </b-input-group>
             </b-col>
-            <b-col/>
+            <b-col />
           </b-row>
         </div>
       </b-container>
@@ -54,7 +62,8 @@
             v-model="selected"
             :options="optionSort"
             class="custom-light-accent-select"
-            @change="true"/>
+            @change="true"
+          />
         </div>
 
         <b-row>
@@ -64,19 +73,20 @@
                 <tr
                   v-for="item in getBuilds" :key="item.id"
                   :class="{ queued: item.state == STATE.QUEUING, running: item.state == STATE.RUNNING, failed: item.state == STATE.FINISHED && item.exit_status != 0, success: item.state == STATE.FINISHED && item.exit_status == 0 }"
-                  class="bg-light-accent-hover build-item">
+                  class="bg-light-accent-hover build-item"
+                >
                   <td class="text-center" width="5%">
                     <div v-if="item.state === STATE.FINISHED && item.exit_status == 0">
-                      <i class="fas fa-check text-success"/>
+                      <i class="fas fa-check text-success" />
                     </div>
                     <div v-else-if="item.state === STATE.FINISHED && item.exit_status != 0">
-                      <i class="fas fa-times text-failed"/>
+                      <i class="fas fa-times text-failed" />
                     </div>
                     <div v-else-if="item.state === STATE.RUNNING">
-                      <i class="fas fa-bolt text-running"/>
+                      <i class="fas fa-bolt text-running" />
                     </div>
                     <div v-else-if="item.state === STATE.QUEUING">
-                      <i class="fas fa-history text-queued"/>
+                      <i class="fas fa-history text-queued" />
                     </div>
                   </td>
                   <td class="text-truncate" width="10%">
@@ -94,15 +104,15 @@
                     <span v-else>None</span>
                   </td>
                   <td class="text-truncate text-left" width="10%">
-                    <i class="far fa-calendar-alt"/> {{ item.creation_date | momentFromNow }}
+                    <i class="far fa-calendar-alt" /> {{ item.creation_date | momentFromNow }}
                     <div v-if="item.start_date && item.end_date">
-                      <i class="far fa-clock"/> {{ item.start_date | momentDuration(item.end_date) }}
+                      <i class="far fa-clock" /> {{ item.start_date | momentDuration(item.end_date) }}
                     </div>
                     <div v-else-if="item.start_date && !item.end_date">
-                      <i class="far fa-clock"/> Running since {{ item.start_date | momentFromNow }}
+                      <i class="far fa-clock" /> Running since {{ item.start_date | momentFromNow }}
                     </div>
                     <div v-else>
-                      <i class="far fa-clock"/> Queued
+                      <i class="far fa-clock" /> Queued
                     </div>
                   </td>
                 </tr>
@@ -127,7 +137,8 @@
                 :container-class="'pagination'"
                 :page-class="'pagination-item'"
                 :active-class="'current-page'"
-                first-last-button />
+                first-last-button
+              />
             </div>
           </b-col>
         </b-row>

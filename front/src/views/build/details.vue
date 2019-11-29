@@ -3,12 +3,13 @@
     <b-container class="top-container">
       <b-row>
         <b-col>
-          <div class="manifest-name">#{{ build && build.id }}</div>
+          <div class="manifest-name">
+            #{{ build && build.id }}
+          </div>
         </b-col>
       </b-row>
     </b-container>
     <b-container class="mid-container">
-
       <!-- error handling -->
       <div v-if="getBuildLoadings.get" class="text-loading">
         Retrieving the build's data...
@@ -18,9 +19,15 @@
         <p>{{ getBuildErrors.get }}</p>
       </div>
       <div v-else-if="!getSocket.isConnected" class="text-error">
-        <p v-if="getSocket.error">{{ getSocket.error }}</p>
-        <p v-if="getSocket.reconnectCount">Trying to reconnect... {{ getSocket.reconnectCount }}</p>
-        <button v-if="getSocket.reconnectCount === 6" @click="$router.go()">Refresh</button>
+        <p v-if="getSocket.error">
+          {{ getSocket.error }}
+        </p>
+        <p v-if="getSocket.reconnectCount">
+          Trying to reconnect... {{ getSocket.reconnectCount }}
+        </p>
+        <button v-if="getSocket.reconnectCount === 6" @click="$router.go()">
+          Refresh
+        </button>
       </div>
 
       <table id="date-table" class="table b-table table-striped">
@@ -37,12 +44,24 @@
         </thead>
         <tbody>
           <tr class="table-row-nohover">
-            <td class="list-table-cell">{{ build && build.id }}</td>
-            <td class="list-table-cell">{{ build && build.state }}</td>
-            <td class="list-table-cell">{{ (build && build.exit_status) || '-' }}</td>
-            <td class="list-table-cell">{{ build && build.creation_date }}</td>
-            <td class="list-table-cell">{{ (build && build.start_date) || '-' }}</td>
-            <td class="list-table-cell">{{ (build && build.end_date) || '-' }}</td>
+            <td class="list-table-cell">
+              {{ build && build.id }}
+            </td>
+            <td class="list-table-cell">
+              {{ build && build.state }}
+            </td>
+            <td class="list-table-cell">
+              {{ (build && build.exit_status) || '-' }}
+            </td>
+            <td class="list-table-cell">
+              {{ build && build.creation_date }}
+            </td>
+            <td class="list-table-cell">
+              {{ (build && build.start_date) || '-' }}
+            </td>
+            <td class="list-table-cell">
+              {{ (build && build.end_date) || '-' }}
+            </td>
           </tr>
         </tbody>
       </table>
@@ -73,7 +92,9 @@
           </tr>
         </thead>
         <tbody>
-          <prism language="python">{{ build && build.stdout }}</prism>
+          <prism language="python">
+            {{ build && build.stdout }}
+          </prism>
         </tbody>
       </table>
 
@@ -84,7 +105,9 @@
           </tr>
         </thead>
         <tbody>
-          <prism language="python">{{ build && build.stderr }}</prism>
+          <prism language="python">
+            {{ build && build.stderr }}
+          </prism>
         </tbody>
       </table>
     </b-container>

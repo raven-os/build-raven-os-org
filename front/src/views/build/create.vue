@@ -6,7 +6,9 @@
     <section id="create-build">
       <b-container>
         <!-- Create Build section -->
-        <h1 class="my-4">Create build</h1>
+        <h1 class="my-4">
+          Create build
+        </h1>
         <!-- Error handling -->
         <div v-if="getBuildLoadings.create" class="text-loading">
           Adding the build...
@@ -35,11 +37,14 @@
               <b-col>
                 <treeselect
                   v-model="selectedManifests" :multiple="true" :options="manifestList"
-                  placeholder="Select the manifests" class="tree-select text-center" />
+                  placeholder="Select the manifests" class="tree-select text-center"
+                />
               </b-col>
             </b-row>
             <b-row>
-              <button class="custom-button" type="submit">Create</button>
+              <button class="custom-button" type="submit">
+                Create
+              </button>
             </b-row>
           </b-container>
         </form>

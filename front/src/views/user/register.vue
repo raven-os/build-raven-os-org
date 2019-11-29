@@ -2,7 +2,9 @@
   <div id="app">
     <section id="builds-search">
       <b-container>
-        <h1 class="my-5">Register</h1>
+        <h1 class="my-5">
+          Register
+        </h1>
         <div class="register-zone">
           <form @submit.prevent="registerHandler()">
             <b-input-group class="custom-input-group">
@@ -60,14 +62,18 @@
               >
             </b-input-group>
 
-            <button class="custom-button" type="submit">Sign In</button>
+            <button class="custom-button" type="submit">
+              Sign In
+            </button>
           </form>
         </div>
       </b-container>
     </section>
 
     <!-- error handling -->
-    <div v-if="getUserLoadings.create" class="text-loading">Creating account...</div>
+    <div v-if="getUserLoadings.create" class="text-loading">
+      Creating account...
+    </div>
     <div v-if="error || getUserErrors.create" class="text-error">
       <p>An error occurred while creating account</p>
       <p>{{ error || getUserErrors.create }}</p>
