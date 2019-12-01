@@ -16,7 +16,6 @@ class UserController {
       .where(field, value)
       .count()
 
-    console.log(count, field, value)
     return count === '1'
   }
 
