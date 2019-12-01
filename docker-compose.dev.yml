@@ -1,0 +1,31 @@
+version: "3.7"
+services:
+
+  # Frontend
+  front:
+    build:
+      context: ./front/
+      target: base
+    command: npm run serve
+    environment:
+      NODE_ENV: development
+    volumes:
+      - ./front/src:/app/src
+      - ./front/public:/app/public
+
+  # API
+  api:
+    command: npm run dev
+    environment:
+      NODE_ENV: development
+    volumes:
+      - ./server/src:/app/src
+      - ./server/migrations:/app/migrations
+
+  # Builder
+  builder:
+    command: npm run dev
+    environment:
+      NODE_ENV: development
+    volumes:
+      - ./builder/src:/app/src

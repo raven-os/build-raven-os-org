@@ -6,3 +6,5 @@
 !src/
 !migrations/
 !knexfile.js
+!.eslintrc.json
+!.eslintignore

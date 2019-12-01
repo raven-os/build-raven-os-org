@@ -11,6 +11,7 @@
   "license": "ISC",
   "scripts": {
     "start": "eslint . && node src/index.js",
+    "dev": "eslint . && nodemon src/index.js",
     "test": "eslint . && nyc -s true mocha test/mock-database.js test/setup.js test/ --recursive",
     "coverage": "nyc report",
     "apidoc": "apidoc -i src/action -o docs/apidoc/",
@@ -59,6 +60,7 @@
     "mocha": "^6.2.2",
     "mock-knex": "^0.4.7",
     "mock-require": "^3.0.3",
+    "nodemon": "^2.0.1",
     "nyc": "^14.1.1",
     "sinon": "^7.3.2"
   }

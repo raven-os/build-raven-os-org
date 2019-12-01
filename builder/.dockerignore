@@ -4,3 +4,5 @@
 # Allow only necessary files
 !package.json
 !src/
+!.eslintrc.json
+!.eslintignore

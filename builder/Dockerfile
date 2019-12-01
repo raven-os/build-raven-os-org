@@ -1,7 +1,5 @@
 FROM node:10
 
-ENV NODE_ENV=production
-
 WORKDIR /app
 
 # Download docker cli
@@ -24,7 +22,7 @@ RUN apt-get update && apt-get install -y -q \
 
 # Install builder dependencies
 COPY package.json .
-RUN npm install --only=production
+RUN npm install
 
 # Install builder
 COPY . .
