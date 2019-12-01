@@ -6,19 +6,31 @@
     <header id="header">
       <div class="container">
         <b-navbar class="app-navbar" toggleable="md" type="dark">
-          <b-navbar-toggle target="nav_collapse"/>
+          <b-navbar-toggle target="nav_collapse" />
           <b-navbar-brand to="/">
             <img src="/img/raven_title.png">
           </b-navbar-brand>
           <b-collapse id="nav_collapse" is-nav>
             <b-navbar-nav class="ml-auto">
               <!-- TODO: move this out of the navbar -->
-              <b-nav-item to="/builds" exact class="nav-item" active-class="nav-item-active">Builds</b-nav-item>
-              <b-nav-item to="/builds/create" exact class="nav-item" active-class="nav-item-active">Create build</b-nav-item>
-              <b-nav-item to="/manifests" exact class="nav-item" active-class="nav-item-active">Manifests</b-nav-item>
-              <b-nav-item to="/manifests/create" exact class="nav-item" active-class="nav-item-active">Create manifest</b-nav-item>
-              <b-nav-item v-if="isAdmin" to="/admin" exact class="nav-item" active-class="nav-item-active">Admin</b-nav-item>
-              <b-nav-item v-if="displayLogout" exact class="nav-item" active-class="nav-item-active"><a @click.prevent="handleLogout()">Logout</a></b-nav-item>
+              <b-nav-item to="/builds" exact class="nav-item" active-class="nav-item-active">
+                Builds
+              </b-nav-item>
+              <b-nav-item to="/builds/create" exact class="nav-item" active-class="nav-item-active">
+                Create build
+              </b-nav-item>
+              <b-nav-item to="/manifests" exact class="nav-item" active-class="nav-item-active">
+                Manifests
+              </b-nav-item>
+              <b-nav-item to="/manifests/create" exact class="nav-item" active-class="nav-item-active">
+                Create manifest
+              </b-nav-item>
+              <b-nav-item v-if="isAdmin" to="/admin" exact class="nav-item" active-class="nav-item-active">
+                Admin
+              </b-nav-item>
+              <b-nav-item v-if="displayLogout" exact class="nav-item" active-class="nav-item-active">
+                <a @click.prevent="handleLogout()">Logout</a>
+              </b-nav-item>
             </b-navbar-nav>
           </b-collapse>
         </b-navbar>
@@ -37,7 +49,7 @@
         <p>An error occurred while loging out</p>
         <p>{{ getAuthErrors.logout }}</p>
       </div>
-      <router-view class="view"/>
+      <router-view class="view" />
     </div>
 
     <!--==========================
@@ -45,7 +57,9 @@
     ============================-->
     <footer id="footer">
       <div class="container py-4">
-        <div class="text-center">&copy; Copyright <strong>Raven</strong>. All Rights Reserved</div>
+        <div class="text-center">
+          &copy; Copyright <strong>Raven</strong>. All Rights Reserved
+        </div>
       </div>
     </footer>
   </div>
