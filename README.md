@@ -12,4 +12,14 @@ The project `build-raven-os-org` contains three main parts:
 
 To configure the project, you can either `cp .env.example .env` and change the variables you want or define environment variables.
 
-Then run `docker-compose up`
+### Development
+
+```bash
+$ ./dev.sh
+```
+
+### Production
+
+```bash
+$ ./deploy.sh
+```
