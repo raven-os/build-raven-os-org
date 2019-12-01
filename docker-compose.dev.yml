@@ -7,6 +7,7 @@ services:
       context: ./front/
       target: base
     command: npm run serve
+    restart: "no"
     environment:
       NODE_ENV: development
     volumes:
@@ -16,6 +17,7 @@ services:
   # API
   api:
     command: npm run dev
+    restart: "no"
     environment:
       NODE_ENV: development
     volumes:
@@ -25,6 +27,7 @@ services:
   # Builder
   builder:
     command: npm run dev
+    restart: "no"
     environment:
       NODE_ENV: development
     volumes:
