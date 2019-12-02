@@ -11,6 +11,21 @@
     </b-container>
     <b-container class="mid-container">
       <!-- error handling -->
+      <div v-if="getBuildLoadings.create" class="text-loading">
+        Adding the build...
+      </div>
+      <div v-if="getBuildErrors.create" class="text-error">
+        <p>An error occurred preventing the creation of the build</p>
+        <p>{{ getBuildErrors.create }}</p>
+      </div>
+
+      <div v-if="buildId" class="text-success">
+        <p>Build successfully created</p>
+        <a :href="'/builds/details/' + buildId">
+          <u>#{{ buildId }}</u>
+        </a>
+      </div>
+
       <div v-if="getManifestLoadings.get" class="text-loading">
         Retrieving manifest...
       </div>
@@ -51,8 +66,8 @@
               <a v-if="isMaintainer || isAdmin" :href="'/manifests/update/' + id" class="text-accent">
                 <i class="fas fa-edit" />
               </a>
-              <a class="text-accent ml-2">
-                <i class="fas fa-hammer" />
+              <a class="text-accent ml-2" :href="'#'">
+                <i class="fas fa-hammer" @click.prevent="build()" />
               </a>
             </td>
           </tr>
@@ -130,6 +145,7 @@ export default {
     return {
       query: null,
       historyIndex: 0,
+      buildId: null,
       dateFields: [
         {
           key: 'created_at',
@@ -164,6 +180,7 @@ export default {
     ...mapGetters('manifest', ['getManifest', 'getManifestLoadings', 'getManifestErrors']),
     ...mapGetters('auth', ['getAuthUser']),
     ...mapGetters('user', ['getUserLoadings', 'getUserErrors', 'getUserList']),
+    ...mapGetters('build', ['getBuildLoadings', 'getBuildErrors']),
     _id () {
       return Number(this.id) || this.id
     },
@@ -201,6 +218,7 @@ export default {
   methods: {
     ...mapActions('manifest', ['retrieveManifest', 'updateManifestMaintainer']),
     ...mapActions('user', ['list']),
+    ...mapActions('build', ['createBuild']),
     _date (value) {
       return (value && moment(value).format('MMMM Do YYYY, HH:mm:ss')) || null
     },
@@ -213,6 +231,12 @@ export default {
     },
     setMaintainer (maintainer) {
       this.updateManifestMaintainer({ id: this.manifest.id, maintainer })
+    },
+    build () {
+      this.buildId = null
+      this.createBuild([this._id]).then(build => {
+        this.buildId = build && build.id
+      })
     }
   }
 }
