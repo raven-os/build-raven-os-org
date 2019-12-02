@@ -51,7 +51,7 @@ class Receiver {
 
   async getManifestList (ids) {
     const url = this.config.build_api_url + 'manifest/'
-    const path = this.config.manifest_dir + 'manifest_'
+    const path = this.config.manifest_dir
     const options = {
       method: 'GET',
       headers: {
@@ -67,7 +67,7 @@ class Receiver {
       result = JSON.parse(result)
       result = {
         id,
-        name: path + id + '.py',
+        name: path + result.name,
         content: (result.history.pop()).content
       }
       manifests.push(result)
@@ -95,7 +95,7 @@ class Receiver {
 
       const copy = 'cp config.toml.example config.toml'
       const nbuild = `./nbuild.py -vvv -o /app/out/ ${manifest.name}`
-      const script = `docker run -v nbuild_manifests:/app/manifests/ -v nbuild_out:/app/out/ -it ravenos/nbuild /bin/bash -c "${copy} && ${nbuild}"`
+      const script = `docker run -v nbuild_manifests:/app/manifests/ -v nbuild_out:/app/out/ ravenos/nbuild /bin/bash -c "${copy} && ${nbuild}"`
       const child = spawn(script, [], { shell: true, stdio: ['inherit'] })
 
       child.stdout.on('data', async (data) => {
