@@ -51,7 +51,7 @@
               {{ build && build.state }}
             </td>
             <td class="list-table-cell">
-              {{ (build && build.exit_status) || '-' }}
+              {{ (build && build.exit_status) }}
             </td>
             <td class="list-table-cell">
               {{ build && build.creation_date }}
