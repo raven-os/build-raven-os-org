@@ -80,6 +80,12 @@ const { body, param } = require('express-validator')
  *    "message": "You must be connected",
  *    "errors": []
  * }
+ *
+ * @apiErrorExample {json} Forbidden 403
+ * {
+ *    "message": "You don't have admin rights",
+ *    "errors": []
+ * }
  */
 class UpdateManifestMaintainer extends AbstractAction {
   get validate () {

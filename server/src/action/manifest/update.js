@@ -60,6 +60,12 @@ const { body, param } = require('express-validator')
  *    "message": "You must be connected",
  *    "errors": []
  * }
+ *
+ * @apiErrorExample {json} Forbidden 403
+ * {
+ *    "message": "Manifest #9 can only be updated by its maintainer",
+ *    "errors": []
+ * }
  */
 class UpdateManifest extends AbstractAction {
   get validate () {

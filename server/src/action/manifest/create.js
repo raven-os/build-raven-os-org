@@ -24,6 +24,8 @@ const { body } = require('express-validator')
  * @apiSuccess  {String}    name                  Name of the manifest
  * @apiSuccess  {String}    creation_date         Date of creation
  * @apiSuccess  {String}    last_update           Date of last update
+ * @apiSuccess  {Integer}   author                User ID of the author
+ * @apiSuccess  {Integer}   maintainer            User ID of the maintainer
  * @apiSuccess  {Object[]}  history               List of content (ordered by last_update)
  * @apiSuccess  {Integer}   history.id            ID of the content
  * @apiSuccess  {Integer}   history.manifest_id   ID of the manifest

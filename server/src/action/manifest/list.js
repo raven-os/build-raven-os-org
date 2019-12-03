@@ -23,6 +23,8 @@ const lowercase = require('../sanitizer/lowercase')
  * @apiSuccess  {String}    data.name                   Name of the manifest
  * @apiSuccess  {String}    data.creation_date          Date of creation
  * @apiSuccess  {String}    data.last_update            Date of last update
+ * @apiSuccess  {Integer}   data.author                 User ID of the author
+ * @apiSuccess  {Integer}   data.maintainer             User ID of the maintainer
  * @apiSuccess  {Object[]}  data.history                List of content (ordered by last_update)
  * @apiSuccess  {Integer}   data.history.id             ID of the content
  * @apiSuccess  {Integer}   data.history.manifest_id    ID of the manifest

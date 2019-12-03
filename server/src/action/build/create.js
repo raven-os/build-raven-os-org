@@ -77,6 +77,12 @@ const { body } = require('express-validator')
  *    "message": "You must be connected",
  *    "errors": []
  * }
+ *
+ * @apiErrorExample {json} Forbidden 403
+ * {
+ *    "message": "Manifest #9 can only be built by its maintainer",
+ *    "errors": []
+ * }
  */
 class CreateBuild extends AbstractAction {
   get validate () {
