@@ -9,6 +9,8 @@ const { body } = require('express-validator')
  *
  * @apiDescription Create a new manifest that can be used to compile a package
  *
+ * @apiHeader {String} Cookie Contains the session identifier `user_sid`
+ *
  * @apiParam  (Body) {String{1..255}}  name    Name of the manifest
  * @apiParam  (Body) {String{1..}}     content Content of the manifest
  *
@@ -60,6 +62,12 @@ const { body } = require('express-validator')
  *          "value": ""
  *      }
  *    ]
+ * }
+ *
+ * @apiErrorExample {json} Unauthorized 401
+ * {
+ *    "message": "You must be connected",
+ *    "errors": []
  * }
  */
 class CreateManifest extends AbstractAction {

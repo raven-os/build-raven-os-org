@@ -9,6 +9,8 @@ const { param } = require('express-validator')
  *
  * @apiDescription Fetch a manifest's content and metadata
  *
+ * @apiHeader {String} Cookie Contains the session identifier `user_sid`
+ *
  * @apiParam  (Params) {Integer}  id  ID of the manifest
  *
  * @apiSuccess  {Integer}   id                    ID of the manifest
@@ -58,6 +60,12 @@ const { param } = require('express-validator')
  * @apiErrorExample {json} Not Found 404
  * {
  *    "message": "Manifest #42 not found",
+ *    "errors": []
+ * }
+ *
+ * @apiErrorExample {json} Unauthorized 401
+ * {
+ *    "message": "You must be connected",
  *    "errors": []
  * }
  */
