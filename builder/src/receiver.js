@@ -90,11 +90,11 @@ class Receiver {
 
       fs.writeFileSync(manifest.name, manifest.content)
 
-      const outputDir = this.config.output_dir + (new Date()).getTime() + '/'
-      const absolutePath = path.resolve(outputDir)
+      const outputDir = (new Date()).getTime() + '/'
+      const absolutePath = path.resolve(this.config.output_dir + outputDir) + '/'
 
       const copy = 'cp config.toml.example config.toml'
-      const nbuild = `./nbuild.py -vvv -o /app/out/ ${manifest.name}`
+      const nbuild = `./nbuild.py -vvv -o /app/out/${outputDir} ${manifest.name}`
       const script = `docker run -v nbuild_manifests:/app/manifests/ -v nbuild_out:/app/out/ ravenos/nbuild /bin/bash -c "${copy} && ${nbuild}"`
       const child = spawn(script, [], { shell: true, stdio: ['inherit'] })
 
