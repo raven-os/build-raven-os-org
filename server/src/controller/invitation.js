@@ -7,7 +7,7 @@ class InvitationController {
 
   async _get (uuid) {
     const invitationModel = await this.app.database.model.invitation
-      .where('uuid', uuid)
+      .where(this.app.database.utils.raw('uuid::text'), uuid)
       .fetch()
 
     if (!invitationModel) {
