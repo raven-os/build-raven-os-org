@@ -32,3 +32,12 @@ services:
       NODE_ENV: development
     volumes:
       - ./builder/src:/app/src
+
+  nest-server:
+    image: ravenos/nest-server
+    networks:
+      - backend
+    ports:
+      - 8001:80
+    environment:
+      RAVEN_NEST_SERVER_AUTH_TOKEN: ${APIKEYS_NEST_SERVER}
