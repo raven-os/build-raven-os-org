@@ -9,6 +9,8 @@ const { body } = require('express-validator')
  *
  * @apiDescription Create a new build and schedule it to compile some manifests
  *
+ * @apiHeader {String} Cookie Contains the session identifier `user_sid`
+ *
  * @apiParam  (Body) {Integer[]}  ids    IDs of the manifests to build
  *
  * @apiParamExample {json} Request Body
@@ -67,6 +69,12 @@ const { body } = require('express-validator')
  * @apiErrorExample {json} Not Found 404
  * {
  *    "message": "Manifest #4400 not found",
+ *    "errors": []
+ * }
+ *
+ * @apiErrorExample {json} Unauthorized 401
+ * {
+ *    "message": "You must be connected",
  *    "errors": []
  * }
  */

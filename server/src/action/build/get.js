@@ -9,6 +9,8 @@ const { param } = require('express-validator')
  *
  * @apiDescription Fetch a build
  *
+ * @apiHeader {String} Cookie Contains the session identifier `user_sid`
+ *
  * @apiParam  (Params) {Integer}  id    ID of the build
  *
  * @apiSuccess  {Integer}                               id            ID of the build
@@ -55,6 +57,12 @@ const { param } = require('express-validator')
  * @apiErrorExample {json} Not Found 404
  * {
  *    "message": "Build #4400 not found",
+ *    "errors": []
+ * }
+ *
+ * @apiErrorExample {json} Unauthorized 401
+ * {
+ *    "message": "You must be connected",
  *    "errors": []
  * }
  */

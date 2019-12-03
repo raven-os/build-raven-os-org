@@ -10,6 +10,8 @@ const lowercase = require('../sanitizer/lowercase')
  *
  * @apiDescription List all builds
  *
+ * @apiHeader {String} Cookie Contains the session identifier `user_sid`
+ *
  * @apiParam  (Query String) {Boolean}                          [queuing]           Search for builds in queuing state
  * @apiParam  (Query String) {Boolean}                          [running]           Search for builds in running state
  * @apiParam  (Query String) {Boolean}                          [exit_status]       Search for builds with an exit status equal to `exit_status`
@@ -62,6 +64,11 @@ const lowercase = require('../sanitizer/lowercase')
  *    }
  * }
  *
+ * @apiErrorExample {json} Unauthorized 401
+ * {
+ *    "message": "You must be connected",
+ *    "errors": []
+ * }
  */
 class ListBuild extends AbstractAction {
   get validate () {
