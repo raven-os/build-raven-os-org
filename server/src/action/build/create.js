@@ -7,6 +7,8 @@ const { body } = require('express-validator')
  * @apiGroup Build
  * @apiName BuildCreate
  *
+ * @apiPermission admin | maintainer
+ *
  * @apiDescription Create a new build and schedule it to compile some manifests
  *
  * @apiHeader {String} Cookie Contains the session identifier `user_sid`

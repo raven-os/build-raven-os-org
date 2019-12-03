@@ -7,6 +7,8 @@ const { body, param } = require('express-validator')
  * @apiGroup Manifest
  * @apiName ManifestMaintainerUpdate
  *
+ * @apiPermission admin
+ *
  * @apiDescription Update a manifest's maintainer
  *
  * @apiHeader {String} Cookie Contains the session identifier `user_sid`

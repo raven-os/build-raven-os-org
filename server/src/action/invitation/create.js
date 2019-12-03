@@ -11,6 +11,8 @@ const arrayEnum = require('../validator/array-enum')
  * @apiGroup Invitation
  * @apiName InvitationSend
  *
+ * @apiPermission admin
+ *
  * @apiDescription Send invitation email for a new user to sign up
  *
  * @apiHeader {String} Cookie Contains the session identifier `user_sid`
