@@ -42,14 +42,24 @@ class CreateUser extends AbstractAction {
   }
 
   async handler (req, res, next) {
-    const user = {
+    const input = {
       invitation: req.body.invitation,
       firstname: req.body.firstname,
       lastname: req.body.lastname,
       password: req.body.password
     }
 
-    return this.app.controller.user.create(user)
+    const user = await this.app.controller.user.create(input)
+
+    return {
+      id: user.id,
+      firstname: user.firstname,
+      lastname: user.lastname,
+      email: user.email,
+      rights: user.rights,
+      creation_date: user.creation_date,
+      last_access: user.last_access
+    }
   }
 }
 
