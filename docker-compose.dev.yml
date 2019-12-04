@@ -38,6 +38,6 @@ services:
     networks:
       - backend
     ports:
-      - 8001:80
+      - 80:80
     environment:
       RAVEN_NEST_SERVER_AUTH_TOKEN: ${APIKEYS_NEST_SERVER}
