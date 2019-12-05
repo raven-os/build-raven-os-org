@@ -5,6 +5,7 @@
 !package.json
 !src/
 !migrations/
+!seeds/
 !knexfile.js
 !.eslintrc.json
 !.eslintignore

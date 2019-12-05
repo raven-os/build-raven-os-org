@@ -23,6 +23,7 @@ services:
     volumes:
       - ./server/src:/app/src
       - ./server/migrations:/app/migrations
+      - ./server/seeds:/app/seeds
 
   # Builder
   builder:

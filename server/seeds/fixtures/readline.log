@@ -1,0 +1,627 @@
+1 pending transaction:
+
+    pull beta
+
+Would you like to apply this transaction? [Yes/no] Successfully pulled 1 repository
+1 pending transaction:
+
+ install beta::sys-libs/ncurses-dev#6.1.0
+
+Would you like to apply this transaction? [Yes/no] Downloading packages...
+Successfully installed beta::sys-libs/ncurses-dev#6.1.0
+checking build system type... x86_64-pc-linux-gnu
+checking host system type... x86_64-pc-linux-gnu
+
+Beginning configuration for readline-8.0 for x86_64-pc-linux-gnu
+
+checking whether make sets $(MAKE)... yes
+checking for gcc... gcc
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables...
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether gcc accepts -g... yes
+checking for gcc option to accept ISO C89... none needed
+checking how to run the C preprocessor... gcc -E
+checking for grep that handles long lines and -e... /bin/grep
+checking for egrep... /bin/grep -E
+checking for ANSI C header files... yes
+checking for sys/types.h... yes
+checking for sys/stat.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for memory.h... yes
+checking for strings.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for unistd.h... yes
+checking minix/config.h usability... no
+checking minix/config.h presence... no
+checking for minix/config.h... no
+checking whether it is safe to define __EXTENSIONS__... yes
+checking whether gcc needs -traditional... no
+checking for a BSD-compatible install... /bin/install -c
+checking for ar... ar
+checking for ranlib... ranlib
+checking for an ANSI C-conforming const... yes
+checking for function prototypes... yes
+checking whether char is unsigned... no
+checking for working volatile... yes
+checking return type of signal handlers... void
+checking for size_t... yes
+checking for ssize_t... yes
+checking for ANSI C header files... (cached) yes
+checking whether stat file-mode macros are broken... no
+checking for dirent.h that defines DIR... yes
+checking for library containing opendir... none required
+checking for fcntl... yes
+checking for kill... yes
+checking for lstat... yes
+checking for readlink... yes
+checking for fnmatch... yes
+checking for memmove... yes
+checking for pselect... yes
+checking for putenv... yes
+checking for select... yes
+checking for setenv... yes
+checking for setlocale... yes
+checking for strcasecmp... yes
+checking for strpbrk... yes
+checking for tcgetattr... yes
+checking for vsnprintf... yes
+checking for isascii... yes
+checking for isxdigit... yes
+checking for getpwent... yes
+checking for getpwnam... yes
+checking for getpwuid... yes
+checking for uid_t in sys/types.h... yes
+checking for unistd.h... (cached) yes
+checking for working chown... yes
+checking for working strcoll... yes
+checking fcntl.h usability... yes
+checking fcntl.h presence... yes
+checking for fcntl.h... yes
+checking for unistd.h... (cached) yes
+checking for stdlib.h... (cached) yes
+checking varargs.h usability... no
+checking varargs.h presence... no
+checking for varargs.h... no
+checking stdarg.h usability... yes
+checking stdarg.h presence... yes
+checking for stdarg.h... yes
+checking stdbool.h usability... yes
+checking stdbool.h presence... yes
+checking for stdbool.h... yes
+checking for string.h... (cached) yes
+checking for strings.h... (cached) yes
+checking limits.h usability... yes
+checking limits.h presence... yes
+checking for limits.h... yes
+checking locale.h usability... yes
+checking locale.h presence... yes
+checking for locale.h... yes
+checking pwd.h usability... yes
+checking pwd.h presence... yes
+checking for pwd.h... yes
+checking for memory.h... (cached) yes
+checking termcap.h usability... yes
+checking termcap.h presence... yes
+checking for termcap.h... yes
+checking termios.h usability... yes
+checking termios.h presence... yes
+checking for termios.h... yes
+checking termio.h usability... yes
+checking termio.h presence... yes
+checking for termio.h... yes
+checking sys/ioctl.h usability... yes
+checking sys/ioctl.h presence... yes
+checking for sys/ioctl.h... yes
+checking sys/pte.h usability... no
+checking sys/pte.h presence... no
+checking for sys/pte.h... no
+checking sys/stream.h usability... no
+checking sys/stream.h presence... no
+checking for sys/stream.h... no
+checking sys/select.h usability... yes
+checking sys/select.h presence... yes
+checking for sys/select.h... yes
+checking sys/file.h usability... yes
+checking sys/file.h presence... yes
+checking for sys/file.h... yes
+checking for sys/ptem.h... no
+checking for special C compiler options needed for large files... no
+checking for _FILE_OFFSET_BITS value needed for large files... no
+checking for type of signal functions... posix
+checking if signal handlers must be reinstalled when invoked... no
+checking for presence of POSIX-style sigsetjmp/siglongjmp... present
+checking for lstat... yes
+checking whether or not strcoll and strcmp differ... no
+checking whether the ctype macros accept non-ascii characters... yes
+checking whether getpw functions are declared in pwd.h... yes
+checking whether termios.h defines TIOCGWINSZ... no
+checking whether sys/ioctl.h defines TIOCGWINSZ... yes
+checking for sig_atomic_t in signal.h... yes
+checking whether signal handlers are of type void... yes
+checking for TIOCSTAT in sys/ioctl.h... no
+checking for FIONREAD in sys/ioctl.h... yes
+checking for speed_t in sys/types.h... no
+checking for struct winsize in sys/ioctl.h and termios.h... sys/ioctl.h
+checking for struct dirent.d_ino... yes
+checking for struct dirent.d_fileno... yes
+checking libaudit.h usability... no
+checking libaudit.h presence... no
+checking for libaudit.h... no
+checking whether AUDIT_USER_TTY is declared... yes
+checking for tgetent... no
+checking for tgetent in -ltermcap... no
+checking for tgetent in -ltinfo... yes
+checking which library has the termcap functions... using libtinfo
+checking wctype.h usability... yes
+checking wctype.h presence... yes
+checking for wctype.h... yes
+checking wchar.h usability... yes
+checking wchar.h presence... yes
+checking for wchar.h... yes
+checking langinfo.h usability... yes
+checking langinfo.h presence... yes
+checking for langinfo.h... yes
+checking mbstr.h usability... no
+checking mbstr.h presence... no
+checking for mbstr.h... no
+checking for mbrlen... yes
+checking for mbscasecmp... no
+checking for mbscmp... no
+checking for mbsnrtowcs... yes
+checking for mbsrtowcs... yes
+checking for mbschr... no
+checking for wcrtomb... yes
+checking for wcscoll... yes
+checking for wcsdup... yes
+checking for wcwidth... yes
+checking for wctype... yes
+checking for wcswidth... yes
+checking whether mbrtowc and mbstate_t are properly declared... yes
+checking for iswlower... yes
+checking for iswupper... yes
+checking for towlower... yes
+checking for towupper... yes
+checking for iswctype... yes
+checking for nl_langinfo and CODESET... yes
+checking for wchar_t in wchar.h... yes
+checking for wctype_t in wctype.h... yes
+checking for wint_t in wctype.h... yes
+checking for wcwidth broken with unicode combining characters... no
+checking size of wchar_t... 4
+checking configuration for building shared libraries... supported
+configure: creating ./config.status
+config.status: creating Makefile
+config.status: creating doc/Makefile
+config.status: creating examples/Makefile
+config.status: creating shlib/Makefile
+config.status: creating readline.pc
+config.status: creating config.h
+config.status: executing default commands
+make: Entering directory '/app/cache/build/readline/8.0.0'
+rm -f readline.o
+rm -f vi_mode.o
+rm -f funmap.o
+gcc -c  -DHAVE_CONFIG_H   -I. -I.  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  readline.c
+gcc -c  -DHAVE_CONFIG_H   -I. -I.  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  vi_mode.c
+gcc -c  -DHAVE_CONFIG_H   -I. -I.  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  funmap.c
+rm -f keymaps.o
+rm -f parens.o
+gcc -c  -DHAVE_CONFIG_H   -I. -I.  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  keymaps.c
+gcc -c  -DHAVE_CONFIG_H   -I. -I.  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  parens.c
+rm -f search.o
+gcc -c  -DHAVE_CONFIG_H   -I. -I.  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  search.c
+rm -f rltty.o
+rm -f complete.o
+gcc -c  -DHAVE_CONFIG_H   -I. -I.  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  rltty.c
+gcc -c  -DHAVE_CONFIG_H   -I. -I.  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  complete.c
+rm -f bind.o
+gcc -c  -DHAVE_CONFIG_H   -I. -I.  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  bind.c
+rm -f isearch.o
+gcc -c  -DHAVE_CONFIG_H   -I. -I.  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  isearch.c
+rm -f display.o
+gcc -c  -DHAVE_CONFIG_H   -I. -I.  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  display.c
+rm -f signals.o
+rm -f util.o
+gcc -c  -DHAVE_CONFIG_H   -I. -I.  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  signals.c
+gcc -c  -DHAVE_CONFIG_H   -I. -I.  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  util.c
+rm -f kill.o
+gcc -c  -DHAVE_CONFIG_H   -I. -I.  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  kill.c
+rm -f undo.o
+gcc -c  -DHAVE_CONFIG_H   -I. -I.  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  undo.c
+rm -f macro.o
+gcc -c  -DHAVE_CONFIG_H   -I. -I.  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  macro.c
+rm -f input.o
+gcc -c  -DHAVE_CONFIG_H   -I. -I.  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  input.c
+rm -f callback.o
+gcc -c  -DHAVE_CONFIG_H   -I. -I.  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  callback.c
+rm -f terminal.o
+gcc -c  -DHAVE_CONFIG_H   -I. -I.  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  terminal.c
+rm -f text.o
+gcc -c  -DHAVE_CONFIG_H   -I. -I.  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  text.c
+rm -f nls.o
+rm -f misc.o
+gcc -c  -DHAVE_CONFIG_H   -I. -I.  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  nls.c
+gcc -c  -DHAVE_CONFIG_H   -I. -I.  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  misc.c
+rm -f history.o
+gcc -c  -DHAVE_CONFIG_H   -I. -I.  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  history.c
+rm -f histexpand.o
+gcc -c  -DHAVE_CONFIG_H   -I. -I.  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  histexpand.c
+rm -f histfile.o
+gcc -c  -DHAVE_CONFIG_H   -I. -I.  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  histfile.c
+rm -f histsearch.o
+rm -f shell.o
+gcc -c  -DHAVE_CONFIG_H   -I. -I.  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  histsearch.c
+gcc -c  -DHAVE_CONFIG_H   -I. -I.  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  shell.c
+rm -f mbutil.o
+gcc -c  -DHAVE_CONFIG_H   -I. -I.  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  mbutil.c
+rm -f tilde.o
+gcc  -DHAVE_CONFIG_H   -I. -I.  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  -DREADLINE_LIBRARY -c ./tilde.c
+rm -f colors.o
+rm -f parse-colors.o
+gcc -c  -DHAVE_CONFIG_H   -I. -I.  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  colors.c
+gcc -c  -DHAVE_CONFIG_H   -I. -I.  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  parse-colors.c
+rm -f xmalloc.o
+gcc -c  -DHAVE_CONFIG_H   -I. -I.  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  xmalloc.c
+rm -f xfree.o
+gcc -c  -DHAVE_CONFIG_H   -I. -I.  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  xfree.c
+rm -f compat.o
+gcc -c  -DHAVE_CONFIG_H   -I. -I.  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  compat.c
+test -d shlib || mkdir shlib
+( cd shlib ; make -w -j5 --jobserver-auth=3,4 all )
+make[1]: Entering directory '/app/cache/build/readline/8.0.0/shlib'
+rm -f readline.so
+gcc -c -DHAVE_CONFIG_H   -I. -I.. -I..  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  -fPIC -o readline.o ../readline.c
+rm -f vi_mode.so
+rm -f funmap.so
+gcc -c -DHAVE_CONFIG_H   -I. -I.. -I..  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  -fPIC -o vi_mode.o ../vi_mode.c
+gcc -c -DHAVE_CONFIG_H   -I. -I.. -I..  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  -fPIC -o funmap.o ../funmap.c
+rm -f keymaps.so
+rm -f parens.so
+gcc -c -DHAVE_CONFIG_H   -I. -I.. -I..  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  -fPIC -o keymaps.o ../keymaps.c
+gcc -c -DHAVE_CONFIG_H   -I. -I.. -I..  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  -fPIC -o parens.o ../parens.c
+mv funmap.o funmap.so
+rm -f search.so
+gcc -c -DHAVE_CONFIG_H   -I. -I.. -I..  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  -fPIC -o search.o ../search.c
+rm -f libreadline.a
+rm -f libhistory.a
+ar cr libreadline.a readline.o vi_mode.o funmap.o keymaps.o parens.o search.o rltty.o complete.o bind.o isearch.o display.o signals.o util.o kill.o undo.o macro.o input.o callback.o terminal.o text.o nls.o misc.o history.o histexpand.o histfile.o histsearch.o shell.o mbutil.o tilde.o colors.o parse-colors.o xmalloc.o xfree.o compat.o
+mv keymaps.o keymaps.so
+ar cr libhistory.a history.o histexpand.o histfile.o histsearch.o shell.o mbutil.o xmalloc.o xfree.o
+mv parens.o parens.so
+rm -f rltty.so
+rm -f complete.so
+gcc -c -DHAVE_CONFIG_H   -I. -I.. -I..  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  -fPIC -o rltty.o ../rltty.c
+gcc -c -DHAVE_CONFIG_H   -I. -I.. -I..  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  -fPIC -o complete.o ../complete.c
+test -n "ranlib" && ranlib libhistory.a
+test -n "ranlib" && ranlib libreadline.a
+mv search.o search.so
+rm -f bind.so
+gcc -c -DHAVE_CONFIG_H   -I. -I.. -I..  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  -fPIC -o bind.o ../bind.c
+mv readline.o readline.so
+rm -f isearch.so
+gcc -c -DHAVE_CONFIG_H   -I. -I.. -I..  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  -fPIC -o isearch.o ../isearch.c
+mv rltty.o rltty.so
+rm -f display.so
+gcc -c -DHAVE_CONFIG_H   -I. -I.. -I..  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  -fPIC -o display.o ../display.c
+mv isearch.o isearch.so
+rm -f signals.so
+gcc -c -DHAVE_CONFIG_H   -I. -I.. -I..  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  -fPIC -o signals.o ../signals.c
+mv vi_mode.o vi_mode.so
+rm -f util.so
+gcc -c -DHAVE_CONFIG_H   -I. -I.. -I..  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  -fPIC -o util.o ../util.c
+mv util.o util.so
+mv complete.o complete.so
+rm -f kill.so
+rm -f undo.so
+gcc -c -DHAVE_CONFIG_H   -I. -I.. -I..  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  -fPIC -o kill.o ../kill.c
+mv signals.o signals.so
+gcc -c -DHAVE_CONFIG_H   -I. -I.. -I..  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  -fPIC -o undo.o ../undo.c
+rm -f macro.so
+gcc -c -DHAVE_CONFIG_H   -I. -I.. -I..  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  -fPIC -o macro.o ../macro.c
+mv undo.o undo.so
+rm -f input.so
+gcc -c -DHAVE_CONFIG_H   -I. -I.. -I..  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  -fPIC -o input.o ../input.c
+mv macro.o macro.so
+rm -f callback.so
+gcc -c -DHAVE_CONFIG_H   -I. -I.. -I..  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  -fPIC -o callback.o ../callback.c
+mv kill.o kill.so
+rm -f terminal.so
+gcc -c -DHAVE_CONFIG_H   -I. -I.. -I..  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  -fPIC -o terminal.o ../terminal.c
+mv bind.o bind.so
+rm -f text.so
+gcc -c -DHAVE_CONFIG_H   -I. -I.. -I..  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  -fPIC -o text.o ../text.c
+mv input.o input.so
+rm -f nls.so
+gcc -c -DHAVE_CONFIG_H   -I. -I.. -I..  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  -fPIC -o nls.o ../nls.c
+mv callback.o callback.so
+rm -f misc.so
+gcc -c -DHAVE_CONFIG_H   -I. -I.. -I..  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  -fPIC -o misc.o ../misc.c
+mv terminal.o terminal.so
+rm -f history.so
+mv display.o display.so
+gcc -c -DHAVE_CONFIG_H   -I. -I.. -I..  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  -fPIC -o history.o ../history.c
+rm -f histexpand.so
+gcc -c -DHAVE_CONFIG_H   -I. -I.. -I..  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  -fPIC -o histexpand.o ../histexpand.c
+mv nls.o nls.so
+rm -f histfile.so
+gcc -c -DHAVE_CONFIG_H   -I. -I.. -I..  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  -fPIC -o histfile.o ../histfile.c
+mv misc.o misc.so
+rm -f histsearch.so
+gcc -c -DHAVE_CONFIG_H   -I. -I.. -I..  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  -fPIC -o histsearch.o ../histsearch.c
+mv history.o history.so
+rm -f shell.so
+gcc -c -DHAVE_CONFIG_H   -I. -I.. -I..  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  -fPIC -o shell.o ../shell.c
+mv histfile.o histfile.so
+rm -f mbutil.so
+gcc -c -DHAVE_CONFIG_H   -I. -I.. -I..  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  -fPIC -o mbutil.o ../mbutil.c
+mv histsearch.o histsearch.so
+mv shell.o shell.so
+rm -f tilde.so
+rm -f colors.so
+gcc -c -DHAVE_CONFIG_H   -I. -I.. -I..  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  -fPIC -DREADLINE_LIBRARY -c -o tilde.o ../tilde.c
+gcc -c -DHAVE_CONFIG_H   -I. -I.. -I..  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  -fPIC -o colors.o ../colors.c
+mv text.o text.so
+rm -f parse-colors.so
+gcc -c -DHAVE_CONFIG_H   -I. -I.. -I..  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  -fPIC -o parse-colors.o ../parse-colors.c
+mv mbutil.o mbutil.so
+mv tilde.o tilde.so
+rm -f xmalloc.so
+rm -f xfree.so
+gcc -c -DHAVE_CONFIG_H   -I. -I.. -I..  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  -fPIC -o xmalloc.o ../xmalloc.c
+gcc -c -DHAVE_CONFIG_H   -I. -I.. -I..  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  -fPIC -o xfree.o ../xfree.c
+mv colors.o colors.so
+rm -f compat.so
+gcc -c -DHAVE_CONFIG_H   -I. -I.. -I..  -DRL_LIBRARY_VERSION='"8.0"' -O2 -s -m64 -mtune=generic  -fPIC -o compat.o ../compat.c
+mv parse-colors.o parse-colors.so
+mv xmalloc.o xmalloc.so
+mv xfree.o xfree.so
+mv compat.o compat.so
+mv histexpand.o histexpand.so
+rm -f libreadline.so.8.0
+rm -f libhistory.so.8.0
+gcc -shared -Wl,-soname,libreadline.so.8.0 -O2 -s -m64 -mtune=generic  -Wl,-rpath,/usr/lib64 -Wl,-soname,`basename libreadline.so.8.0 .0` -o libreadline.so.8.0 readline.so vi_mode.so funmap.so keymaps.so parens.so search.so rltty.so complete.so bind.so isearch.so display.so signals.so util.so kill.so undo.so macro.so input.so callback.so terminal.so text.so nls.so misc.so history.so histexpand.so histfile.so histsearch.so shell.so mbutil.so tilde.so colors.so parse-colors.so xmalloc.so xfree.so compat.so -lncursesw
+gcc -shared -Wl,-soname,libhistory.so.8.0 -O2 -s -m64 -mtune=generic  -Wl,-rpath,/usr/lib64 -Wl,-soname,`basename libhistory.so.8.0 .0` -o libhistory.so.8.0 history.so histexpand.so histfile.so histsearch.so shell.so mbutil.so xmalloc.so xfree.so -lncursesw
+make[1]: Leaving directory '/app/cache/build/readline/8.0.0/shlib'
+make: Leaving directory '/app/cache/build/readline/8.0.0'
+make: Entering directory '/app/cache/build/readline/8.0.0'
+make: Nothing to be done for 'check'.
+make: Leaving directory '/app/cache/build/readline/8.0.0'
+make: Entering directory '/app/cache/build/readline/8.0.0'
+/bin/sh ./support/mkinstalldirs /app/./cache/install/readline/8.0.0/usr/include \
+	/app/./cache/install/readline/8.0.0/usr/include/readline /app/./cache/install/readline/8.0.0/usr/lib64 \
+	/app/./cache/install/readline/8.0.0/usr/share/info /app/./cache/install/readline/8.0.0/usr/share/man/man3 /app/./cache/install/readline/8.0.0/usr/share/doc/readline \
+	/app/./cache/install/readline/8.0.0/usr/lib64/pkgconfig
+test -d shlib || mkdir shlib
+mkdir -p -- /app/./cache/install/readline/8.0.0/usr/include /app/./cache/install/readline/8.0.0/usr/include/readline /app/./cache/install/readline/8.0.0/usr/lib64 /app/./cache/install/readline/8.0.0/usr/share/info /app/./cache/install/readline/8.0.0/usr/share/man/man3 /app/./cache/install/readline/8.0.0/usr/share/doc/readline /app/./cache/install/readline/8.0.0/usr/lib64/pkgconfig
+for f in readline.h chardefs.h keymaps.h history.h tilde.h rlstdc.h rlconf.h rltypedefs.h; do \
+	/bin/install -c -m 644 ./$f /app/./cache/install/readline/8.0.0/usr/include/readline ; \
+done
+( cd shlib ; make -w -j5 --jobserver-auth=3,4 all )
+/bin/install -c -m 644 ./CHANGES ./INSTALL ./README /app/./cache/install/readline/8.0.0/usr/share/doc/readline
+/bin/install -c -m 644 /app/cache/build/readline/8.0.0/readline.pc /app/./cache/install/readline/8.0.0/usr/lib64/pkgconfig/readline.pc
+( if test -d doc ; then \
+	cd doc && \
+	make -w -j5 --jobserver-auth=3,4 infodir=/usr/share/info DESTDIR=/app/./cache/install/readline/8.0.0 install; \
+  fi )
+make[1]: Entering directory '/app/cache/build/readline/8.0.0/shlib'
+make[1]: Entering directory '/app/cache/build/readline/8.0.0/doc'
+/bin/sh ../support/mkdirs /app/./cache/install/readline/8.0.0/usr/share/info /app/./cache/install/readline/8.0.0/usr/share/man/man3
+if test -n "" ; then \
+	/bin/sh ../support/mkdirs /app/./cache/install/readline/8.0.0 ; \
+fi
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/app/cache/build/readline/8.0.0/shlib'
+( cd examples ; make -w -j5 --jobserver-auth=3,4 DESTDIR=/app/./cache/install/readline/8.0.0 install )
+if test -f readline.info; then \
+	/bin/install -c -m 644 readline.info /app/./cache/install/readline/8.0.0/usr/share/info/readline.info; \
+else \
+	/bin/install -c -m 644 ./readline.info /app/./cache/install/readline/8.0.0/usr/share/info/readline.info; \
+fi
+make[1]: Entering directory '/app/cache/build/readline/8.0.0/examples'
+/bin/sh ../support/mkdirs /app/./cache/install/readline/8.0.0/usr/share/readline
+if test -f rluserman.info; then \
+	/bin/install -c -m 644 rluserman.info /app/./cache/install/readline/8.0.0/usr/share/info/rluserman.info; \
+else \
+	/bin/install -c -m 644 ./rluserman.info /app/./cache/install/readline/8.0.0/usr/share/info/rluserman.info; \
+fi
+if test -f history.info; then \
+	/bin/install -c -m 644 history.info /app/./cache/install/readline/8.0.0/usr/share/info/history.info; \
+else \
+	/bin/install -c -m 644 ./history.info /app/./cache/install/readline/8.0.0/usr/share/info/history.info; \
+fi
+if /bin/sh -c 'install-info --version' >/dev/null 2>&1; then \
+	install-info --dir-file=/app/./cache/install/readline/8.0.0/usr/share/info/dir \
+		/app/./cache/install/readline/8.0.0/usr/share/info/readline.info ; \
+	install-info --dir-file=/app/./cache/install/readline/8.0.0/usr/share/info/dir \
+		/app/./cache/install/readline/8.0.0/usr/share/info/history.info ; \
+	install-info --dir-file=/app/./cache/install/readline/8.0.0/usr/share/info/dir \
+		/app/./cache/install/readline/8.0.0/usr/share/info/rluserman.info ; \
+else true; fi
+/bin/install -c -m 644 ./readline.3 /app/./cache/install/readline/8.0.0/usr/share/man/man3/readline.3
+/bin/install -c -m 644 ./history.3 /app/./cache/install/readline/8.0.0/usr/share/man/man3/history.3
+mkdir /app/./cache/install/readline/8.0.0/usr/share/readline
+if test -n "" ; then \
+	if test -f readline.html; then \
+		/bin/install -c -m 644 readline.html /app/./cache/install/readline/8.0.0/readline.html; \
+	else \
+		/bin/install -c -m 644 ./readline.html /app/./cache/install/readline/8.0.0/readline.html; \
+	fi ; \
+	if test -f history.html; then \
+		/bin/install -c -m 644 history.html /app/./cache/install/readline/8.0.0/history.html; \
+	else \
+		/bin/install -c -m 644 ./history.html /app/./cache/install/readline/8.0.0/history.html; \
+	fi ; \
+	if test -f rluserman.html; then \
+		/bin/install -c -m 644 rluserman.html /app/./cache/install/readline/8.0.0/rluserman.html; \
+	else \
+		/bin/install -c -m 644 ./rluserman.html /app/./cache/install/readline/8.0.0/rluserman.html; \
+	fi ; \
+fi
+make[1]: Leaving directory '/app/cache/build/readline/8.0.0/doc'
+( cd shlib ; make -w -j5 --jobserver-auth=3,4 DESTDIR=/app/./cache/install/readline/8.0.0 install )
+make[1]: Entering directory '/app/cache/build/readline/8.0.0/shlib'
+/bin/sh ../support/mkdirs /app/./cache/install/readline/8.0.0/usr/lib64
+/bin/sh ../support/mkdirs /app/./cache/install/readline/8.0.0/usr/bin
+mkdir /app/./cache/install/readline/8.0.0/usr/bin
+/bin/sh ../support/shlib-install -O linux-gnu -V pc -d /app/./cache/install/readline/8.0.0/usr/lib64 -b /app/./cache/install/readline/8.0.0/usr/bin -i "/bin/install -c -m 644" libhistory.so.8.0
+make[1]: Leaving directory '/app/cache/build/readline/8.0.0/examples'
+mv /app/./cache/install/readline/8.0.0/usr/lib64/libreadline.a /app/./cache/install/readline/8.0.0/usr/lib64/libreadline.old
+/bin/install -c -m 644 libreadline.a /app/./cache/install/readline/8.0.0/usr/lib64/libreadline.a
+test -n "ranlib" && ranlib /app/./cache/install/readline/8.0.0/usr/lib64/libreadline.a
+/bin/sh ../support/shlib-install -O linux-gnu -V pc -d /app/./cache/install/readline/8.0.0/usr/lib64 -b /app/./cache/install/readline/8.0.0/usr/bin -i "/bin/install -c -m 644" libreadline.so.8.0
+mv /app/./cache/install/readline/8.0.0/usr/lib64/libhistory.a /app/./cache/install/readline/8.0.0/usr/lib64/libhistory.old
+/bin/install -c -m 644 libhistory.a /app/./cache/install/readline/8.0.0/usr/lib64/libhistory.a
+test -n "ranlib" && ranlib /app/./cache/install/readline/8.0.0/usr/lib64/libhistory.a
+install: you may need to run ldconfig
+make[1]: Leaving directory '/app/cache/build/readline/8.0.0/shlib'
+make: Leaving directory '/app/cache/build/readline/8.0.0'
+[+]  installing build dependencies...
+[+]      - sys-libs/ncurses-dev
+[d]  echo yes | nest pull
+[d]  echo yes | nest install sys-libs/ncurses-dev
+[+]  Dependencies installed!
+[+]  Building readline (8.0.0)
+[*]      Step 1/9: Fetch
+[*]          Cache miss for https://ftp.gnu.org/gnu/readline/readline-8.0.tar.gz, fetching now...
+[+]          Fetch done.
+[*]      Step 2/9: Extract
+[*]          Extracting readline-8.0.tar.gz
+[+]          Extracted in /app/cache/build/readline/8.0.0
+[*]      Step 3/9: Patch
+[*]      Step 4/9: Configure
+[d]                   ./configure             --enable-stack-protector=all             --enable-stackguard-randomization                         --enable-shared             --enable-static             --with-shared             --with-static                         --disable-werror             --disable-option-checking                         --with-packager='Raven-OS'             --with-bugurl='https://bugs.raven-os.org'                         --with-ncursesw --with-pthreads --with-threads --with-readline --with-history --prefix="/usr" --exec-prefix="/usr" --bindir="/usr/bin" --sbindir="/usr/bin" --libdir="/usr/lib64" --libexecdir="/usr/lib64" --includedir="/usr/include" --datarootdir="/usr/share" --datadir="/usr/share" --mandir="/usr/share/man" --sysconfdir="/etc" --localstatedir="/var" --with-ncurses --enable-multibyte
+
+[*]      Step 5/9: Compile
+[d]          make -C . SHLIB_LIBS=-lncursesw
+[*]      Step 6/9: Check
+[d]          make -C . check
+[*]      Step 7/9: Install
+[d]          make -C . install SHLIB_LIBS=-lncursesw DESTDIR=/app/./cache/install/readline/8.0.0
+[*]      Step 8/9: Split
+[*]          The following packages were generated:
+[*]              sys-libs/readline#8.0.0
+[*]              sys-libs/readline-dev#8.0.0
+[*]              sys-libs/readline-doc#8.0.0
+[*]      Step 9/9: Dependency Linking
+[*]          ELF Dependency Linker: Looking for binaries and their dependencies in sys-libs/readline...
+[*]              /usr/lib64/libhistory.so.8.0: libncursesw.so.6 libc.so.6
+[*]              /usr/lib64/libhistory.so.8: libncursesw.so.6 libc.so.6
+[*]              /usr/lib64/libreadline.so.8: libncursesw.so.6 libc.so.6
+[*]              /usr/lib64/libreadline.so.8.0: libncursesw.so.6 libc.so.6
+[*]          ELF Dependency Linker: Looking for binaries and their dependencies in sys-libs/readline-dev...
+[*]          ELF Dependency Linker: Looking for binaries and their dependencies in sys-libs/readline-doc...
+[*]          ELF Dependency Linker: Solving dependencies of sys-libs/readline...
+[*]              Looking for a package containing "libncursesw.so.6"...
+[+]                  A single package "sys-libs/ncurses" was found with the file "libncursesw.so.6"!
+[+]              Found remotely: sys-libs/ncurses
+[*]              Looking for a package containing "libc.so.6"...
+[+]                  A single package "sys-libs/glibc" was found with the file "libc.so.6"!
+[+]              Found remotely: sys-libs/glibc
+[*]          ELF Dependency Linker: Solving dependencies of sys-libs/readline-dev...
+[*]          ELF Dependency Linker: Solving dependencies of sys-libs/readline-doc...
+[+]      Wrapping sys-libs/readline#8.0.0
+[+]          name: readline
+[+]          category: sys-libs
+[+]          version: 8.0.0
+[+]          description: A set of libraries that offers command-line editing and history capabilities.
+[+]          tags: gnu, cli
+[+]          maintainer: grange_c@raven-os.org
+[+]          licenses: gpl_v3
+[+]          upstream_url: https://tiswww.case.edu/php/chet/readline/rltop.html
+[+]          kind: effective
+[+]          wrap_date: 2019-12-05T15:22:44Z
+[+]          dependencies:
+[+]              sys-libs/glibc
+[+]              raven-os/corefs
+[+]              sys-libs/ncurses
+[+]
+[+]          Files added:
+[+]              ./usr/lib64/libhistory.so.8.0
+[+]              ./usr/lib64/libhistory.so.8 -> libhistory.so.8.0
+[+]              ./usr/lib64/libreadline.so.8 -> libreadline.so.8.0
+[+]              ./usr/lib64/libreadline.so.8.0
+[+]              ./usr/lib64/pkgconfig/readline.pc
+[+]          (That's 5 files.)
+[+]          Creating data.tar.gz
+[+]          Creating manifest.toml
+[+]          Creating readline-8.0.0.nest
+[+]      Wrapping sys-libs/readline-dev#8.0.0
+[+]          name: readline-dev
+[+]          category: sys-libs
+[+]          version: 8.0.0
+[+]          description: Headers and manuals to compile or write a software using the sys-libs/readline package.
+[+]          tags: gnu, cli
+[+]          maintainer: grange_c@raven-os.org
+[+]          licenses: gpl_v3
+[+]          upstream_url: https://tiswww.case.edu/php/chet/readline/rltop.html
+[+]          kind: effective
+[+]          wrap_date: 2019-12-05T15:22:44Z
+[+]          dependencies:
+[+]              sys-libs/readline#=8.0.0
+[+]
+[+]          Files added:
+[+]              ./usr/lib64/libreadline.so -> libreadline.so.8
+[+]              ./usr/lib64/libreadline.a
+[+]              ./usr/lib64/libhistory.so -> libhistory.so.8
+[+]              ./usr/lib64/libhistory.a
+[+]              ./usr/share/readline/fileman.c
+[+]              ./usr/share/readline/rlversion.c
+[+]              ./usr/share/readline/hist_erasedups.c
+[+]              ./usr/share/readline/rlevent.c
+[+]              ./usr/share/readline/rlcat.c
+[+]              ./usr/share/readline/rlkeymaps.c
+[+]              ./usr/share/readline/manexamp.c
+[+]              ./usr/share/readline/rl.c
+[+]              ./usr/share/readline/rl-fgets.c
+[+]              ./usr/share/readline/rl-callbacktest.c
+[+]              ./usr/share/readline/rlptytest.c
+[+]              ./usr/share/readline/hist_purgecmd.c
+[+]              ./usr/share/readline/rltest.c
+[+]              ./usr/share/readline/histexamp.c
+[+]              ./usr/share/readline/excallback.c
+[+]              ./usr/share/readline/rlbasic.c
+[+]              ./usr/share/man/man3/history.3
+[+]              ./usr/share/man/man3/readline.3
+[+]              ./usr/include/readline/rlconf.h
+[+]              ./usr/include/readline/chardefs.h
+[+]              ./usr/include/readline/keymaps.h
+[+]              ./usr/include/readline/history.h
+[+]              ./usr/include/readline/rlstdc.h
+[+]              ./usr/include/readline/rltypedefs.h
+[+]              ./usr/include/readline/tilde.h
+[+]              ./usr/include/readline/readline.h
+[+]          (That's 30 files.)
+[+]          Creating data.tar.gz
+[+]          Creating manifest.toml
+[+]          Creating readline-dev-8.0.0.nest
+[+]      Wrapping sys-libs/readline-doc#8.0.0
+[+]          name: readline-doc
+[+]          category: sys-libs
+[+]          version: 8.0.0
+[+]          description: Offline documentation of sys-libs/readline.
+[+]          tags: gnu, cli
+[+]          maintainer: grange_c@raven-os.org
+[+]          licenses: gpl_v3
+[+]          upstream_url: https://tiswww.case.edu/php/chet/readline/rltop.html
+[+]          kind: effective
+[+]          wrap_date: 2019-12-05T15:22:44Z
+[+]          dependencies:
+[+]
+[+]          Files added:
+[+]              ./usr/share/info/history.info
+[+]              ./usr/share/info/rluserman.info
+[+]              ./usr/share/info/readline.info
+[+]              ./usr/share/doc/readline/INSTALL
+[+]              ./usr/share/doc/readline/README
+[+]              ./usr/share/doc/readline/CHANGES
+[+]          (That's 6 files.)
+[+]          Creating data.tar.gz
+[+]          Creating manifest.toml
+[+]          Creating readline-doc-8.0.0.nest
+[+]  Done!
