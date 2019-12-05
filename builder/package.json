@@ -4,11 +4,16 @@
   "description": "build-raven-os-org builder",
   "main": "src/index.js",
   "author": "raven-os",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/raven-os/build-raven-os-org.git"
   },
   "license": "ISC",
+  "engines": {
+    "node": "12.13.1",
+    "npm": "6.13.2"
+  },
   "scripts": {
     "start": "eslint . && node src/index.js",
     "dev": "eslint . && nodemon src/index.js",
