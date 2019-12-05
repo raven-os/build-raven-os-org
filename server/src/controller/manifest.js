@@ -71,7 +71,9 @@ class ManifestController {
           this.app.database.utils.raw(userJSON('author')),
           this.app.database.utils.raw(userJSON('maintainer'))
         ],
-        withRelated: ['history']
+        withRelated: [
+          { history: (query) => { query.orderBy('edition_date') } }
+        ]
       })
 
     if (!manifestModel) {
@@ -210,7 +212,9 @@ class ManifestController {
       .fetchPage({
         pageSize: pagination.perPage,
         page: pagination.page,
-        withRelated: ['history']
+        withRelated: [
+          { history: (query) => { query.orderBy('edition_date') } }
+        ]
       })
 
     return {
