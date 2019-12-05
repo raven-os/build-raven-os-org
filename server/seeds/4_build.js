@@ -55,20 +55,18 @@ function dates (date, state) {
   }
 }
 
-
-
 exports.seed = (knex) => {
-  // Deletes ALL existing entries
-  return knex('build').del()
+  // Deletes ALL existing entries and reset auto-increment
+  return knex.raw('TRUNCATE TABLE build RESTART IDENTITY CASCADE')
     .then(() => {
       // Inserts seed entries
       return knex('build').insert([
         // Add example of each states
-        { ...queued, id: 1, manifest_id: [1], ...dates('2019-01-30T10:00:00', 'queuing') },
-        { ...running, id: 2, manifest_id: [1], ...dates('2019-01-30T11:00:00', 'running') },
-        { ...failed, id: 3, manifest_id: [1], ...dates('2019-01-30T12:00:00', 'finished') },
-        { ...success, id: 4, manifest_id: [1], ...dates('2019-01-30T13:00:00', 'finished') },
-        { ...success, id: 5, manifest_id: [1, 2], ...dates('2019-01-30T14:00:00', 'finished') },
+        { ...queued, manifest_id: [1], ...dates('2019-01-30T10:00:00', 'queuing') },
+        { ...running, manifest_id: [1], ...dates('2019-01-30T11:00:00', 'running') },
+        { ...failed, manifest_id: [1], ...dates('2019-01-30T12:00:00', 'finished') },
+        { ...success, manifest_id: [1], ...dates('2019-01-30T13:00:00', 'finished') },
+        { ...success, manifest_id: [1, 2], ...dates('2019-01-30T14:00:00', 'finished') },
 
         // Alternate success and failed
         ...[...Array(30).keys()].map(i => {
