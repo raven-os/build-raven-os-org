@@ -1,5 +1,5 @@
 # Base stage
-FROM node:10 as base
+FROM node:12.13.1 as base
 
 # Use development to install dev dependencies for build
 ENV NODE_ENV=development
