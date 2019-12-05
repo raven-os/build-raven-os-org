@@ -32,6 +32,11 @@ class Application {
     await this.mailer.init()
     await this.database.ensureConnection()
     await this.database.runMigrations()
+
+    if (this.config.populateDB) {
+      await this.database.runSeeds()
+    }
+
     await this.queue._getInstance()
 
     this.express = express()

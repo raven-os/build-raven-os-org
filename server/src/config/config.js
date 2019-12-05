@@ -167,6 +167,12 @@ const config = convict({
       default: 'toto42',
       env: 'ADMIN_PASSWORD'
     }
+  },
+  populateDB: {
+    doc: 'Turn seeding on/off to clean and repopulate the database',
+    format: Boolean,
+    default: false,
+    env: 'POPULATE_DATABASE'
   }
 })
 

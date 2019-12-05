@@ -20,6 +20,7 @@ services:
     restart: "no"
     environment:
       NODE_ENV: development
+      POPULATE_DATABASE: ${POPULATE_DATABASE}
     volumes:
       - ./server/src:/app/src
       - ./server/migrations:/app/migrations

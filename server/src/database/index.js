@@ -36,6 +36,13 @@ class Database {
 
     return knexMigrate('up', {}, logger)
   }
+
+  async runSeeds () {
+    console.log('Populating database')
+
+    const res = await bookshelf.knex.seed.run()
+    console.log('Ran', res[0])
+  }
 }
 
 module.exports = Database
