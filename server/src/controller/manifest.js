@@ -13,7 +13,7 @@ class ManifestController {
    * Verify if a manifest exists
    *
    * @public
-   * @param  {Integer}  id Id of a manifest
+   * @param  {Integer}  id ID of a manifest
    * @return {Boolean}     true if the manifest exists, false otherwise
    */
   async exists (id) {
@@ -27,8 +27,8 @@ class ManifestController {
   /**
    * Verify if a manifest with a maintainer exists
    *
-   * @param  {Integer}  id     Id of a manifest
-   * @param  {Integer}  userId Id of a user
+   * @param  {Integer}  id     ID of a manifest
+   * @param  {Integer}  userId ID of a user
    * @return {Boolean}         true if the user is the maintainer of the manifest
    */
   async isMaintainer (id, userId) {
@@ -41,10 +41,10 @@ class ManifestController {
   }
 
   /**
-   * Retrieve a manifest by id
+   * Retrieve a manifest by id and retrieve its author and maintainer names
    *
    * @private
-   * @param  {Integer}          id Id of a manifest
+   * @param  {Integer}          id ID of a manifest
    * @return {Bookshelf.Model}     Model manifest to perform database actions on
    * @throws {NotFound}            If the manifest doesn't exists
    */
@@ -87,7 +87,7 @@ class ManifestController {
    * Create a manifests and a manifestContent
    *
    * @public
-   * @param  {String}  name    Name of the namfest
+   * @param  {String}  name    Name of the manifest
    * @param  {String}  content Content of the manifest
    * @return {Object}          Manifest with its content
    */
@@ -116,7 +116,7 @@ class ManifestController {
    * Create a manifest_content
    *
    * @private
-   * @param  {Integer}  manifestId  If of the manifest
+   * @param  {Integer}  manifestId  ID of the manifest
    * @param  {String}   content     Content of the manifest
    * @param  {Date}     editionDate Date of creation of manifest_content
    * @return {Object}               The manifest content object
@@ -132,10 +132,10 @@ class ManifestController {
   }
 
   /**
-   * Update a manifest: create a new content and update the last_update Date
+   * Update a manifest: create a new content and update the last_update date
    *
    * @public
-   * @param  {Integer}  id      Id of the manifest
+   * @param  {Integer}  id      ID of the manifest
    * @param  {String}   content New content of the manifest
    * @return {Object}           New Content and metadata of the manifest's new content
    * @throws {NotFound}         If the manifest doesn't exists
@@ -161,7 +161,7 @@ class ManifestController {
   /**
    * Update a manifest's maintainer
    *
-   * @param  {Integer}  id            Id of the manifest
+   * @param  {Integer}  id            ID of the manifest
    * @param  {Integer}  newMaintainer Usr id of the new maintainer
    * @return {Object}                 The manifest
    * @throws {NotFound}               If the manifest or user doesn't exists
@@ -183,7 +183,7 @@ class ManifestController {
    * Retrieve a manifest
    *
    * @public
-   * @param   {Integer}  id Id of the manifest
+   * @param   {Integer}  id ID of the manifest
    * @return  {Object}      The manifest
    * @throws  {NotFound}    If the manifest doesn't exists
    */
@@ -200,7 +200,7 @@ class ManifestController {
    * @param  {String}                               name                Match all manifest starting with this name
    * @param  {'name'|'creation_date'|'last_update'} sort                Column to sort on
    * @param  {'asc'|'desc'}                         direction           Direction of the sort
-   * @param  {Object}                               pagination          pagination object
+   * @param  {Object}                               pagination          Pagination object
    * @param  {Integer}                              pagination.perPage  Number of item per page
    * @param  {Integer}                              pagination.page     Page to retrieve
    * @return {Object}                                                   List of manifests found and metadata containing pagination information
