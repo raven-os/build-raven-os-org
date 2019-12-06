@@ -159,12 +159,6 @@ class BuildController {
   async list (sort, direction, filters, pagination) {
     const builds = await this.app.database.model.build
       .query(queryBuilder => {
-        if (filters.queuing !== null) {
-          queryBuilder.where('queuing', filters.queuing)
-        }
-        if (filters.running !== null) {
-          queryBuilder.where('running', filters.running)
-        }
         if (filters.manifestId !== null) {
           queryBuilder.where('manifest_id', '@>', [filters.manifestId])
         }
