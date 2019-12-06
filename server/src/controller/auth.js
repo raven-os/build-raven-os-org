@@ -32,7 +32,7 @@ class AuthController {
     this.recovery[email] = { token, expireAt: date }
 
     const subject = 'Password recovery for Raven\'s Package Builder'
-    const text = `To reset your password on Raven's Package Builder, use this code: ${token}`
+    const text = `To reset your password on Raven's Package Builder, use this code: ${token} (available ${this.recoveryTimeout} minutes)`
 
     await this.app.mailer.send(email, subject, text)
   }
