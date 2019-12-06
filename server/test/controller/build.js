@@ -231,8 +231,6 @@ describe('controller/build', () => {
         sort: 'creation_date',
         direction: 'ASC',
         filters: {
-          queuing: true,
-          running: false,
           manifestId: 42,
           exitStatus: 83
         },
@@ -255,11 +253,13 @@ describe('controller/build', () => {
       tracker.on('query', (query, step) => {
         [
           function firstQuery () {
-            assert.strictEqual(query.bindings.includes(...Object.values(params.filters)), true)
+            assert.strictEqual(query.bindings.some(e => Array.isArray(e) && e[0] === 42), true)
+            assert.strictEqual(query.bindings.some(e => e === 83), true)
             query.response(expectedData)
           },
           function secondQuery () {
-            assert.strictEqual(query.bindings.includes(...Object.values(params.filters)), true)
+            assert.strictEqual(query.bindings.some(e => Array.isArray(e) && e[0] === 42), true)
+            assert.strictEqual(query.bindings.some(e => e === 83), true)
             query.response([{ count: 34 }])
           }
         ][step - 1]()
@@ -280,8 +280,6 @@ describe('controller/build', () => {
 
     it('should successfully list builds without filters', async () => {
       params.filters = {
-        queuing: null,
-        running: null,
         manifestId: null,
         exitStatus: null
       }
