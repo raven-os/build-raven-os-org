@@ -69,26 +69,61 @@
               <a class="text-accent ml-2" :href="'#'">
                 <i class="fas fa-hammer" @click.prevent="build()" />
               </a>
+              <a v-if="isAdmin" class="text-accent ml-2" style="cursor: pointer" @click="openSettings = !openSettings">
+                <i class="fas fa-user-cog" />
+              </a>
             </td>
           </tr>
         </tbody>
       </table>
 
-      <div v-if="isAdmin">
-        <p>Change maintainer</p>
-        <input
-          v-model="query"
-          type="text"
-          placeholder="Search for a maintainer"
-        >
-        <div v-if="query">
-          <div v-for="user in getUserList" :key="user.id">
-            <span>
-              #{{ user.id }}: {{ user.firstname }} {{ user.lastname }} ({{ user.email }})
-              <button @click.prevent="setMaintainer(user.id)">Define as new maintainer</button>
-            </span>
-          </div>
-        </div>
+      <div v-if="openSettings">
+        <table id="settings" class="table b-table table-striped">
+          <thead class="list-thead">
+            <tr>
+              <th>Settings: Change maintainer</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="box-settings">
+              <div style="padding: 10px;">
+                <b-input-group class="custom-input-group">
+                  <b-input-group-prepend class="custom-input-group-prepend">
+                    <label for="lastname">Name</label>
+                  </b-input-group-prepend>
+                  <input
+                    id="lastname"
+                    v-model="query"
+                    class="form-control custom-input"
+                    type="text"
+                    placeholder="Search for a maintainer"
+                    autocomplete="lastname"
+                  >
+                </b-input-group>
+                <div v-if="query">
+                  <b-container>
+                    <b-row v-for="user in getUserList" :key="user.id" class="mb-2">
+                      <b-col>
+                        <span style="font-weight: bold">#{{ user.id }}: {{ user.firstname }} {{ user.lastname }}</span> ({{ user.email }})
+                      </b-col>
+                      <b-col>
+                        <button class="set-maintainer-button ml-5" @click.prevent="setMaintainer(user.id)">
+                          Define as new maintainer
+                        </button>
+                      </b-col>
+                    </b-row>
+                  </b-container>
+                  <!-- <div v-for="user in getUserList" :key="user.id">
+                    <span class="ml-4">
+                      <span style="font-weight: bold">#{{ user.id }}: {{ user.firstname }} {{ user.lastname }}</span> ({{ user.email }})
+                      <button class="set-maintainer-button ml-5" @click.prevent="setMaintainer(user.id)">Define as new maintainer</button>
+                    </span>
+                  </div> -->
+                </div>
+              </div>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
       <div>
@@ -146,34 +181,7 @@ export default {
       query: null,
       historyIndex: 0,
       buildId: null,
-      dateFields: [
-        {
-          key: 'created_at',
-          label: 'Creation date',
-          class: 'td-date',
-          tdClass: 'list-table-cell',
-          formatter: value => {
-            if (value) {
-              return moment(value).format('MMMM Do YYYY, HH:mm:ss')
-            } else {
-              return ''
-            }
-          }
-        },
-        {
-          key: 'updated_at',
-          label: 'last update',
-          class: 'td-date',
-          tdClass: 'list-table-cell',
-          formatter: value => {
-            if (value) {
-              return moment(value).format('MMMM Do YYYY, HH:mm:ss')
-            } else {
-              return ''
-            }
-          }
-        }
-      ]
+      openSettings: false
     }
   },
   computed: {
@@ -220,7 +228,7 @@ export default {
     ...mapActions('user', ['list']),
     ...mapActions('build', ['createBuild']),
     _date (value) {
-      return (value && moment(value).format('MMMM Do YYYY, HH:mm:ss')) || null
+      return (value && moment(value).format('MMM Do YYYY, HH:mm:ss')) || null
     },
     search () {
       if (!this.isAdmin || !this.query || this.query.length < 1) {
@@ -270,5 +278,27 @@ export default {
 
 .manifest-history-row:hover {
   cursor: pointer;
+}
+
+/* Settings */
+.box-settings {
+  background-color: var(--mid-grey);
+  padding: 10px;
+  border-bottom: 1px solid var(--accent);
+  margin-bottom: 15px;
+}
+
+.set-maintainer-button {
+  font-size: 14px;
+  padding: 3px;
+  border: 1px solid var(--primary-dark);
+  color: var(--white);
+  border-radius: 5px;
+  height: 30px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: var(--accent);
+  width: 200px;
 }
 </style>
