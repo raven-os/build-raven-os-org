@@ -20,6 +20,7 @@ class AbstractAction {
   /**
    * List of validators to sanitize and validate user input
    *
+   * @public
    * @return {List} List of validators
    */
   get validate () {
@@ -29,6 +30,7 @@ class AbstractAction {
   /**
    * Handles the request
    *
+   * @public
    * @param  {Request}  req The incoming request
    * @return {Object}       The json response
    */
@@ -40,6 +42,7 @@ class AbstractAction {
    * Validates the input and calls the request handler
    * Then send the json response back to the client
    *
+   * @protected
    * @param  {Request}    req  The incoming request
    * @param  {Response}   res  The outgoing response
    * @param  {Function}   next The next route
@@ -62,6 +65,7 @@ class AbstractAction {
   /**
    * Validates the input and calls the next middleware
    *
+   * @protected
    * @param  {Request}    req  The incoming request
    * @param  {Response}   res  The outgoing response
    * @param  {Function}   next The next route

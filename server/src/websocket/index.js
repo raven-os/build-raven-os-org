@@ -9,6 +9,13 @@ const actions = {
   BUILD_PACKAGES: 'BUILD_PACKAGES'
 }
 
+/**
+ * The WebSocket server allows connected clients to receive updates
+ * about builds in real time
+ *
+ * @public
+ * @class
+ */
 class WebsocketServer {
   get actions () {
     return actions
@@ -19,6 +26,11 @@ class WebsocketServer {
     this.connections = []
   }
 
+  /**
+   * Start the websocket server
+   *
+   * @param  {Object} server The HTTP server
+   */
   run (server) {
     this.ws = new ws.Server({
       server,
@@ -29,10 +41,22 @@ class WebsocketServer {
     this.ws.on('error', this.error)
   }
 
+  /**
+   * Error callback
+   *
+   * @param  {Error} err An error
+   */
   error (err) {
     console.log('[WebsocketServer.error]', err)
   }
 
+  /**
+   * Broadcast an event to all clients
+   *
+   * @public
+   * @param  {String} type Type of event
+   * @param  {Object} data Data updated in real time
+   */
   broadcast (type, data) {
     for (const connection of this.connections) {
       connection.send(JSON.stringify({ type, data }))

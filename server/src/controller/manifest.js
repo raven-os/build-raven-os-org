@@ -161,6 +161,7 @@ class ManifestController {
   /**
    * Update a manifest's maintainer
    *
+   * @public
    * @param  {Integer}  id            ID of the manifest
    * @param  {Integer}  newMaintainer Usr id of the new maintainer
    * @return {Object}                 The manifest

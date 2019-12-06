@@ -15,6 +15,12 @@ const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const helmet = require('helmet')
 
+/**
+ * The application class regroup every part of the API together
+ *
+ * @public
+ * @class
+ */
 class Application {
   constructor () {
     this.config = config
@@ -28,6 +34,14 @@ class Application {
     this.session = new Session(this)
   }
 
+  /**
+   * Initialize every part of the application
+   * Start the mailer, connect to the database
+   * Run the migration (and populate the database in dev env)
+   * Connect to the queue and instanciate the http server and the routing
+   *
+   * @public
+   */
   async run () {
     await this.mailer.init()
     await this.database.ensureConnection()
@@ -60,6 +74,13 @@ class Application {
     })
   }
 
+  /**
+   * Middleware to log each endpoints requested
+   *
+   * @param  {Request}  req  The incoming request
+   * @param  {Response} res  The outgoing response
+   * @param  {Function} next The next route
+   */
   logger (req, res, next) {
     console.log(req.method, req.originalUrl)
     next()

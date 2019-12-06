@@ -2,6 +2,12 @@ const Model = require('./model')
 const bookshelf = require('./bookshelf')
 const knexMigrate = require('knex-migrate')
 
+/**
+ * Database interacts with the Postgres database
+ *
+ * @public
+ * @class
+ */
 class Database {
   constructor (app) {
     this.app = app
@@ -11,6 +17,11 @@ class Database {
     }
   }
 
+  /**
+   * Try to connect to the database multiple times if it fails
+   *
+   * @public
+   */
   async ensureConnection () {
     let retries = this.app.config.database.retry.count || 5
     const interval = this.app.config.database.retry.interval || 1000
@@ -31,12 +42,22 @@ class Database {
     }
   }
 
+  /**
+   * Run the migrations to create the tables
+   *
+   * @public
+   */
   async runMigrations () {
     const logger = ({ migration }) => console.info('Running migration', migration)
 
     return knexMigrate('up', {}, logger)
   }
 
+  /**
+   * Run the seeds to populate the database with some data
+   *
+   * @public
+   */
   async runSeeds () {
     console.log('Populating database')
 
