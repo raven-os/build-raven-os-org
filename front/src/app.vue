@@ -16,9 +16,6 @@
               <b-nav-item to="/builds" exact class="nav-item" active-class="nav-item-active">
                 Builds
               </b-nav-item>
-              <b-nav-item to="/builds/create" exact class="nav-item" active-class="nav-item-active">
-                Create build
-              </b-nav-item>
               <b-nav-item to="/manifests" exact class="nav-item" active-class="nav-item-active">
                 Manifests
               </b-nav-item>

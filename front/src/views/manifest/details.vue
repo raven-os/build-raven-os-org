@@ -113,12 +113,6 @@
                       </b-col>
                     </b-row>
                   </b-container>
-                  <!-- <div v-for="user in getUserList" :key="user.id">
-                    <span class="ml-4">
-                      <span style="font-weight: bold">#{{ user.id }}: {{ user.firstname }} {{ user.lastname }}</span> ({{ user.email }})
-                      <button class="set-maintainer-button ml-5" @click.prevent="setMaintainer(user.id)">Define as new maintainer</button>
-                    </span>
-                  </div> -->
                 </div>
               </div>
             </tr>
