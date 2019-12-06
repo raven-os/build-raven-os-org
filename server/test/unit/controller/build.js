@@ -1,8 +1,8 @@
 const tracker = require('mock-knex').getTracker()
-const Application = require('../../src/application')
+const Application = require('../../../src/application')
 const assert = require('assert')
 const sinon = require('sinon')
-const { assertThrowsAsync, assertDoesNotThrowAsync } = require('../../../utils/test')
+const { assertThrowsAsync, assertDoesNotThrowAsync } = require('../../../../utils/test')
 
 const config = {
   builder_apikey: 'TESTING'

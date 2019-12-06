@@ -17,7 +17,7 @@
   "scripts": {
     "start": "eslint . && node src/index.js",
     "dev": "eslint . && nodemon src/index.js",
-    "test": "eslint . && nyc -s true mocha test/mock-database.js test/setup.js test/ --recursive",
+    "test": "eslint . && nyc -s true mocha test/unit/mock-database.js test/unit/setup.js test/unit/ --recursive --exit",
     "coverage": "nyc report",
     "apidoc": "apidoc -i src/action -o docs/apidoc/",
     "jsdoc": "jsdoc -a all -d docs/jsdoc/ -r src/controller src/database src/websocket src/action/abstract.js src/*.js -R README.md",
