@@ -64,13 +64,13 @@
             </td>
             <td class="list-table-cell">
               <a v-if="isMaintainer || isAdmin" :href="'/manifests/update/' + id" class="text-accent">
-                <i class="fas fa-edit" />
+                <i class="fas fa-edit" title="Edit" />
               </a>
-              <a class="text-accent ml-2" :href="'#'">
-                <i class="fas fa-hammer" @click.prevent="build()" />
+              <a v-if="isMaintainer || isAdmin" class="text-accent ml-2" :href="'#'">
+                <i class="fas fa-hammer" title="Build" @click.prevent="build()" />
               </a>
               <a v-if="isAdmin" class="text-accent ml-2" style="cursor: pointer" @click="openSettings = !openSettings">
-                <i class="fas fa-user-cog" />
+                <i class="fas fa-user-cog" title="Change maintainer" />
               </a>
             </td>
           </tr>
