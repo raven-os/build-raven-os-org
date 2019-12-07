@@ -35,6 +35,7 @@
           <tr>
             <!-- TODO: indicate duration -->
             <th>Id</th>
+            <th>Manifests</th>
             <th>State</th>
             <th>Exit Status</th>
             <th>Creation Date</th>
@@ -46,6 +47,16 @@
           <tr class="table-row-nohover">
             <td class="list-table-cell">
               {{ build && build.id }}
+            </td>
+            <td class="list-table-cell">
+              [
+              <span v-for="(manifest, index) in build && build.manifest_id" :key="manifest">
+                <a :href="'/manifests/details/' + manifest">
+                  <b>{{ manifest }}</b>
+                </a>
+                <span v-if="index < build.manifest_id.length - 1 && build.manifest_id.length > 1">, </span>
+              </span>
+              ]
             </td>
             <td class="list-table-cell">
               {{ build && build.state }}
