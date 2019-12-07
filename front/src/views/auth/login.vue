@@ -46,7 +46,14 @@
               <b-row>
                 <b-col>
                   <div class="text-center my-4">
-                    <a href="/recovery" class="forgotten-pwd">Forgotten password?</a>
+                    <a href="/recovery" class="forgotten-pwd">Forgotten password ?</a>
+                  </div>
+                </b-col>
+              </b-row>
+              <b-row>
+                <b-col>
+                  <div class="text-center">
+                    <a href="/register" class="forgotten-pwd">Register</a>
                   </div>
                 </b-col>
               </b-row>
