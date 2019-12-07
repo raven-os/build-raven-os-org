@@ -40,6 +40,20 @@
       <p>{{ getManifestErrors.list }}</p>
     </div>
 
+    <div v-if="getBuildLoadings.create" class="text-loading">
+      Adding the build...
+    </div>
+    <div v-if="getBuildErrors.create" class="text-error">
+      <p>An error occurred preventing the creation of the build</p>
+      <p>{{ getBuildErrors.create }}</p>
+    </div>
+    <div v-if="buildId" class="text-success">
+      <p>Build successfully created</p>
+      <a :href="'/builds/details/' + buildId">
+        <u>#{{ buildId }}</u>
+      </a>
+    </div>
+
     <!--==========================
     App - List
     ============================-->
@@ -63,7 +77,7 @@
                       <input
                         :id="item.id"
                         v-model="checkedManifests"
-                        :value="item"
+                        :value="item.id"
                         type="checkbox"
                         class="custom-control-input"
                       >
@@ -86,7 +100,7 @@
         </b-row>
 
         <b-row v-if="checkedManifests.length">
-          <button class="custom-button">
+          <button class="custom-button" @click.prevent="build()">
             Build
           </button>
         </b-row>
@@ -143,7 +157,8 @@ export default {
         { text: 'From A to Z', value: { by: 'name', desc: false } },
         { text: 'From Z to A', value: { by: 'name', desc: true } }
       ],
-      checkedManifests: []
+      checkedManifests: [],
+      buildId: null
     }
   },
   computed: {
@@ -153,6 +168,7 @@ export default {
       'getManifestLoadings',
       'getManifestErrors'
     ]),
+    ...mapGetters('build', ['getBuildLoadings', 'getBuildErrors']),
     pageCount () {
       return (this.getManifestPagination && this.getManifestPagination.pageCount) || null
     },
@@ -171,6 +187,7 @@ export default {
   },
   methods: {
     ...mapActions('manifest', ['listManifests']),
+    ...mapActions('build', ['createBuild']),
     search () {
       const params = {
         ...(this.query && { name: this.query }),
@@ -183,6 +200,14 @@ export default {
     },
     clickCallback (newPage) {
       this.page = newPage
+    },
+    build () {
+      this.buildId = null
+
+      this.createBuild(this.checkedManifests).then(build => {
+        this.buildId = build && build.id
+        this.checkedManifests = []
+      })
     }
   }
 }
