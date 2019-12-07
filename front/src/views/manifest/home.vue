@@ -159,7 +159,8 @@ export default {
         { text: 'From Z to A', value: { by: 'name', desc: true } }
       ],
       checkedManifests: [],
-      buildId: null
+      buildId: null,
+      currentPage: 0
     }
   },
   computed: {
@@ -172,10 +173,7 @@ export default {
     ...mapGetters('build', ['getBuildLoadings', 'getBuildErrors']),
     ...mapGetters('auth', ['getAuthUser']),
     pageCount () {
-      return (this.getManifestPagination && this.getManifestPagination.pageCount) || null
-    },
-    currentPage () {
-      return (this.getManifestPagination && this.getManifestPagination.currentPage) || null
+      return (this.getManifestPagination && this.getManifestPagination.pageCount) || 0
     },
     isAdmin () {
       return this.getAuthUser.rights && this.getAuthUser.rights.includes('admin')

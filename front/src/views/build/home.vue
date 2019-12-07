@@ -168,7 +168,8 @@ export default {
       optionSort: [
         { text: 'From newest to oldest', value: { by: 'creation', desc: true } },
         { text: 'From oldest to newest', value: { by: 'creation', desc: false } }
-      ]
+      ],
+      currentPage: 0
     }
   },
   computed: {
@@ -189,10 +190,7 @@ export default {
       return this.getBuilds
     },
     pageCount () {
-      return (this.getBuildPagination && this.getBuildPagination.pageCount) || null
-    },
-    currentPage () {
-      return (this.getBuildPagination && this.getBuildPagination.currentPage) || null
+      return (this.getBuildPagination && this.getBuildPagination.pageCount) || 0
     }
   },
   watch: {
