@@ -118,9 +118,10 @@ export default {
         lastname: this.lastname,
         password: this.password
       }
+
       this.create(user).then(user => {
         if (user) {
-          console.log(user)
+          this.$router.push({ path: '/login' })
         }
       })
     }
