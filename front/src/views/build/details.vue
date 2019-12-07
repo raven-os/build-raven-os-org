@@ -85,19 +85,6 @@
         </table>
       </div>
 
-      <table id="output-table" class="table b-table table-striped">
-        <thead class="list-thead">
-          <tr>
-            <th>Output</th>
-          </tr>
-        </thead>
-        <tbody>
-          <prism language="python">
-            {{ build && build.stdout }}
-          </prism>
-        </tbody>
-      </table>
-
       <table id="error-table" class="table b-table table-striped">
         <thead class="list-thead">
           <tr>
@@ -105,9 +92,18 @@
           </tr>
         </thead>
         <tbody>
-          <prism language="python">
-            {{ build && build.stderr }}
-          </prism>
+          <prism language="python">{{ build && build.stderr }}</prism>
+        </tbody>
+      </table>
+
+      <table id="output-table" class="table b-table table-striped">
+        <thead class="list-thead">
+          <tr>
+            <th>Output</th>
+          </tr>
+        </thead>
+        <tbody>
+          <prism language="python">{{ build && build.stdout }}</prism>
         </tbody>
       </table>
     </b-container>

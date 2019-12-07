@@ -17,6 +17,7 @@ module.exports = {
   ],
   // custom rules
   'rules': {
+    'vue/singleline-html-element-content-newline': 'off',
     'vue/max-attributes-per-line': [2, { 'singleline': 5, 'multiline': 4 }],
     'quote-props': ['error', 'consistent']
 
