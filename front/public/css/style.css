@@ -284,6 +284,14 @@ Inputs
   background-color: white;
 }
 
+.custom-checkbox .custom-control-input ~ .custom-control-label::after {
+  cursor: pointer;
+}
+
+.custom-checkbox .custom-control-input:disabled ~ .custom-control-label::after {
+  cursor: not-allowed;
+}
+
 .custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
   background-color: var(--accent);
   border: 1px solid var(--accent);
@@ -294,6 +302,10 @@ Inputs
 
 .custom-checkbox .custom-control-input:focus ~ .custom-control-label::before {
   box-shadow: none;
+}
+
+.custom-checkbox .custom-control-input:disabled ~ .custom-control-label::before {
+  background-color: #BFBFBF;
 }
 
 /* -----------------------------------
@@ -355,7 +367,6 @@ Pagination
 .current-page {
   font-weight: bold;
 }
-
 
 .pagination-item {
 }

@@ -79,6 +79,7 @@
                         v-model="checkedManifests"
                         :value="item.id"
                         type="checkbox"
+                        :disabled="!(isAdmin || isMaintainer(item))"
                         class="custom-control-input"
                       >
                       <label class="custom-control-label" :for="item.id" />
@@ -169,11 +170,15 @@ export default {
       'getManifestErrors'
     ]),
     ...mapGetters('build', ['getBuildLoadings', 'getBuildErrors']),
+    ...mapGetters('auth', ['getAuthUser']),
     pageCount () {
       return (this.getManifestPagination && this.getManifestPagination.pageCount) || null
     },
     currentPage () {
       return (this.getManifestPagination && this.getManifestPagination.currentPage) || null
+    },
+    isAdmin () {
+      return this.getAuthUser.rights && this.getAuthUser.rights.includes('admin')
     }
   },
   watch: {
@@ -208,6 +213,9 @@ export default {
         this.buildId = build && build.id
         this.checkedManifests = []
       })
+    },
+    isMaintainer (manifest) {
+      return manifest && manifest.maintainer === this.getAuthUser.id
     }
   }
 }
