@@ -58,6 +58,18 @@
             <table class="table table-sm table-striped table-hover border">
               <tbody>
                 <tr v-for="item in getManifests" :key="item.id" class="bg-light-accent-hover">
+                  <td style="width: 2%;">
+                    <div class="custom-control form-control-lg custom-checkbox" style="height: 15px; margin-top: -5px;">
+                      <input
+                        :id="item.id"
+                        v-model="checkedManifests"
+                        :value="item"
+                        type="checkbox"
+                        class="custom-control-input"
+                      >
+                      <label class="custom-control-label" :for="item.id" />
+                    </div>
+                  </td>
                   <td class="text-truncate text-white" style="width: 30%;">
                     <a :href="'/manifests/details/' + item.id" class="text-white">
                       <kbd><b>#{{ item.id }}: {{ item.name }}</b></kbd>
@@ -71,6 +83,12 @@
               </tbody>
             </table>
           </b-col>
+        </b-row>
+
+        <b-row v-if="checkedManifests.length">
+          <button class="custom-button">
+            Build
+          </button>
         </b-row>
         <!-- Pagination -->
         <b-row>
@@ -124,7 +142,8 @@ export default {
         { text: 'From oldest to newest', value: { by: 'creation', desc: false } },
         { text: 'From A to Z', value: { by: 'name', desc: false } },
         { text: 'From Z to A', value: { by: 'name', desc: true } }
-      ]
+      ],
+      checkedManifests: []
     }
   },
   computed: {
