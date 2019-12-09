@@ -11,7 +11,7 @@
             <img src="/img/raven_title.png">
           </b-navbar-brand>
           <b-collapse id="nav_collapse" is-nav>
-            <div v-if="displayLogout" style="color: #DDDDDD;">Hi {{ getAuthUser.firstname }} {{ getAuthUser.lastname }},</div>
+            <div v-if="displayLogout" style="color: var(--white);">Hello {{ getAuthUser.firstname }} {{ getAuthUser.lastname }}</div>
             <b-navbar-nav class="ml-auto">
               <!-- TODO: move this out of the navbar -->
               <b-nav-item to="/builds" exact class="nav-item" active-class="nav-item-active">
