@@ -40,6 +40,7 @@ services:
     networks:
       - backend
     ports:
-      - 80:80
+      - ${NEST_SERVER_PORT}:${NEST_SERVER_PORT}
     environment:
       RAVEN_NEST_SERVER_AUTH_TOKEN: ${APIKEYS_NEST_SERVER}
+      ROCKET_PORT: ${NEST_SERVER_PORT}
