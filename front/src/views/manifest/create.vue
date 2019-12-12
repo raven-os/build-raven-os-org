@@ -98,7 +98,13 @@ export default {
   data () {
     return {
       code: '# Write your own manifest\n',
-      options: {},
+      options: {
+        autoClosingBrackets: false,
+        autoClosingQuotes: false,
+        autoClosingOvertype: false,
+        autoSurround: false,
+        autoIndent: false
+      },
       file: null,
       name: null,
       manifest: null,
