@@ -11,9 +11,11 @@ describe('Build', function() {
     cy.get(':nth-child(3) > .nav-link').click() // button createManifest
     
     cy.get('#name').click().type('readlinetest').should('have.value', 'readlinetest')
+    cy.wait(3000)
     cy.get('[style="top:18px;height:18px;"]').type(manifestContent, { delay: 0 })
+    cy.wait(500)
     cy.get('.custom-button').click()
-
+    cy.contains('Manifest successfully created')
   })
 })
 
