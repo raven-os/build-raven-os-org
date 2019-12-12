@@ -115,7 +115,9 @@ networks:
 
 volumes:
   dbdata:
+    name: "dbdata"
   rabbit:
+    name: "rabbit"
   nbuild_manifests:
     name: "nbuild_manifests"
   nbuild_out:
