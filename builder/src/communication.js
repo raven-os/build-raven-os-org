@@ -10,8 +10,18 @@ class Communication {
     this.stderrEndpoint = '/stderr'
     this.endEndpoint = '/end'
     this.packageEndpoint = '/packages'
-    this.stdoutBuffer = new Buffer()
-    this.stderrBuffer = new Buffer()
+    this.buffers = {}
+  }
+
+  _getBuffers (id) {
+    if (!this.buffers[id]) {
+      this.buffers[id] = {
+        stdout: new Buffer(),
+        stderr: new Buffer()
+      }
+    }
+
+    return this.buffers[id]
   }
 
   async _req (uri, body) {
@@ -53,7 +63,7 @@ class Communication {
 
   async updateStdout (id, stdout) {
     const url = this.resource + id + this.stdoutEndpoint
-    const buffered = this.stdoutBuffer.write(stdout)
+    const buffered = this._getBuffers(id).stdout.write(stdout)
 
     if (buffered) {
       await this._req(url, { data: buffered })
@@ -62,7 +72,7 @@ class Communication {
 
   async updateStderr (id, stderr) {
     const url = this.resource + id + this.stderrEndpoint
-    const buffered = this.stderrBuffer.write(stderr)
+    const buffered = this._getBuffers(id).stderr.write(stderr)
 
     if (buffered) {
       await this._req(url, { data: buffered })
@@ -79,8 +89,8 @@ class Communication {
   async resetBuffer (id) {
     const urlStdout = this.resource + id + this.stdoutEndpoint
     const urlStderr = this.resource + id + this.stderrEndpoint
-    const stdout = this.stdoutBuffer.reset()
-    const stderr = this.stderrBuffer.reset()
+    const stdout = this._getBuffers(id).stdout.reset()
+    const stderr = this._getBuffers(id).stderr.reset()
 
     if (stdout) {
       await this._req(urlStdout, { data: stdout })
@@ -88,6 +98,10 @@ class Communication {
     if (stderr) {
       await this._req(urlStderr, { data: stderr })
     }
+
+    delete this._getBuffers(id).stdout
+    delete this._getBuffers(id).stderr
+    delete this._getBuffers(id)
   }
 
   async updatePackage (id, data) {
