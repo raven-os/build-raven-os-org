@@ -110,7 +110,7 @@ class ListBuild extends AbstractAction {
     const dir = req.query.dir || (sort === 'creation_date' ? 'desc' : 'asc')
     const filters = {
       manifestId: req.query.manifest_id || null,
-      exitStatus: req.query.exit_status || null
+      exitStatus: Number.isInteger(req.query.exit_status) ? req.query.exit_status : null
     }
 
     const pagination = {
