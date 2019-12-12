@@ -1,10 +1,13 @@
 const { hashPassword } = require('../src/controller/utils')
 
 exports.seed = (knex) => {
-  // Deletes ALL existing entries except the first one (admin)
+  // Deletes ALL existing entries except the first one (admin) and set auto-increment to 6
   return knex('user_account')
     .whereNot({ id: 1 })
     .del()
+    .then(() => {
+      return knex.raw('ALTER SEQUENCE user_account_id_seq RESTART WITH 6')
+    })
     .then(async () => {
       // Inserts seed entries
       return knex('user_account').insert([

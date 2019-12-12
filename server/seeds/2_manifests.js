@@ -13,8 +13,11 @@ function manifest (num, author) {
 }
 
 exports.seed = (knex) => {
-  // Deletes ALL existing entries
+  // Deletes ALL existing entries and set auto-increment to 19
   return knex('manifest').del()
+    .then(() => {
+      return knex.raw('ALTER SEQUENCE manifest_id_seq RESTART WITH 19')
+    })
     .then(() => {
       // Inserts seed entries
       return knex('manifest').insert([

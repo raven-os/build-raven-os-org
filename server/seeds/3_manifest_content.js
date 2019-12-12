@@ -18,8 +18,11 @@ function content (filepath) {
 }
 
 exports.seed = (knex) => {
-  // Deletes ALL existing entries
+  // Deletes ALL existing entries and set auto-increment to 25
   return knex('manifest_content').del()
+    .then(() => {
+      return knex.raw('ALTER SEQUENCE manifest_content_id_seq RESTART WITH 25')
+    })
     .then(() => {
       // Inserts seed entries
       return knex('manifest_content').insert([
