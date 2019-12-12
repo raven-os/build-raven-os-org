@@ -101,7 +101,14 @@ const mutations = {
 
   [types.BUILD_GET_SUCCESS] (state, build) {
     Vue.set(state.loading, 'get', false)
-    Vue.set(state, 'builds', [build])
+
+    const index = state.builds.findIndex(x => x.id === build.id)
+
+    if (index !== -1) {
+      Vue.set(state.builds, index, build)
+    } else {
+      state.builds.push(build)
+    }
   },
 
   [types.BUILD_GET_ERROR] (state, error) {
