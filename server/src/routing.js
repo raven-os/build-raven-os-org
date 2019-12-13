@@ -88,7 +88,7 @@ class Routing {
       err.message = errorParam.map(x => `${x.param}: ${x.detail}`).join('. ')
     }
 
-    console.error('[error]', err.stack)
+    this.app.logger.error('[error]', err.stack)
     res.status(err.status || 400)
     res.json({ message: err.message, errors: errorParam })
   }

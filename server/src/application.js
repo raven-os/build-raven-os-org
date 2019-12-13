@@ -10,6 +10,7 @@ const Errors = require('./errors')
 const Websocket = require('./websocket')
 const Mailer = require('./mailer')
 const Session = require('./session')
+const Logger = require('./logger')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
@@ -32,6 +33,7 @@ class Application {
     this.websocket = new Websocket(this)
     this.mailer = new Mailer(this)
     this.session = new Session(this)
+    this.logger = new Logger()
   }
 
   /**
@@ -54,7 +56,7 @@ class Application {
     await this.queue._getInstance()
 
     this.express = express()
-    this.express.use(this.logger)
+    this.express.use(this.requestLogger.bind(this))
     this.express.use(helmet())
     this.express.use(cors(this.config.cors))
     this.express.use(bodyParser.json())
@@ -70,7 +72,7 @@ class Application {
 
     this.server.listen(this.config.port, () => {
       this.websocket.run(this.server)
-      console.info('[server] running on port', this.config.port)
+      this.logger.info('[server] running on port', this.config.port)
     })
   }
 
@@ -81,8 +83,8 @@ class Application {
    * @param  {Response} res  The outgoing response
    * @param  {Function} next The next route
    */
-  logger (req, res, next) {
-    console.log(req.method, req.originalUrl)
+  requestLogger (req, res, next) {
+    this.logger.log(req.method, req.originalUrl)
     next()
   }
 }
