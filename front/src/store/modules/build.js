@@ -73,9 +73,9 @@ const mutations = {
     Vue.set(state.loading, 'create', false)
   },
 
-  [types.BUILD_CREATE_ERROR] (state, error) {
+  [types.BUILD_CREATE_ERROR] (state, { message }) {
     Vue.set(state.loading, 'create', false)
-    Vue.set(state.error, 'create', error)
+    Vue.set(state.error, 'create', message)
   },
 
   [types.BUILD_LIST_REQUEST] (state) {
@@ -89,9 +89,9 @@ const mutations = {
     Vue.set(state, 'pagination', res.meta.pagination)
   },
 
-  [types.BUILD_LIST_ERROR] (state, error) {
+  [types.BUILD_LIST_ERROR] (state, { message }) {
     Vue.set(state.loading, 'list', false)
-    Vue.set(state.error, 'list', error)
+    Vue.set(state.error, 'list', message)
   },
 
   [types.BUILD_GET_REQUEST] (state) {
@@ -111,9 +111,9 @@ const mutations = {
     }
   },
 
-  [types.BUILD_GET_ERROR] (state, error) {
+  [types.BUILD_GET_ERROR] (state, { message }) {
     Vue.set(state.loading, 'get', false)
-    Vue.set(state.error, 'get', error)
+    Vue.set(state.error, 'get', message)
   }
 }
 

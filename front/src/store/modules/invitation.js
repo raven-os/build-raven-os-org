@@ -38,9 +38,9 @@ const mutations = {
     Vue.set(state.loading, 'create', false)
   },
 
-  [types.INVITATION_CREATE_ERROR] (state, error) {
+  [types.INVITATION_CREATE_ERROR] (state, { message }) {
     Vue.set(state.loading, 'create', false)
-    Vue.set(state.error, 'create', error)
+    Vue.set(state.error, 'create', message)
   }
 }
 
