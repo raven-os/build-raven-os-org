@@ -1,0 +1,9 @@
+version: "3.7"
+services:
+
+  # API
+  api:
+    command: npm test
+    volumes:
+      - ./server/test:/app/test
+      - ./server/coverage:/app/coverage

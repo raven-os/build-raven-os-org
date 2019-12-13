@@ -17,8 +17,11 @@
   "scripts": {
     "start": "eslint . && node src/index.js",
     "dev": "eslint . && nodemon src/index.js",
-    "test": "eslint . && nyc -s true mocha test/unit/mock-database.js test/unit/setup.js test/unit/ --recursive --exit",
-    "coverage": "nyc report",
+    "test": "nyc -s=true true && npm run test:all && npm run coverage",
+    "test:all": "eslint . && npm run test:unit -- -R dot && npm run test:integration -- -R dot",
+    "test:unit": "nyc -s true --clean false mocha test/unit/mock-database.js test/unit/setup.js test/unit/ --recursive --exit",
+    "test:integration": "nyc -s true --clean false mocha test/integration/init test/integration --recursive --exit",
+    "coverage": "nyc report --reporter=text --reporter=lcov",
     "apidoc": "apidoc -i src/action -o docs/apidoc/",
     "jsdoc": "jsdoc -a all -d docs/jsdoc/ -r src/controller src/database src/websocket src/action/abstract.js src/*.js -R README.md",
     "migrate:make": "knex migrate:make",
@@ -67,6 +70,7 @@
     "mock-require": "^3.0.3",
     "nodemon": "^2.0.1",
     "nyc": "^14.1.1",
-    "sinon": "^7.3.2"
+    "sinon": "^7.3.2",
+    "supertest": "^4.0.2"
   }
 }
