@@ -101,6 +101,9 @@ services:
     hostname: rabbit_mq
     image: rabbitmq:3-management
     restart: on-failure
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
     networks:
       - backend
     expose:
