@@ -1,9 +1,19 @@
 const helper = require('./helper')
 
 before(async function () {
-  helper.app.logger.log = () => {}
-  helper.app.logger.info = () => {}
-  helper.app.logger.error = () => {}
+  const noop = () => {}
+
+  helper.app.logger.log = noop
+  helper.app.logger.info = noop
+  helper.app.logger.error = noop
+
+  helper.app.queue = {
+    _getInstance: noop,
+    ensureConnection: noop,
+    send: noop,
+    receive: noop,
+    close: noop
+  }
 
   await helper.app.run()
 })
