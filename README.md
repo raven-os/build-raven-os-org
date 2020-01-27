@@ -1,6 +1,6 @@
 # build-raven-os-org
 
-An interface for to upload build manifests and schedule packages compilations.
+An interface to upload build manifests and schedule packages compilations.
 
 The project `build-raven-os-org` contains three main parts:
 
