@@ -56,12 +56,18 @@
 								{
 									"key": "content",
 									"value": "#!/usr/bin/env python3.6\n# -*- coding: utf-8 -*-\n\"\"\"\nBuild manifest for the GNU 'readline' library.\n\"\"\"\n\nimport stdlib\nimport stdlib.fetch\nimport stdlib.split\nimport stdlib.template.autotools\n\n\n@stdlib.manifest(\n    name='readline',\n    category='sys-lib',\n    description='''\n    The GNU Readline library provides a set of functions for use by applications that allow users to edit command lines as they are typed in.\n    ''',\n    maintainer='benjamin.grange@epitech.eu',\n    licenses=[stdlib.License.GPL_V3],\n    upstream_url='https://tiswww.case.edu/php/chet/readline/rltop.html',\n    versions_data=[\n        {\n            'semver': '8.0.0',\n            'fetch_url': {\n                'url': 'https://ftp.gnu.org/gnu/readline/readline-8.0.tar.gz',\n                'sha256': 'e339f51971478d369f8a053a330a190781acb9864cf4c541060f12078948e461',\n            },\n        },\n    ],\n)\ndef build(build):\n    aggregate = stdlib.template.autotools.build_library(\n        configure=lambda: stdlib.template.autotools.configure(\n            '--disable-install-examples',\n            '--with-curses',\n            '--enable-multibyte',\n        ),\n    )\n\n    # Dependencies\n    aggregate['libreadline8'].run_dependencies['stable::sys-lib/libc6'] = '*'\n\n    return aggregate",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "content",
+									"value": "new content",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "localhost:8000/api/manifest/55",
+							"raw": "localhost:8000/api/manifest/1",
 							"host": [
 								"localhost"
 							],
@@ -69,7 +75,7 @@
 							"path": [
 								"api",
 								"manifest",
-								"55"
+								"1"
 							]
 						}
 					},
@@ -200,7 +206,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"ids\": [19]\n}"
+							"raw": "{\n\t\"ids\": [1]\n}"
 						},
 						"url": {
 							"raw": "localhost:8000/api/build/",
@@ -398,7 +404,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"data\": \"this is stderr azertyuioozazertyuiuyt\"\n}"
+							"raw": "{\n\t\"data\": \"this is stderr\"\n}"
 						},
 						"url": {
 							"raw": "localhost:8000/api/build/208/stderr",
@@ -509,7 +515,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"data\": [\n\t\t\"http://hello.world\"\n\t\t]\n}"
+							"raw": "{\n\t\"data\": [\n\t\t\"http://hello.world\"\n\t]\n}"
 						},
 						"url": {
 							"raw": "localhost:8000/api/build/207/packages",
@@ -546,7 +552,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"invitation\": \"a13f3c78-eca9-440f-8621-123909a83427\",\n\t\"firstname\": \"mickael\",\n\t\"lastname\": \"bourgois\",\n\t\"password\": \"Password1234\"\n}"
+							"raw": "{\n\t\"invitation\": \"a13f3c78-eca9-440f-8621-123909a83427\",\n\t\"firstname\": \"john\",\n\t\"lastname\": \"doe\",\n\t\"password\": \"Password1234\"\n}"
 						},
 						"url": {
 							"raw": "localhost:8000/api/user/",
@@ -558,6 +564,59 @@
 								"api",
 								"user",
 								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8000/api/user/10",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"user",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8000/api/user?search=test",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"user"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "test"
+								}
 							]
 						}
 					},
@@ -618,7 +677,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"email\": \"mickael.bourgois@epitech.eu\",\n\t\"password\": \"toto42\"\n}"
+							"raw": "{\n\t\"email\": \"test@build.com\",\n\t\"password\": \"toto42\"\n}"
 						},
 						"url": {
 							"raw": "localhost:8000/api/auth/login/",
@@ -662,7 +721,7 @@
 					"response": []
 				},
 				{
-					"name": "Login Copy",
+					"name": "Forgot Password",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -675,10 +734,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"email\": \"toto@toto.com\",\n\t\"password\": \"Password1234\"\n}"
+							"raw": "{\n\t\"email\": \"toto@toto.com\"\n}"
 						},
 						"url": {
-							"raw": "localhost:8000/api/auth/login/",
+							"raw": "localhost:8000/api/auth/forgot/",
 							"host": [
 								"localhost"
 							],
@@ -686,7 +745,39 @@
 							"path": [
 								"api",
 								"auth",
-								"login",
+								"forgot",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reset Password",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"token\": \"028070d88b6957eeb687ff97a6b45196a1312101\",\n\t\"password\": \"Password12345\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8000/api/auth/reset/",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"auth",
+								"reset",
 								""
 							]
 						}
