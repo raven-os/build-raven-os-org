@@ -1,5 +1,11 @@
 const { comparePassword, generateToken } = require('./utils')
 
+/**
+ * Performs actions related to authentication
+ *
+ * @public
+ * @class
+ */
 class AuthController {
   constructor (app) {
     this.app = app
@@ -8,6 +14,15 @@ class AuthController {
     this.recoveryTimeout = 10 // minutes
   }
 
+  /**
+   * Authenticate a user
+   *
+   * @public
+   * @param  {String}  email    Email of the user
+   * @param  {String}  password Password of the user
+   * @return {Object}           The authenticated user
+   * @throws {BadRequest}       If the email or password is invalid
+   */
   async login (email, password) {
     if (!await this.app.controller.user.exists(email)) {
       throw new this.app.errors.BadRequest(`No user with email ${email}`)
@@ -20,6 +35,13 @@ class AuthController {
     return user
   }
 
+  /**
+   * Send an email with a token to reset a forgotten password
+   *
+   * @public
+   * @param  {String}  email    Email of the user
+   * @throws {NotFound}         If the email doesn't exists
+   */
   async forgotPassword (email) {
     if (!await this.app.controller.user.exists(email)) {
       throw new this.app.errors.NotFound(`No user with email ${email}`)
@@ -32,11 +54,20 @@ class AuthController {
     this.recovery[email] = { token, expireAt: date }
 
     const subject = 'Password recovery for Raven\'s Package Builder'
-    const text = `To reset your password on Raven's Package Builder, use this code: ${token}`
+    const text = `To reset your password on Raven's Package Builder, use this code: ${token} (available ${this.recoveryTimeout} minutes)`
 
     await this.app.mailer.send(email, subject, text)
   }
 
+  /**
+   * Change a forgotten password
+   *
+   * @public
+   * @param  {String}     token     Secret recovery token
+   * @param  {String}     password  New password
+   * @throws {NotFound}             If the token doesn't exists
+   * @throws {Forbidden}            If the token is expired
+   */
   async resetPassword (token, password) {
     const recovery = Object.entries(this.recovery).filter(e => e[1] && e[1].token === token)
 

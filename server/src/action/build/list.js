@@ -10,8 +10,8 @@ const lowercase = require('../sanitizer/lowercase')
  *
  * @apiDescription List all builds
  *
- * @apiParam  (Query String) {Boolean}                          [queuing]           Search for builds in queuing state
- * @apiParam  (Query String) {Boolean}                          [running]           Search for builds in running state
+ * @apiHeader {String} Cookie Contains the session identifier `user_sid`
+ *
  * @apiParam  (Query String) {Boolean}                          [exit_status]       Search for builds with an exit status equal to `exit_status`
  * @apiParam  (Query String) {Boolean}                          [manifest_id]       Search for builds which contains the list of manifest ids
  * @apiParam  (Query String) {String='creation','start','end'}  [sort='creation']   Sort the results by the provided criteria
@@ -62,16 +62,15 @@ const lowercase = require('../sanitizer/lowercase')
  *    }
  * }
  *
+ * @apiErrorExample {json} Unauthorized 401
+ * {
+ *    "message": "You must be connected",
+ *    "errors": []
+ * }
  */
 class ListBuild extends AbstractAction {
   get validate () {
     return [
-      query('queuing')
-        .optional()
-        .toBoolean(),
-      query('running')
-        .optional()
-        .toBoolean(),
       query('manifest_id')
         .optional()
         .toInt(),
@@ -110,10 +109,8 @@ class ListBuild extends AbstractAction {
     // Default direction is DESCENDING only if we are sorting by creation date
     const dir = req.query.dir || (sort === 'creation_date' ? 'desc' : 'asc')
     const filters = {
-      queuing: req.query.queuing || null,
-      running: req.query.running || null,
       manifestId: req.query.manifest_id || null,
-      exitStatus: req.query.exit_status || null
+      exitStatus: Number.isInteger(req.query.exit_status) ? req.query.exit_status : null
     }
 
     const pagination = {

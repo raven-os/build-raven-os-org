@@ -1,3 +1,9 @@
+/**
+ * Performs actions related to builds
+ *
+ * @public
+ * @class
+ */
 class BuildController {
   constructor (app) {
     this.app = app
@@ -8,12 +14,27 @@ class BuildController {
     }
   }
 
+  /**
+   * Verify if the builder apikey is correct
+   *
+   * @public
+   * @param  {String}  apikey Builder apikey
+   * @throws {Forbidden}      If the apikey is wrong
+   */
   authorization (apikey) {
     if (apikey !== this.app.config.builder_apikey) {
       throw new this.app.errors.Forbidden('Invalid builder apikey')
     }
   }
 
+  /**
+   * Retrieve a build by ID
+   *
+   * @private
+   * @param  {Integer}          id ID of a build
+   * @return {Bookshelf.Model}     Model build to perform database actions on
+   * @throws {NotFound}            If the build doesn't exists
+   */
   async _get (id) {
     const buildModel = await this.app.database.model.build
       .where('id', id)
@@ -26,6 +47,17 @@ class BuildController {
     return buildModel
   }
 
+  /**
+   * Create a build and send it in the queue
+   *
+   * @public
+   * @param  {Integer[]}  ids  List of manifest IDs
+   * @param  {User}       user User creating the build
+   * @return {Object}          The build
+   * @throws {BadRequest}      If the list of manifest IDs is empty
+   * @throws {NotFound}        If one of the manifest IDs doesn't exists
+   * @throws {Forbidden}       If the user is not an admin or the maintainer of all the manifests
+   */
   async create (ids, user) {
     if (!ids.length) {
       throw new this.app.errors.BadRequest('A build needs at least one manifest')
@@ -65,6 +97,16 @@ class BuildController {
     return build.toJSON()
   }
 
+  /**
+   * Concatenate the new output log coming from the builder
+   * Then send to build to a websocket
+   *
+   * @public
+   * @param  {Integer}  id      ID of the build
+   * @param  {String}   stdout  New output log to append
+   * @return {Object}           The updated build
+   * @throws {NotFound}         If the build doesn't exists
+   */
   async stdout (id, stdout) {
     let build = await this._get(id)
 
@@ -81,6 +123,16 @@ class BuildController {
     return build
   }
 
+  /**
+   * Concatenate the new error log coming from the builder
+   * Then send to build to a websocket
+   *
+   * @public
+   * @param  {Integer}  id      ID of the build
+   * @param  {String}   stdout  New output log to append
+   * @return {Object}           The updated build
+   * @throws {NotFound}         If the build doesn't exists
+   */
   async stderr (id, stderr) {
     let build = await this._get(id)
 
@@ -97,6 +149,16 @@ class BuildController {
     return build
   }
 
+  /**
+   * Concatenate the packages url coming from the builder
+   * Then send to build to a websocket
+   *
+   * @public
+   * @param  {Integer}  id       ID of the build
+   * @param  {String[]} packages List of packages built
+   * @return {Object}            The updated build
+   * @throws {NotFound}          If the build doesn't exists
+   */
   async packages (id, packages) {
     let build = await this._get(id)
 
@@ -113,6 +175,15 @@ class BuildController {
     return build
   }
 
+  /**
+   * Update the state and the start date of a build
+   * Then send to build to a websocket
+   *
+   * @public
+   * @param  {Integer}  id      ID of the build
+   * @return {Object}           The updated build
+   * @throws {NotFound}         If the build doesn't exists
+   */
   async start (id) {
     let build = await this._get(id)
     const date = new Date()
@@ -131,6 +202,16 @@ class BuildController {
     return build
   }
 
+  /**
+   * Update the state, the end date and the exit status of a build
+   * Then send to build to a websocket
+   *
+   * @public
+   * @param  {Integer}  id         ID of the build
+   * @param  {Integer}  exitStatus ID of the build
+   * @return {Object}              The updated build
+   * @throws {NotFound}            If the build doesn't exists
+   */
   async end (id, exitStatus) {
     let build = await this._get(id)
     const date = new Date()
@@ -150,21 +231,37 @@ class BuildController {
     return build
   }
 
+  /**
+   * Retrieve a build
+   *
+   * @public
+   * @param   {Integer}  id ID of the build
+   * @return  {Object}      The build
+   * @throws  {NotFound}    If the build doesn't exists
+   */
   async get (id) {
     const build = await this._get(id)
 
     return build.toJSON()
   }
 
+  /**
+   * List all builds matching the filters
+   *
+   * @public
+   * @param  {'creation_date'|'start_date'|'end_date'} sort               Column to sort on
+   * @param  {'asc'|'desc'}                            direction          Direction of the sort
+   * @param  {Object}                                  filters            Filter object
+   * @param  {Integer}                                 filters.manifestId Manifest ID contained in the list of manifest IDs built
+   * @param  {Integer}                                 filters.exitStatus Exit status
+   * @param  {Object}                                  pagination         Pagination object
+   * @param  {Integer}                                 pagination.perPage Number of item per page
+   * @param  {Integer}                                 pagination.page    Page to retrieve
+   * @return {Object}                                                     List of builds found and metadata containing pagination information
+   */
   async list (sort, direction, filters, pagination) {
     const builds = await this.app.database.model.build
       .query(queryBuilder => {
-        if (filters.queuing !== null) {
-          queryBuilder.where('queuing', filters.queuing)
-        }
-        if (filters.running !== null) {
-          queryBuilder.where('running', filters.running)
-        }
         if (filters.manifestId !== null) {
           queryBuilder.where('manifest_id', '@>', [filters.manifestId])
         }

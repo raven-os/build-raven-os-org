@@ -39,12 +39,21 @@
                 </b-col>
               </b-row>
               <b-row>
-                <button class="custom-button" type="submit">Login</button>
+                <button class="custom-button" type="submit">
+                  Login
+                </button>
               </b-row>
               <b-row>
                 <b-col>
                   <div class="text-center my-4">
-                    <a href="/recovery" class="forgotten-pwd">Forgotten password?</a>
+                    <a href="/recovery" class="forgotten-pwd">Forgotten password ?</a>
+                  </div>
+                </b-col>
+              </b-row>
+              <b-row>
+                <b-col>
+                  <div class="text-center">
+                    <a href="/register" class="forgotten-pwd">Register</a>
                   </div>
                 </b-col>
               </b-row>
@@ -55,7 +64,9 @@
     </section>
 
     <!-- error handling -->
-    <div v-if="getAuthLoadings.login" class="text-loading">Loging in...</div>
+    <div v-if="getAuthLoadings.login" class="text-loading">
+      Loging in...
+    </div>
     <div v-if="error || getAuthErrors.login" class="text-error">
       <p>An error occurred while loging in</p>
       <p>{{ error || getAuthErrors.login }}</p>

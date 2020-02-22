@@ -36,7 +36,7 @@ const options = {
 }
 
 const wsUrl = () => {
-  const protocol = process.env.VUE_APP_API_PROTOCOL.endsWith('s') ? 'wss' : 'ws'
+  const protocol = (process.env.VUE_APP_API_PROTOCOL || '').endsWith('s') ? 'wss' : 'ws'
   const host = process.env.VUE_APP_API_HOST
   const port = process.env.VUE_APP_API_PORT
 

@@ -21,7 +21,7 @@ $ npm run serve
 
 #### Production
 
-Files will be located in `../static` and serve by rocket api
+Files will be located in `dist` directory and will be served using `nginx`
 
 ```bash
 $ npm run build

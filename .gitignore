@@ -2,8 +2,11 @@ node_modules/
 npm-debug.log
 package-lock.json
 *.local.js
-manifests/*
-!manifests/.empty
 .nyc_output/
 coverage/
 docs/
+builder/manifests/*
+!builder/manifests/.empty
+builder/nbuild/
+builder/out/
+.env

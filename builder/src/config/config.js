@@ -1,12 +1,6 @@
 const convict = require('convict')
 
 const config = convict({
-  nbuild_path: {
-    doc: 'Path to the nbuild executable',
-    format: String,
-    default: null,
-    env: 'NBUILD_PATH'
-  },
   build_api_url: {
     doc: 'URL of build-raven-os-org API',
     format: String,

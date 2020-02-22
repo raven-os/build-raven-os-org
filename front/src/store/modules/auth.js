@@ -77,9 +77,9 @@ const mutations = {
     Vue.set(state, 'user', user)
   },
 
-  [types.AUTH_LOGIN_ERROR] (state, error) {
+  [types.AUTH_LOGIN_ERROR] (state, { message }) {
     Vue.set(state.loading, 'login', false)
-    Vue.set(state.error, 'login', error)
+    Vue.set(state.error, 'login', message)
   },
 
   [types.AUTH_LOGOUT_REQUEST] (state) {
@@ -92,9 +92,9 @@ const mutations = {
     Vue.set(state, 'user', {})
   },
 
-  [types.AUTH_LOGOUT_ERROR] (state, error) {
+  [types.AUTH_LOGOUT_ERROR] (state, { message }) {
     Vue.set(state.loading, 'logout', false)
-    Vue.set(state.error, 'logout', error)
+    Vue.set(state.error, 'logout', message)
   },
 
   [types.AUTH_FORGOT_PASSWORD_REQUEST] (state) {
@@ -106,9 +106,9 @@ const mutations = {
     Vue.set(state.loading, 'forgotPassword', false)
   },
 
-  [types.AUTH_FORGOT_PASSWORD_ERROR] (state, error) {
+  [types.AUTH_FORGOT_PASSWORD_ERROR] (state, { message }) {
     Vue.set(state.loading, 'forgotPassword', false)
-    Vue.set(state.error, 'forgotPassword', error)
+    Vue.set(state.error, 'forgotPassword', message)
   },
 
   [types.AUTH_RESET_PASSWORD_REQUEST] (state) {
@@ -120,9 +120,9 @@ const mutations = {
     Vue.set(state.loading, 'resetPassword', false)
   },
 
-  [types.AUTH_RESET_PASSWORD_ERROR] (state, error) {
+  [types.AUTH_RESET_PASSWORD_ERROR] (state, { message }) {
     Vue.set(state.loading, 'resetPassword', false)
-    Vue.set(state.error, 'resetPassword', error)
+    Vue.set(state.error, 'resetPassword', message)
   }
 }
 

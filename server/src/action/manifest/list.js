@@ -10,6 +10,8 @@ const lowercase = require('../sanitizer/lowercase')
  *
  * @apiDescription List all manifests
  *
+ * @apiHeader {String} Cookie Contains the session identifier `user_sid`
+ *
  * @apiParam  (Query String) {String}                             [name]              Search for manifests with a name starting with `name`
  * @apiParam  (Query String) {String='creation','update','name'}  [sort='creation']   Sort the results by the provided criteria
  * @apiParam  (Query String) {String='asc','desc'}                [dir='desc']        Sort direction
@@ -21,6 +23,8 @@ const lowercase = require('../sanitizer/lowercase')
  * @apiSuccess  {String}    data.name                   Name of the manifest
  * @apiSuccess  {String}    data.creation_date          Date of creation
  * @apiSuccess  {String}    data.last_update            Date of last update
+ * @apiSuccess  {Integer}   data.author                 User ID of the author
+ * @apiSuccess  {Integer}   data.maintainer             User ID of the maintainer
  * @apiSuccess  {Object[]}  data.history                List of content (ordered by last_update)
  * @apiSuccess  {Integer}   data.history.id             ID of the content
  * @apiSuccess  {Integer}   data.history.manifest_id    ID of the manifest
@@ -60,6 +64,12 @@ const lowercase = require('../sanitizer/lowercase')
  *          "pageCount": 3
  *       }
  *    }
+ * }
+ *
+ * @apiErrorExample {json} Unauthorized 401
+ * {
+ *    "message": "You must be connected",
+ *    "errors": []
  * }
  */
 class ListManifest extends AbstractAction {

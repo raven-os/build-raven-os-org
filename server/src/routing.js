@@ -1,10 +1,21 @@
 const express = require('express')
 
+/**
+ * Define all the routes of the API
+ *
+ * @public
+ * @class
+ */
 class Routing {
   constructor (app) {
     this.app = app
   }
 
+  /**
+   * Map actions and session middleware to each routes
+   *
+   * @public
+   */
   routing () {
     const notConnected = this.app.session.notConnected.bind(this.app.session)
     const connected = this.app.session.connected.bind(this.app.session)
@@ -55,6 +66,15 @@ class Routing {
     this.app.express.use(this.errorHandler.bind(this))
   }
 
+  /**
+   * Error handler, fallback when an error occure on a route
+   * Format and send an error response to the client
+   *
+   * @param  {Error}    err  The error
+   * @param  {Request}  req  The incoming request
+   * @param  {Response} res  The outgoing response
+   * @param  {Function} next The next route
+   */
   errorHandler (err, req, res, next) {
     const details = err.mapped && err.mapped()
     const errorParam = []
@@ -68,7 +88,7 @@ class Routing {
       err.message = errorParam.map(x => `${x.param}: ${x.detail}`).join('. ')
     }
 
-    console.error('[error]', err.stack)
+    this.app.logger.error('[error]', err.stack)
     res.status(err.status || 400)
     res.json({ message: err.message, errors: errorParam })
   }

@@ -60,7 +60,9 @@
                 </b-col>
               </b-row>
               <b-row>
-                <button class="custom-button" type="submit">Send invitation</button>
+                <button class="custom-button" type="submit">
+                  Send invitation
+                </button>
               </b-row>
             </b-container>
           </form>
@@ -69,7 +71,9 @@
     </section>
 
     <!-- error handling -->
-    <div v-if="getInvitationLoadings.create" class="text-loading">Sending invitation...</div>
+    <div v-if="getInvitationLoadings.create" class="text-loading">
+      Sending invitation...
+    </div>
     <div v-if="error || getInvitationErrors.create" class="text-error">
       <p>An error occurred while sending invitation</p>
       <p>{{ error || getInvitationErrors.create }}</p>
@@ -134,27 +138,6 @@ export default {
 .invit-zone {
   margin-top: 75px;
   margin-bottom: 100px;
-}
-
-.custom-checkbox {
-  margin-left: 15px;
-  height: 40px;
-}
-
-.custom-control-label:before {
-  background-color: white;
-}
-
-.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
-  background-color: var(--accent);
-  border: 1px solid var(--accent);
-}
-.custom-checkbox .custom-control-input:checked ~ .custom-control-label::after {
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath fill='white' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3E%3C/svg%3E");
-}
-
-.custom-checkbox .custom-control-input:focus ~ .custom-control-label::before {
-  box-shadow: none;
 }
 
 </style>

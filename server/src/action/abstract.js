@@ -1,5 +1,11 @@
 const { validationResult } = require('express-validator')
 
+/**
+ * Abstract Action contains default behavior for handling requests and responses
+ *
+ * @public
+ * @class
+ */
 class AbstractAction {
   constructor (app) {
     this.app = app
@@ -11,14 +17,37 @@ class AbstractAction {
     this.DEFAULT_ITEM_PER_PAGE = this.app.config.pagination.default_item_per_page
   }
 
+  /**
+   * List of validators to sanitize and validate user input
+   *
+   * @public
+   * @return {List} List of validators
+   */
   get validate () {
     return []
   }
 
+  /**
+   * Handles the request
+   *
+   * @public
+   * @param  {Request}  req The incoming request
+   * @return {Object}       The json response
+   */
   async handler (req) {
     return {}
   }
 
+  /**
+   * Validates the input and calls the request handler
+   * Then send the json response back to the client
+   *
+   * @protected
+   * @param  {Request}    req  The incoming request
+   * @param  {Response}   res  The outgoing response
+   * @param  {Function}   next The next route
+   * @throws {BadRequest}      If the input is invalid or the handler throws
+   */
   async _handler (req, res, next) {
     try {
       const errors = validationResult(req)
@@ -33,6 +62,15 @@ class AbstractAction {
     }
   }
 
+  /**
+   * Validates the input and calls the next middleware
+   *
+   * @protected
+   * @param  {Request}    req  The incoming request
+   * @param  {Response}   res  The outgoing response
+   * @param  {Function}   next The next route
+   * @throws {BadRequest}      If the input is invalid
+   */
   _middlewareHandler (req, res, next) {
     try {
       const errors = validationResult(req)

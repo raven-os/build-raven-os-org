@@ -10,11 +10,18 @@ const Errors = require('./errors')
 const Websocket = require('./websocket')
 const Mailer = require('./mailer')
 const Session = require('./session')
+const Logger = require('./logger')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const helmet = require('helmet')
 
+/**
+ * The application class regroup every part of the API together
+ *
+ * @public
+ * @class
+ */
 class Application {
   constructor () {
     this.config = config
@@ -26,16 +33,30 @@ class Application {
     this.websocket = new Websocket(this)
     this.mailer = new Mailer(this)
     this.session = new Session(this)
+    this.logger = new Logger()
   }
 
+  /**
+   * Initialize every part of the application
+   * Start the mailer, connect to the database
+   * Run the migration (and populate the database in dev env)
+   * Connect to the queue and instanciate the http server and the routing
+   *
+   * @public
+   */
   async run () {
     await this.mailer.init()
     await this.database.ensureConnection()
     await this.database.runMigrations()
+
+    if (this.config.populateDB) {
+      await this.database.runSeeds()
+    }
+
     await this.queue._getInstance()
 
     this.express = express()
-    this.express.use(this.logger)
+    this.express.use(this.requestLogger.bind(this))
     this.express.use(helmet())
     this.express.use(cors(this.config.cors))
     this.express.use(bodyParser.json())
@@ -51,12 +72,19 @@ class Application {
 
     this.server.listen(this.config.port, () => {
       this.websocket.run(this.server)
-      console.info('[server] running on port', this.config.port)
+      this.logger.info('[server] running on port', this.config.port)
     })
   }
 
-  logger (req, res, next) {
-    console.log(req.method, req.originalUrl)
+  /**
+   * Middleware to log each endpoints requested
+   *
+   * @param  {Request}  req  The incoming request
+   * @param  {Response} res  The outgoing response
+   * @param  {Function} next The next route
+   */
+  requestLogger (req, res, next) {
+    this.logger.log(req.method, req.originalUrl)
     next()
   }
 }

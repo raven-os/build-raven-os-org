@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "./nbuild.py", line 71, in <module>
+    main()
+  File "./nbuild.py", line 67, in main
+    spec.loader.exec_module(module)
+  File "<frozen importlib._bootstrap_external>", line 728, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "manifests/zlib.py", line 1, in <module>
+    oups_there_is_an_error_in_the_manifest
+NameError: name 'oups_there_is_an_error_in_the_manifest' is not defined

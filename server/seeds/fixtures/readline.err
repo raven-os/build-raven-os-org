@@ -1,0 +1,10 @@
+make[1]: warning: -jN forced in submake: disabling jobserver mode.
+make[1]: warning: -jN forced in submake: disabling jobserver mode.
+make[1]: warning: -jN forced in submake: disabling jobserver mode.
+make[1]: warning: -jN forced in submake: disabling jobserver mode.
+make[1]: warning: -jN forced in submake: disabling jobserver mode.
+/bin/install: cannot stat './rltest2.c': No such file or directory
+mv: cannot stat '/app/./cache/install/readline/8.0.0/usr/lib64/libreadline.a': No such file or directory
+make: [Makefile:254: install-static] Error 1 (ignored)
+mv: cannot stat '/app/./cache/install/readline/8.0.0/usr/lib64/libhistory.a': No such file or directory
+make: [Makefile:257: install-static] Error 1 (ignored)

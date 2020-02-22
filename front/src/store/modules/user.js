@@ -54,9 +54,9 @@ const mutations = {
     Vue.set(state.loading, 'create', false)
   },
 
-  [types.USER_CREATE_ERROR] (state, error) {
+  [types.USER_CREATE_ERROR] (state, { message }) {
     Vue.set(state.loading, 'create', false)
-    Vue.set(state.error, 'create', error)
+    Vue.set(state.error, 'create', message)
   },
 
   [types.USER_LIST_REQUEST] (state) {
@@ -69,9 +69,9 @@ const mutations = {
     Vue.set(state, 'list', res)
   },
 
-  [types.USER_LIST_ERROR] (state, error) {
+  [types.USER_LIST_ERROR] (state, { message }) {
     Vue.set(state.loading, 'list', false)
-    Vue.set(state.error, 'list', error)
+    Vue.set(state.error, 'list', message)
   }
 }
 

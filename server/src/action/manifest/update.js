@@ -7,7 +7,12 @@ const { body, param } = require('express-validator')
  * @apiGroup Manifest
  * @apiName ManifestUpdate
  *
+ * @apiPermission admin | maintainer
+
+ *
  * @apiDescription Update a manifest
+ *
+ * @apiHeader {String} Cookie Contains the session identifier `user_sid`
  *
  * @apiParam  (Params) {Integer}      id      ID of the manifest
  * @apiParam  (Body)   {String{1..}}  content New content of the manifest
@@ -50,6 +55,18 @@ const { body, param } = require('express-validator')
  * @apiErrorExample {json} Not Found 404
  * {
  *    "message": "Manifest #42 not found",
+ *    "errors": []
+ * }
+ *
+ * @apiErrorExample {json} Unauthorized 401
+ * {
+ *    "message": "You must be connected",
+ *    "errors": []
+ * }
+ *
+ * @apiErrorExample {json} Forbidden 403
+ * {
+ *    "message": "Manifest #9 can only be updated by its maintainer",
  *    "errors": []
  * }
  */

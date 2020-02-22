@@ -104,9 +104,9 @@ const mutations = {
     Vue.set(state.loading, 'create', false)
   },
 
-  [types.MANIFEST_CREATE_ERROR] (state, error) {
+  [types.MANIFEST_CREATE_ERROR] (state, { message }) {
     Vue.set(state.loading, 'create', false)
-    Vue.set(state.error, 'create', error)
+    Vue.set(state.error, 'create', message)
   },
 
   [types.MANIFEST_UPDATE_REQUEST] (state) {
@@ -118,9 +118,9 @@ const mutations = {
     Vue.set(state.loading, 'update', false)
   },
 
-  [types.MANIFEST_UPDATE_ERROR] (state, error) {
+  [types.MANIFEST_UPDATE_ERROR] (state, { message }) {
     Vue.set(state.loading, 'update', false)
-    Vue.set(state.error, 'update', error)
+    Vue.set(state.error, 'update', message)
   },
 
   [types.MANIFEST_UPDATE_MAINTAINER_REQUEST] (state) {
@@ -133,9 +133,9 @@ const mutations = {
     Vue.set(state, 'manifests', [manifest])
   },
 
-  [types.MANIFEST_UPDATE_MAINTAINER_ERROR] (state, error) {
+  [types.MANIFEST_UPDATE_MAINTAINER_ERROR] (state, { message }) {
     Vue.set(state.loading, 'updateMaintainer', false)
-    Vue.set(state.error, 'updateMaintainer', error)
+    Vue.set(state.error, 'updateMaintainer', message)
   },
 
   [types.MANIFEST_LIST_REQUEST] (state) {
@@ -149,9 +149,9 @@ const mutations = {
     Vue.set(state, 'pagination', res.meta.pagination)
   },
 
-  [types.MANIFEST_LIST_ERROR] (state, error) {
+  [types.MANIFEST_LIST_ERROR] (state, { message }) {
     Vue.set(state.loading, 'list', false)
-    Vue.set(state.error, 'list', error)
+    Vue.set(state.error, 'list', message)
   },
 
   [types.MANIFEST_GET_REQUEST] (state) {
@@ -164,9 +164,9 @@ const mutations = {
     Vue.set(state, 'manifests', [manifest])
   },
 
-  [types.MANIFEST_GET_ERROR] (state, error) {
+  [types.MANIFEST_GET_ERROR] (state, { message }) {
     Vue.set(state.loading, 'get', false)
-    Vue.set(state.error, 'get', error)
+    Vue.set(state.error, 'get', message)
   }
 }
 
