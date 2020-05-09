@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "amqplib": "^0.5.3",
-    "convict": "^5.1.0",
+    "convict": "^6.0.0",
     "glob": "^7.1.4",
     "request": "^2.88.0",
     "request-promise": "^4.2.4"
