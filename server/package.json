@@ -26,7 +26,9 @@
     "jsdoc": "jsdoc -a all -d docs/jsdoc/ -r src/controller src/database src/websocket src/action/abstract.js src/*.js -R README.md",
     "migrate:make": "knex migrate:make",
     "migrate:latest": "knex migrate:latest",
-    "migrate:rollback": "knex migrate:rollback"
+    "migrate:rollback": "knex migrate:rollback",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "dependencies": {
     "amqplib": "^0.5.3",
@@ -53,7 +55,8 @@
     "request": "^2.88.0",
     "request-promise": "^4.2.5",
     "uuid": "^3.3.3",
-    "ws": "^7.2.0"
+    "ws": "^7.2.0",
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "apidoc": "^0.17.7",
@@ -71,5 +74,6 @@
     "nyc": "^14.1.1",
     "sinon": "^7.3.2",
     "supertest": "^4.0.2"
-  }
+  },
+  "snyk": true
 }
