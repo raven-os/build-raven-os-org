@@ -17,14 +17,17 @@
   "scripts": {
     "start": "eslint . && node src/index.js",
     "dev": "eslint . && nodemon src/index.js",
-    "test": "echo \"no test specified yet\" && exit 0"
+    "test": "echo \"no test specified yet\" && exit 0",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "dependencies": {
     "amqplib": "^0.5.3",
     "convict": "^5.1.0",
     "glob": "^7.1.4",
     "request": "^2.88.0",
-    "request-promise": "^4.2.4"
+    "request-promise": "^4.2.4",
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "eslint": "^6.6.0",
@@ -34,5 +37,6 @@
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
     "nodemon": "^2.0.1"
-  }
+  },
+  "snyk": true
 }
